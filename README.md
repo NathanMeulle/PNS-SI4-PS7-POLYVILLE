@@ -8,5 +8,12 @@
 ![](https://img.shields.io/badge/Editor-IntelliJ_IDEA-informational?style=flat&logo=intellij-idea&logoColor=white&color=4581E5)
 
 
+## Team
+- [Julien Kaplan](https://github.com/JulienK-hub)
+- [Benjamin de Laverny](https://github.com/Benjamin-deLaverny)
+- [Nathan Meulle](https://github.com/NathanMeulle)
+- [Alexis Mérienne](https://github.com/AlexisMerienne)
+
+
 ##
 ![Polytech_logo](http://unice.fr/polytechnice/fr/contenus-riches/images/logos/logo-uns-pns)
