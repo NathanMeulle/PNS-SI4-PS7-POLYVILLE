@@ -14,6 +14,8 @@
 - [Nathan Meulle](https://github.com/NathanMeulle)
 - [Alexis Mérienne](https://github.com/AlexisMerienne)
 
+## How to contribute
+To participate in this project, please have a look at our [contributing.md](https://github.com/PNS-PS7and8/ps7-20-21-al-ihm2/blob/master/CONTRIBUTING.md) 👀
 
 ##
 ![Polytech_logo](http://unice.fr/polytechnice/fr/contenus-riches/images/logos/logo-uns-pns)
