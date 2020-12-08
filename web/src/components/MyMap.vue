@@ -14,6 +14,11 @@
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <l-control-layers />
+      <l-marker :lat-lng="marker" draggable @moveend="log('moveend')">
+        <l-popup>
+          lol
+        </l-popup>
+      </l-marker>
     </l-map>
   </div>
 </template>
@@ -23,23 +28,25 @@
     LMap,
     LTileLayer,
     LControlLayers,
+    LMarker,
   } from "@vue-leaflet/vue-leaflet";
   import "leaflet/dist/leaflet.css";
 
 
 export default {
-  name: "MyMap",
   components: {
           LMap,
           LTileLayer,
           LControlLayers,
+          LMarker,
   },
   data() {
     return {
+      marker : [43.6154, 7.0719],
       zoom: 15,
       maxZoom: 18,
       minZoom:13,
-      maxBounds:[[43.6200,7.0950],[43.6300,7.1000]],
+      maxBounds:[[43.6054,7.0569],[43.6254,7.0869]],
       iconWidth: 25,
       iconHeight: 40,
     };
