@@ -1,15 +1,22 @@
 <template>
+<div>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="box">
+    <h2 class="title is-5">Monthly Sales Chart</h2>
+    <MonthlySalesChart></MonthlySalesChart>
+  </div>
+</div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-
+import MonthlySalesChart from './components/MonthlySalesChart';
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    MonthlySalesChart
   }
 }
 </script>
