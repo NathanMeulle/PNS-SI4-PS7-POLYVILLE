@@ -1,16 +1,20 @@
 package fr.unice.polytech.si4.ps7.alihm2.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.unice.polytech.si4.ps7.alihm2.Client;
 import fr.unice.polytech.si4.ps7.alihm2.Commercant;
-import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
+import fr.unice.polytech.si4.ps7.alihm2.ModeDeplacement;
 import fr.unice.polytech.si4.ps7.alihm2.Ville;
+import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
 import fr.unice.polytech.si4.ps7.alihm2.serializer.data.DataCommerce;
 import fr.unice.polytech.si4.ps7.alihm2.serializer.data.DataName;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Horaire;
-import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
+import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -25,6 +29,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected List<Commerce> commerces;
     protected final int longeur = 20;// >=20
     protected final int largeur = 20;// >=20
+    protected List<Client> clients;
 
 
     public EngineSettingsSmall1() {
@@ -33,6 +38,18 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         this.commerces = new ArrayList<>();
         initCommerces();
         this.ville = new Ville(longeur, largeur, commercants, commerces);
+        this.clients = initClient();
+    }
+
+    private List<Client> initClient() {
+        List<Client> tmp = new ArrayList<>();
+
+        for (int k = 0; k < 300; k++) { // dans la limite de k<400
+            int x = (int) (Math.random() * (this.longeur + 1));
+            int y = (int) (Math.random() * (this.largeur + 1));
+            tmp.add(new Client(new Position(x,y),k, Math.random()<0.5?ModeDeplacement.BUS:ModeDeplacement.VOITURE));
+        }
+        return tmp;
     }
 
     private List<Commercant> initCommercants() {
@@ -44,7 +61,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
 
         List<Commercant> commercantList = new ArrayList<>();
         for (int k = 0; k < 20; k++) { // dans la limite de k<400
-            commercantList.add(new Commercant(nom.get(k), prenom.get(k)));
+            commercantList.add(new Commercant(initPositionCommerces(),nom.get(k), prenom.get(k)));
         }
         return commercantList;
     }
@@ -56,17 +73,19 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
 
         for (int k = 0; k < commercants.size(); k++) {
             Horaire h = initHoraire();
-            Position p = initPosition();
+            Position p = commercants.get(k).getPosition();
             commerces.add(new Commerce(p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
         }
     }
 
-    private Position initPosition() {
+    private Position initPositionCommerces() {
         int x;
         int y;
         ArrayList<Position> positions = new ArrayList<>();
-        for (Commerce c : commerces){
-            positions.add(c.getPosition());
+        if (commercants!=null) {
+            for (Commercant c : commercants) {
+                positions.add(c.getPosition());
+            }
         }
         do {
             x = (int) (Math.random() * (this.longeur + 1));
@@ -93,7 +112,13 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return oM;
     }
 
+    @Override
     public Ville getVille() {
         return ville;
+    }
+
+    @Override
+    public List<Client> getClients() {
+        return clients;
     }
 }

@@ -1,6 +1,5 @@
 package fr.unice.polytech.si4.ps7.alihm2.pi;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.unice.polytech.si4.ps7.alihm2.Commercant;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Horaire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
