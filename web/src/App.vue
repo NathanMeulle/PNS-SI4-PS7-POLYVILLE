@@ -1,11 +1,15 @@
 <template>
-  <MyMap></MyMap>
+    <h1>Welcome to Polyville !</h1>
+  <router-view></router-view>
+  <Menu></Menu>
 </template>
 <script>
-import MyMap from "./components/MyMap";
-  export default {
+
+import Menu from "./components/Menu.vue";
+
+export default {
     components: {
-      MyMap
+      Menu
     }
   };
 </script>
