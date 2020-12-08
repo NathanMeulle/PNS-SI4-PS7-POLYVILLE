@@ -14,11 +14,13 @@
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <l-control-layers />
-      <l-marker :lat-lng="marker" draggable @moveend="log('moveend')">
+      <l-marker :lat-lng="marker" @moveend="log('moveend')">
         <l-popup>
           lol
         </l-popup>
       </l-marker>
+      <MyCircle :lat-lng="marker"
+                :radius="20"/>
     </l-map>
   </div>
 </template>
@@ -31,6 +33,7 @@
     LMarker,
   } from "@vue-leaflet/vue-leaflet";
   import "leaflet/dist/leaflet.css";
+  import MyCircle from "./MyCircle";
 
 
 export default {
@@ -39,6 +42,7 @@ export default {
           LTileLayer,
           LControlLayers,
           LMarker,
+          MyCircle,
   },
   data() {
     return {

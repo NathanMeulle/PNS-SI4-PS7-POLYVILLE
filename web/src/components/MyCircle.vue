@@ -1,6 +1,6 @@
 <script>
 import { onMounted, ref, inject, nextTick } from "vue";
-import { remapEvents, propsBinder } from "../utils.js";
+import { remapEvents, propsBinder } from "../utils/utils.js";
 import { props, setup as circleSetup } from "../functions/circle";
 import { render } from "../functions/layer";
 
@@ -8,7 +8,7 @@ import { render } from "../functions/layer";
  * Circle component, lets you add and personalize circles on the map
  */
 export default {
-  name: "LCircle",
+  name: "MyCircle",
   props,
   setup(props, context) {
     const leafletRef = ref({});
@@ -34,7 +34,7 @@ export default {
         leafletObject: leafletRef.value,
       });
       ready.value = true;
-      nextTick(() => context.emit("ready", leafletRef.value));
+      await nextTick(() => context.emit("ready", leafletRef.value));
     });
     return { ready, leafletObject: leafletRef };
   },
