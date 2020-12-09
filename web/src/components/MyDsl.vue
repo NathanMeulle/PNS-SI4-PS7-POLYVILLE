@@ -7,7 +7,7 @@
 
 <script>
 
-import DragDrop from "@/components/DSL/FirstDrag&Drop";
+import DragDrop from "@/components/DSL/DSL";
 
 export default {
     name:"MyDsl",
