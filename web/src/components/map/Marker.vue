@@ -1,6 +1,6 @@
 <template>
     <div>
-    <l-marker :lat-lng="position" @moveend="log('moveend')" @click="toDisplay('Hello from Marker')">
+    <l-marker :lat-lng="position" @moveend="log('moveend')" @click="toDisplay(name)">
         <MarkerPopup v-bind:msg="msg"/>
     </l-marker>
     </div>
@@ -15,7 +15,8 @@
         name: "Marker",
         props:{
             position: Array,
-            msg : String
+            msg : String,
+            name : String
         },
         components : {
             LMarker,
