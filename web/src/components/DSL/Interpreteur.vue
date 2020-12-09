@@ -24,15 +24,17 @@ export default {
       this.useless()
     },
     useless(){
+      let si = 0
+      let alors = 0
+      let pour = 0
       this.programme.forEach((item)=>{
-        let si = 0
-        let alors = 0
-        let pour = 0
-        if(item.title === "Si") si=item.input
-        if(item.title === "Alors") alors=item.input
-        if(item.title === "Pour") pour=item.input
-        this.result = si + alors + pour
+        console.log(item)
+        if(item.title === "Si") si=Number(item.input)
+        if(item.title === "Alors") alors=Number(item.input)
+        if(item.title === "Pour") pour=Number(item.input)
       })
+      this.result = si + alors + pour
+      console.log("res : ",this.result)
     }
   }
 }
