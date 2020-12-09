@@ -47,7 +47,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         for (int k = 0; k < 300; k++) { // dans la limite de k<400
             int x = (int) (Math.random() * (this.longeur + 1));
             int y = (int) (Math.random() * (this.largeur + 1));
-            tmp.add(new Client(new Position(x,y),k, Math.random()<0.5?ModeDeplacement.BUS:ModeDeplacement.VOITURE));
+            tmp.add(new Client(k, new Position(x,y), Math.random()<0.5?ModeDeplacement.BUS:ModeDeplacement.VOITURE));
         }
         return tmp;
     }

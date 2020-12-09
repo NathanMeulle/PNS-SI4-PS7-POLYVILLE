@@ -32,8 +32,8 @@ public class Engine {
             PrintStream sortieOriginale = System.out;
 
             // Créé un nouveau fichier de sortie
-            PrintStream fichierDeSortie = new PrintStream("VilleMock.js");
-            PrintStream fichierDeSortie2 = new PrintStream("PositionMock.js");
+            PrintStream fichierDeSortie = new PrintStream("Ville.mock.js");
+            PrintStream fichierDeSortie2 = new PrintStream("Position.mock.js");
             System.out.println("\n Json Créé !");
 
             // Redirige la sortie vers le fichier .js

@@ -1,17 +1,19 @@
 package fr.unice.polytech.si4.ps7.alihm2;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
 /**
  * Classe représentant un commercant
  * @author nathan
  */
-public class Commercant extends Personne {
+public class Commercant {
     private String nom;
     private String prenom;
+    private Position position;
 
     public Commercant(Position position, String nom, String prenom) {
-        super(position);
+        this.position=position;
         this.nom = nom;
         this.prenom = prenom;
     }
@@ -24,4 +26,8 @@ public class Commercant extends Personne {
         return prenom;
     }
 
+    @JsonIgnore
+    public Position getPosition() {
+        return position;
+    }
 }

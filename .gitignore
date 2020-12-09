@@ -47,5 +47,5 @@ yarn-error.log*
 .vscode
 
 # Json File
-VilleMock.js
-PositionMock.js
+Ville.mock.js
+Position.mock.js
