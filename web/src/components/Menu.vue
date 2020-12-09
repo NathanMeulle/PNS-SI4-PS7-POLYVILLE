@@ -3,7 +3,7 @@
     <ul >
       <li>
         <router-link  active-class="active" to="/map">
-          <span>Carte</span>
+          <span>Map</span>
         </router-link>
       </li>
       <li>
@@ -41,14 +41,19 @@ ul {
   margin: 0;
   padding: 0;
   width: 100px;
-  background-color: #f1f1f1;
+  display: inline;
+  background-color: #b8b8b8d7;
 }
-
+li {
+  float: left;
+}
 li a {
   display: block;
   color: #000;
+  text-align: center;
   padding: 16px 16px;
   text-decoration: none;
+  background-color: #b8b8b8d7;
 }
 
 li a:hover {

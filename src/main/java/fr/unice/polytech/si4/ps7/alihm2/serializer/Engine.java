@@ -72,7 +72,7 @@ public class Engine {
     public static String thisToJson2(EngineSettingsInterface engineSettings) {
         try {
             engineSettings.getoM().configure(SerializationFeature.INDENT_OUTPUT, true);
-            return engineSettings.getoM().writeValueAsString(new EngineSettingClientPositions(engineSettings.getClients()));
+            return engineSettings.getoM().writeValueAsString(new EngineSettingClientPositions(engineSettings.getClients(), engineSettings.getPoliciers()));
         } catch (IOException e) {
             System.err.println(e);
             return "{}";

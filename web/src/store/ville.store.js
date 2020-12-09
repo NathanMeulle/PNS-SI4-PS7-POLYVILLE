@@ -11,8 +11,11 @@ export const villeModule = {
 
     },
     getters:{  
-        loadVille: (state) => {
+        loadCommerces: (state) => {
         return state.ville[0].ville.commerces;
+        },
+        loadParkings: (state) => {
+            return state.ville[0].ville.parkings;
         }
     },
     actions: {

@@ -14,9 +14,15 @@
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <l-control-layers />
-      <div >
+      <div class="commerces">
         <Marker v-for="currentMarker in commerceStore" :key="currentMarker.id" :commerce="currentMarker" v-bind:position="[43.6154+(currentMarker.position.x-10)/1000, 7.0719+(currentMarker.position.y-10)/1000]" v-bind:msg="currentMarker.categorie"/>
       </div>
+
+      <div class="parkings">
+        <Marker v-for="currentParking in parkingStore" :key="currentParking.id" :parking="currentParking" v-bind:position="[43.6154+(currentParking.position.x-10)/1000, 7.0719+(currentParking.position.y-10)/1000]" v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"/>
+      </div>
+
+
       <Marker v-bind:position="[43.6154, 7.0719]" v-bind:msg="'hello'"/>
       <MyCircle :lat-lng="circlePosition"
                 :radius="200"
@@ -68,9 +74,11 @@ export default {
    computed: {
     commerceStore() {
       console.log("loading commerces...");
-      console.log("commerces", this.$store.getters.loadVille);
-      return this.$store.getters.loadVille;
-
+      return this.$store.getters.loadCommerces;
+    },
+    parkingStore() {
+      console.log("loading parking...");
+      return this.$store.getters.loadParkings;
     },
   },
   data() {

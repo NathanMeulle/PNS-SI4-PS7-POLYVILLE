@@ -1,11 +1,9 @@
 package fr.unice.polytech.si4.ps7.alihm2.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.unice.polytech.si4.ps7.alihm2.Client;
-import fr.unice.polytech.si4.ps7.alihm2.Commercant;
-import fr.unice.polytech.si4.ps7.alihm2.ModeDeplacement;
-import fr.unice.polytech.si4.ps7.alihm2.Ville;
+import fr.unice.polytech.si4.ps7.alihm2.*;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
+import fr.unice.polytech.si4.ps7.alihm2.pi.Parking;
 import fr.unice.polytech.si4.ps7.alihm2.serializer.data.DataCommerce;
 import fr.unice.polytech.si4.ps7.alihm2.serializer.data.DataName;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Horaire;
@@ -30,26 +28,45 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected final int longeur = 20;// >=20
     protected final int largeur = 20;// >=20
     protected List<Client> clients;
-
+    protected List<Policier> policiers;
+    protected List<Parking> parkings;
+    private final int nbClients = 300; // dans la limite de 400
+    private final int nbCommerants = 20; // dans la limite de 400
+    private final int nbParking = 4;
 
     public EngineSettingsSmall1() {
         this.oM = new ObjectMapper();
         this.commercants = initCommercants();
         this.commerces = new ArrayList<>();
         initCommerces();
-        this.ville = new Ville(longeur, largeur, commercants, commerces);
+        this.parkings = initParkings();
+        this.ville = new Ville(longeur, largeur, commercants, commerces, parkings);
         this.clients = initClient();
+        this.policiers = initPolicier();
     }
 
     private List<Client> initClient() {
         List<Client> tmp = new ArrayList<>();
 
-        for (int k = 0; k < 300; k++) { // dans la limite de k<400
+        for (int k = 0; k < nbClients; k++) { // dans la limite de k<400
             int x = (int) (Math.random() * (this.longeur + 1));
             int y = (int) (Math.random() * (this.largeur + 1));
             tmp.add(new Client(k, new Position(x,y), Math.random()<0.5?ModeDeplacement.BUS:ModeDeplacement.VOITURE));
         }
         return tmp;
+    }
+
+    private List<Policier> initPolicier() {
+        List<Policier> tmp = new ArrayList<>();
+
+        for (int k = 0; k < nbClients/20; k++) {//un policier pour 20 clients
+            int x = (int) (Math.random() * (this.longeur + 1));
+            int y = (int) (Math.random() * (this.largeur + 1));
+            tmp.add(new Policier(k, new Position(x,y)));
+        }
+        return tmp;
+
+
     }
 
     private List<Commercant> initCommercants() {
@@ -60,7 +77,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         Collections.shuffle(prenom);
 
         List<Commercant> commercantList = new ArrayList<>();
-        for (int k = 0; k < 20; k++) { // dans la limite de k<400
+        for (int k = 0; k < nbCommerants; k++) {
             commercantList.add(new Commercant(initPositionCommerces(),nom.get(k), prenom.get(k)));
         }
         return commercantList;
@@ -108,6 +125,31 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     }
 
 
+    private List<Parking> initParkings() {
+        List<Parking> tmp = new ArrayList<>();
+        for (int k = 0; k < nbParking; k++) {
+                int nbPlace = (int) (Math.random() * ((300 - 50) + 1)) + 50;
+                int x = (int) (Math.random() * (this.longeur + 1));
+                int y = (int) (Math.random() * (this.largeur + 1));
+                Position p = new Position(x, y);
+                tmp.add(new Parking(k, nbPlace, p, initHoraireParking()));
+            }
+        return tmp;
+    }
+
+    private Horaire initHoraireParking() {
+        Horaire tmp = new Horaire();
+        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Samedi", "Dimanche");
+        for (String j : jour){
+            int matinOuverture = (int) (Math.random() * ((8 - 6) + 1)) + 6;
+            int soirFermeture = (int) (Math.random() * ((23 - 20)) + 1) + 20;
+            tmp.addHoraire(j, List.of(new PlageHoraire(matinOuverture, soirFermeture)));
+        }
+        return tmp;
+    }
+
+
+
     public ObjectMapper getoM() {
         return oM;
     }
@@ -120,5 +162,10 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     @Override
     public List<Client> getClients() {
         return clients;
+    }
+
+    @Override
+    public List<Policier> getPoliciers() {
+        return policiers;
     }
 }
