@@ -4,14 +4,19 @@ export const villeModule = {
     namespace: false,
     state(){
         return{
-            ville: VilleMock
+            Ville: VilleMock
         }
     },
     mutations:{
 
     },
     getters:{
-
+        hoursTable: (state) => {
+            console.log(state.Ville[0].ville)
+            var table = state.ville.commerces.horaire.horraire
+            
+            return table;
+        },
     },
     actions: {
 

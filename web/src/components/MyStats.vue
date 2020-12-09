@@ -3,20 +3,20 @@
     
    Hello from Stats
    <button v-on:click ="print">Afficher nombre de citoyens de la BDD (voir console)</button>
-   <MonthlySalesChart/>
+   <HoursChart/>
   </div>
 </template>
 
 <script>
-import MonthlySalesChart from './stats/MonthlySalesChart';
+import HoursChart from './stats/HoursChart';
 export default {
     name:"MyStats",
     components: {
-      MonthlySalesChart,
+      HoursChart,
     },
     methods:{
       print(){
-          console.log(this.$store.getters.numberOfCitizens)
+          console.log(this.$store.getters.hoursTable)
       }
   },
 };
