@@ -8,17 +8,18 @@
             v-model:minZoom="minZoom"
             v-model:maxBounds="maxBounds"
             @move="log('move')"
-            @center="log(this.getCenter())"
     >
       <l-tile-layer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <l-control-layers />
-      <l-marker :lat-lng="marker" draggable @moveend="log('moveend')">
-        <l-popup>
-          lol
-        </l-popup>
-      </l-marker>
+      <Marker/>
+      <MyCircle :lat-lng="circlePosition"
+                :radius="200"
+                color="#41b782"
+                :fill="true"
+                :fillOpacity="0.5"
+                fillColor="#41b782"/>
     </l-map>
   </div>
 </template>
@@ -28,9 +29,10 @@
     LMap,
     LTileLayer,
     LControlLayers,
-    LMarker,
   } from "@vue-leaflet/vue-leaflet";
   import "leaflet/dist/leaflet.css";
+  import MyCircle from "./MyCircle";
+  import Marker from "./Marker";
 
 
 export default {
@@ -38,11 +40,12 @@ export default {
           LMap,
           LTileLayer,
           LControlLayers,
-          LMarker,
+          MyCircle,
+          Marker,
   },
   data() {
     return {
-      marker : [43.6154, 7.0719],
+      circlePosition :[43.6154, 7.0719],
       zoom: 15,
       maxZoom: 18,
       minZoom:13,
