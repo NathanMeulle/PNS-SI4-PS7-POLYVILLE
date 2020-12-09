@@ -8,6 +8,20 @@ export default createStore({
     modules: {
         villeModule: villeModule,
         positionsModule: positionModule,
+    },
+    state() {
+        return {
+            infoCircle : "",
+        }
+    },
+    mutations : {
+        setInformation: (state, payload) => state.infoCircle = payload.circleinfo
+    },
+    getters:{
+        getInfos: state => {
+            return state.infoCircle;
+        }
     }
+
 })
 
