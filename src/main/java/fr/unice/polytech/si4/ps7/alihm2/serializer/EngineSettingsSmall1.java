@@ -74,7 +74,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         for (int k = 0; k < commercants.size(); k++) {
             Horaire h = initHoraire();
             Position p = commercants.get(k).getPosition();
-            commerces.add(new Commerce(p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
+            commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
         }
     }
 
