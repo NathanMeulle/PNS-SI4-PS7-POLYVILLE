@@ -1,17 +1,17 @@
 <template>
   <div>
-   Hello from DSL
-    <DragDrop/>
+    <h1>Langage dédié</h1>
+    <Interpreteur/>
   </div>
 </template>
 
 <script>
 
-import DragDrop from "@/components/DSL/DSL";
+import Interpreteur from "@/components/DSL/Interpreteur";
 
 export default {
     name:"MyDsl",
-  components: {DragDrop},
+  components: {Interpreteur},
 
 };
 </script>

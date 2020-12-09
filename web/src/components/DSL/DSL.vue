@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class='drop-zone' @drop='onDrop($event, 1)' @dragover.prevent @dragenter.prevent>
+      Conditions :
       <div v-for='item in listOne' :key='item.title' class='drag-el' draggable="true" @dragstart='startDrag($event, item)'>
         {{ item.title }}
         {{item.input}}
@@ -11,12 +12,14 @@
       </div>
     </div>
     <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
+      Personnes :
       <div v-for='item in listThree' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
         {{ item.title }}
         {{item.input}}
       </div>
     </div>
     <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
+      Mon programme :
       <div v-for='item in listTwo' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
         {{ item.title }}
         {{item.input}}
@@ -24,12 +27,13 @@
     </div>
   </div>
   <br/>
+  <button v-on:click="launch()">Lancer mon programme</button>
 </template>
 
 <script>
 
 export default {
-  name: "DragDrop",
+  name: "DSL",
   data () {
     return {
       items: [
@@ -97,29 +101,27 @@ export default {
       evt.dataTransfer.dropEffect = 'move'
       evt.dataTransfer.effectAllowed = 'move'
       evt.dataTransfer.setData('itemID', item.id)
-      console.log("id item : ",item.id)
     },
     onDrop (evt, list) {
       const itemID = evt.dataTransfer.getData('itemID')
-      console.log(itemID)
       const item = this.items.find(item => item.id === Number(itemID))
-      console.log(this.items)
-      console.log(item.id)
       item.list = list
+      console.log("ajout à la liste : ",item.list)
       if(list === 1){
         item.position=this.listOne.length+1
       }
-      else {
+      else if (list === 2){
         item.position=this.listTwo.length+1
       }
-      console.log("position : ",item.position)
     },
     validation(id){
       const item = this.items.find(item => item.id === id)
-      console.log(item)
-      console.log("test : ",this.message[item.id])
       item.input = this.message[item.id]
       this.message[item.id] = ""
+    },
+    launch(){
+      console.log("envoi du programme suivant : ",this.listTwo)
+      this.$emit("launch",this.listTwo)
     }
   }
 }

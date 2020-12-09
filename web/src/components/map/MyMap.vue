@@ -4,7 +4,7 @@
     <l-map
             v-model="zoom"
             v-model:zoom="zoom"
-            :center="[43.6238, 7.0996]"
+            :center="[43.6154, 7.0669]"
             v-model:maxZoom="maxZoom"
             v-model:minZoom="minZoom"
             v-model:maxBounds="maxBounds"
@@ -14,8 +14,13 @@
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <l-control-layers />
-      <div class="commerces">
-        <Marker v-for="currentMarker in commerceStore" :key="currentMarker.id" :commerce="currentMarker" v-bind:position="[43.6154+(currentMarker.position.x-10)/1000, 7.0719+(currentMarker.position.y-10)/1000]" v-bind:msg="currentMarker.categorie"/>
+      <div >
+        <Marker v-for="currentMarker in commerceStore"
+                :key="currentMarker.id"
+                :commerce="currentMarker"
+                v-bind:position="[43.6154+(currentMarker.position.x-10)/1000, 7.0669+(currentMarker.position.y-10)/1000]"
+                v-bind:msg="currentMarker.categorie"
+                v-bind:name="currentMarker.nom"/>
       </div>
 
       <div class="parkings">
@@ -24,20 +29,34 @@
 
 
       <Marker v-bind:position="[43.6154, 7.0719]" v-bind:msg="'hello'"/>
-      <MyCircle :lat-lng="circlePosition"
-                :radius="200"
-                color="#41b782"
+      <MyCircle :lat-lng="ZoneA"
+                v-bind:radius="nbrCitizenZoneA * 5"
+                color="#2655E9"
                 :fill="true"
                 :fillOpacity="0.5"
-                fillColor="#41b782"
-                @click="toDisplay('Hello from green circle')"/>
-      <MyCircle :lat-lng="circleRedPosition"
-                :radius="150"
-                color="#D91818"
+                fillColor="#2655E9"
+                @click="toDisplay('Zone A \n Nombre de citoyen présent : \n'+ nbrCitizenZoneA)"/>
+      <MyCircle :lat-lng="ZoneB"
+                v-bind:radius="nbrCitizenZoneB * 5"
+                color="#2655E9"
                 :fill="true"
                 :fillOpacity="0.5"
-                fillColor="#D91818"
-                @click="toDisplay('Hello from red circle')"/>
+                fillColor="#2655E9"
+                @click="toDisplay('Zone B \n Nombre de citoyen présent : \n'+ nbrCitizenZoneB)"/>
+      <MyCircle :lat-lng="ZoneC"
+                :radius="nbrCitizenZoneC * 5"
+                color="#2655E9"
+                :fill="true"
+                :fillOpacity="0.5"
+                fillColor="#2655E9"
+                @click="toDisplay('Zone C \n Nombre de citoyen présent : \n'+ nbrCitizenZoneC)"/>
+      <MyCircle :lat-lng="ZoneD"
+                :radius="nbrCitizenZoneD * 5"
+                color="#2655E9"
+                :fill="true"
+                :fillOpacity="0.5"
+                fillColor="#2655E9"
+                @click="toDisplay('Zone D \n Nombre de citoyen présent : \n'+ nbrCitizenZoneD)"/>
 
       </l-map>
     </div>
@@ -80,15 +99,38 @@ export default {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
     },
+    citizen() {
+      console.log("citizens", this.$store.getters.loadCitizens())
+      return this.$store.getters.loadCitizens;
+     },
+     nbrCitizenZoneA(){
+        console.log("citizen zone A", this.$store.getters.citizenZoneA)
+        return this.$store.getters.citizenZoneA;
+     },
+     nbrCitizenZoneD(){
+       console.log("citizen zone D", this.$store.getters.citizenZoneD)
+       return this.$store.getters.citizenZoneD;
+     },
+     nbrCitizenZoneB(){
+       console.log("citizen zone D", this.$store.getters.citizenZoneB)
+       return this.$store.getters.citizenZoneB;
+     },
+     nbrCitizenZoneC(){
+       console.log("citizen zone D", this.$store.getters.citizenZoneC)
+       return this.$store.getters.citizenZoneC;
+     }
   },
   data() {
     return {
-      circlePosition :[43.6154, 7.0719],
+      ZoneA : [43.6204,7.0719],
+      ZoneB : [43.6204,7.0619],
+      ZoneC : [43.6104,7.0719],
+      ZoneD : [43.6104, 7.0619],
       circleRedPosition : [43.6194, 7.0669],
       zoom: 15,
       maxZoom: 18,
       minZoom:13,
-      maxBounds:[[43.6054,7.0569],[43.6254,7.0869]],
+      maxBounds:[[43.6054,7.0569],[43.6254,7.0769]],
       iconWidth: 25,
       iconHeight: 40,
     };
