@@ -13,7 +13,10 @@
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <l-control-layers />
-      <Marker/>
+      <div >
+        <Marker v-for="currentMarker in commerceStore" :key="currentMarker.id" :commerce="currentMarker" v-bind:position="[43.6154+(currentMarker.position.x-10)/1000, 7.0719+(currentMarker.position.y-10)/1000]" v-bind:msg="currentMarker.categorie"/>
+      </div>
+      <Marker v-bind:position="[43.6154, 7.0719]" v-bind:msg="'hello'"/>
       <MyCircle :lat-lng="circlePosition"
                 :radius="200"
                 color="#41b782"
@@ -42,6 +45,14 @@ export default {
           LControlLayers,
           MyCircle,
           Marker,
+  },
+   computed: {
+    commerceStore() {
+      console.log("loading commerces...");
+      console.log("commerces", this.$store.getters.loadVille);
+      return this.$store.getters.loadVille;
+
+    },
   },
   data() {
     return {

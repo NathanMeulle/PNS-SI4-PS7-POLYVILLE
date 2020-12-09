@@ -9,17 +9,23 @@ import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
  * @author nathan
  */
 public class Commerce extends PI {
+    private int id;
     private String nom;
     private Commercant commercant;
     private String categorie;
     private Horaire horaire;
 
-    public Commerce(Position position, String nom, Commercant commercant, String categorie, Horaire horaire) {
+    public Commerce(int id, Position position, String nom, Commercant commercant, String categorie, Horaire horaire) {
         super(position);
+        this.id = id;
         this.nom = nom;
         this.commercant = commercant;
         this.categorie = categorie;
         this.horaire = horaire;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNom() {

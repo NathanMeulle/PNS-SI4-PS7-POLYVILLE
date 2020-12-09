@@ -12,11 +12,9 @@
     import MarkerPopup from "./MarkerPopup";
     export default {
         name: "Marker",
-        data() {
-            return {
-                position :  [43.6154, 7.0719],
-                msg : "Store information"
-            };
+        props:{
+            position: Array,
+            msg : String
         },
         components : {
             LMarker,

@@ -10,8 +10,10 @@ export const villeModule = {
     mutations:{
 
     },
-    getters:{
-
+    getters:{  
+        loadVille: (state) => {
+        return state.ville[0].ville.commerces;
+        }
     },
     actions: {
 

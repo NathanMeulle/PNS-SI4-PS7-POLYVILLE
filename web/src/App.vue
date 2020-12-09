@@ -16,10 +16,10 @@ export default {
 </script>
 
 <style>
-/* body {
+body {
   background-color: #eeeeee;
   font-family: "Montserrat", sans-serif;
   display: grid;
   grid-template-rows: auto;
-} */
+}
 </style>
