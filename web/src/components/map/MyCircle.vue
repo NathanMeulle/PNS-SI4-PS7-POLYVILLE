@@ -1,8 +1,8 @@
 <script>
 import { onMounted, ref, inject, nextTick } from "vue";
-import { remapEvents, propsBinder } from "../utils/utils.js";
-import { props, setup as circleSetup } from "../functions/circle";
-import { render } from "../functions/layer";
+import { remapEvents, propsBinder } from "../../utils/utils.js";
+import { props, setup as circleSetup } from "../../functions/circle";
+import { render } from "../../functions/layer";
 
 /**
  * Circle component, lets you add and personalize circles on the map
