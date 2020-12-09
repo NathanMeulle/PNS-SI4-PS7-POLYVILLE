@@ -1,12 +1,13 @@
 <template>
+  <div>
     <h1>Welcome to Polyville !</h1>
-  <router-view></router-view>
-  <Menu></Menu>
+    <router-view></router-view>
+    <Menu></Menu>
+  </div>
 </template>
+
 <script>
-
 import Menu from "./components/Menu.vue";
-
 export default {
     components: {
       Menu

@@ -1,14 +1,13 @@
-/*
-import { createStore } from 'vuex';
-import { villeModule } from './ville.store';
-import { positionsModule } from './positions.store';
+import {createStore} from 'vuex'
+import { villeModule } from './ville.store.js';
+import { positionModule } from './positions.store.js';
 
 
 export default createStore({
     namespace: false,
     modules: {
         villeModule: villeModule,
-        positionsModule: positionsModule,
+        positionsModule: positionModule,
     }
 })
-*/
+
