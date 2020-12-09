@@ -1,5 +1,6 @@
 <template>
-  <div style="height: 75vh; width: 50vw;">
+  <div class="wrapper" style="height: 75vh; width: 150vh;">
+  <div class="map" style="height: 75vh; width: 100vh;">
     <l-map
             v-model="zoom"
             v-model:zoom="zoom"
@@ -22,9 +23,23 @@
                 color="#41b782"
                 :fill="true"
                 :fillOpacity="0.5"
-                fillColor="#41b782"/>
-    </l-map>
+                fillColor="#41b782"
+                @click="toDisplay('Hello from green circle')"/>
+      <MyCircle :lat-lng="circleRedPosition"
+                :radius="150"
+                color="#D91818"
+                :fill="true"
+                :fillOpacity="0.5"
+                fillColor="#D91818"
+                @click="toDisplay('Hello from red circle')"/>
+
+      </l-map>
+    </div>
+    <div class="displayer" style="height: 75vh; width: 36vh;" >
+      <Displayer/>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -36,15 +51,19 @@
   import "leaflet/dist/leaflet.css";
   import MyCircle from "./MyCircle";
   import Marker from "./Marker";
+  import Displayer from "./Displayer";
+  import store from "../../store/store";
 
 
 export default {
+  name : "map",
   components: {
           LMap,
           LTileLayer,
           LControlLayers,
           MyCircle,
           Marker,
+          Displayer,
   },
    computed: {
     commerceStore() {
@@ -57,6 +76,7 @@ export default {
   data() {
     return {
       circlePosition :[43.6154, 7.0719],
+      circleRedPosition : [43.6194, 7.0669],
       zoom: 15,
       maxZoom: 18,
       minZoom:13,
@@ -69,10 +89,27 @@ export default {
     log(a) {
       console.log(a);
     },
+    toDisplay(a) {
+      store.commit({
+        type: 'setInformation',
+        circleinfo: a
+      })
+    }
+
   },
+
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  .displayer {
+    float: right;
+    position: relative;
+    border: 1px solid black;
+  }
+  .map {
+    float: left;
+  }
 </style>
