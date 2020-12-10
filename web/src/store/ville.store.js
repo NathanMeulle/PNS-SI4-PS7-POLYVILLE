@@ -4,7 +4,7 @@ export const villeModule = {
     namespace: false,
     state(){
         return{
-            ville: VilleMock
+            Ville: VilleMock
         }
     },
     mutations:{
@@ -16,7 +16,27 @@ export const villeModule = {
         },
         loadParkings: (state) => {
             return state.ville[0].ville.parkings;
-        }
+        },
+        hoursTable: (state) => (id) => {
+            
+            var horaires = null;
+            state.Ville[0].ville.commerces.forEach(commerce => {
+                if(commerce.id === id){
+                    horaires = commerce.horaire.horaires;
+                    return horaires;
+                } 
+              });
+
+              state.Ville[0].ville.parkings.forEach(parking => {
+                if(parking.id === id){
+                    horaires = parking.horaire.horaires;
+                    return horaires;
+                } 
+              });
+            
+            
+            return horaires;
+        },
     },
     actions: {
 
