@@ -8,6 +8,7 @@
 </template>
 
 <script>
+    //import L from 'leaflet';
     import {LMarker} from "@vue-leaflet/vue-leaflet";
     import MarkerPopup from "./MarkerPopup";
     import store from "../../store/store";
@@ -16,7 +17,8 @@
         props:{
             position: Array,
             msg : String,
-            name : String
+            name : String,
+            //icon : String,
         },
         components : {
             LMarker,
@@ -31,6 +33,13 @@
             }
         }
     }
+
+//iconUrl: require('../../assets/placeholder.png'),
+
+
+//const iconParking = new L.Marker();
+
+//export { iconParking };
 </script>
 
 <style scoped>

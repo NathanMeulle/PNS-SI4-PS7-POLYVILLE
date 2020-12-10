@@ -32,8 +32,9 @@ public class Engine {
             PrintStream sortieOriginale = System.out;
 
             // Créé un nouveau fichier de sortie
-            PrintStream fichierDeSortie = new PrintStream("Ville.mock.js");
-            PrintStream fichierDeSortie2 = new PrintStream("Position.mock.js");
+            String path = System.getProperty("user.dir") + "/web/src/mocks"; // Chemin direct vers les mocks de vueJS
+            PrintStream fichierDeSortie = new PrintStream(path + "/Ville.mock.js");
+            PrintStream fichierDeSortie2 = new PrintStream(path + "/Position.mock.js");
             System.out.println("\n Json Créé !");
 
             // Redirige la sortie vers le fichier .js
