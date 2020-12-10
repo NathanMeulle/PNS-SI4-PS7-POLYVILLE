@@ -3,7 +3,7 @@
     
    Hello from Stats
    <button v-on:click ="print">Afficher nombre de citoyens de la BDD (voir console)</button>
-   <HoursChart/>
+   <HoursChart name="Chez Barreau"/>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     },
     methods:{
       print(){
-          console.log(this.$store.getters.hoursTable)
+          console.log(this.$store.getters.hoursTable(0))
       }
   },
 };

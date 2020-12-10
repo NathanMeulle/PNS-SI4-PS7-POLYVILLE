@@ -11,11 +11,25 @@ export const villeModule = {
 
     },
     getters:{
-        hoursTable: (state) => {
-            console.log(state.Ville[0].ville)
-            var table = state.ville.commerces.horaire.horraire
+        hoursTable: (state) => (id) => {
             
-            return table;
+            var horaires = null;
+            state.Ville[0].ville.commerces.forEach(commerce => {
+                if(commerce.id === id){
+                    horaires = commerce.horaire.horaires;
+                    return horaires;
+                } 
+              });
+
+              state.Ville[0].ville.parkings.forEach(parking => {
+                if(parking.id === id){
+                    horaires = parking.horaire.horaires;
+                    return horaires;
+                } 
+              });
+            
+            
+            return horaires;
         },
     },
     actions: {
