@@ -35,7 +35,7 @@ hs_err_pid*
 
 .DS_Store
 node_modules/
-!vue-leaflet.esm.js
+!node_modules/@vue-leaflet/vue-leaflet/dist/vue-leaflet.esm.js
 /dist
 /public
 
