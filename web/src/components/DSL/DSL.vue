@@ -31,7 +31,7 @@
   <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
     Mon programme :
     <div v-for='item in listProg' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
-      {{ item.title }}
+      <div v-if="item.type !== 5">{{ item.title }}</div>
       {{item.input}}
     </div>
   </div>
