@@ -1,5 +1,5 @@
 
-import { VilleMock } from "../mocks/Ville.mock.js"
+import { VilleMock } from "@/mocks/Ville.mock"
 export const villeModule = {
     namespace: false,
     state(){
@@ -8,18 +8,18 @@ export const villeModule = {
         }
     },
     mutations:{
-        
+
         setClosingHour:(state,payload) =>
         state.Ville[0].ville.commerces.forEach(commerce => {
             commerce.horaire.horaires.Lundi[1].heureFermeture = payload;
             commerce.horaire.horaires.Mardi[1].heureFermeture = payload;
-            commerce.horaire.horaires.Mecredi[1].heureFermeture = payload;
-            commerce.horaire.horaires.Jeudi[1].heureFermeture = payload; //marche pas 
-            commerce.horaire.horaires.Vendredi[1].heureFermeture = payload; //marche pas 
-            commerce.horaire.horaires.Samedi[1].heureFermeture = payload; //marche pas 
-          }) 
+            commerce.horaire.horaires.Mercredi[1].heureFermeture = payload;
+            commerce.horaire.horaires.Jeudi[1].heureFermeture = payload; //marche pas
+            commerce.horaire.horaires.Vendredi[1].heureFermeture = payload; //marche pas
+            commerce.horaire.horaires.Samedi[1].heureFermeture = payload; //marche pas
+          }),
     },
-    getters:{  
+    getters:{
         loadCommerces: (state) => {
         return state.Ville[0].ville.commerces;
         },
@@ -27,23 +27,23 @@ export const villeModule = {
             return state.Ville[0].ville.parkings;
         },
         hoursTable: (state) => (id) => {
-            
+
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
                 if(commerce.id === id){
                     horaires = commerce.horaire.horaires;
                     return horaires;
-                } 
+                }
               });
 
               state.Ville[0].ville.parkings.forEach(parking => {
                 if(parking.id === id){
                     horaires = parking.horaire.horaires;
                     return horaires;
-                } 
+                }
               });
-            
-            
+
+
             return horaires;
         },
     },

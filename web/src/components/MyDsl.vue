@@ -1,5 +1,8 @@
 <template>
   <div>
+    <router-link active-class="active" to="/dsl/aide" id="help">
+      <button>Aide</button>
+    </router-link>
     <h1>Langage dédié</h1>
     <Interpreteur/>
   </div>
@@ -18,4 +21,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+#help{
+  margin-left: 95%;
+}
+
 </style>

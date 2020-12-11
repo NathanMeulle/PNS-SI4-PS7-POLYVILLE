@@ -22,14 +22,14 @@
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
-        Personnes :
+        Entités :
         <div v-for='item in listPers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
-        Quartiers :
+        Divers :
         <div v-for='item in listQuartiers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
@@ -48,7 +48,7 @@
     </div>
   </div>
     <br/>
-    <button v-on:click="launch()">Lancer mon programme</button>
+    <button v-on:click="launch()" id="launch">Lancer mon programme</button>
 </template>
 
 <script>
@@ -61,7 +61,7 @@ export default {
       items: [
         {
           id: 0,
-          title: 'Pour',
+          title: 'Pour tous',
           input: '',
           position: -1,
           type:1,
@@ -204,14 +204,13 @@ export default {
     },
     duplication(item){
       let len = this.items.length
-      let copy = {
+      this.items[len] = {
         id: len,
         title: item.title,
         position: -1,
-        type:item.type,
+        type: item.type,
         list: item.list
       }
-      this.items[len] = copy
     },
     validation(id){
       this.error = ''
@@ -256,5 +255,9 @@ export default {
 
 #cond{
   margin-top: 10px;
+}
+
+#launch{
+  margin-top: 5%;
 }
 </style>

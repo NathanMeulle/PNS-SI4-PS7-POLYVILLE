@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
    Hello from Stats
    <button v-on:click ="print">Afficher nombre de citoyens de la BDD (voir console)</button>
    <HoursChart name="Chez Barreau"/>
@@ -17,7 +17,7 @@ export default {
     methods:{
       print(){
         console.log(this.$store.getters.hoursTable(0))
-          this.$store.dispatch('setClosingHour',20)
+          this.$store.dispatch('deplacerPoliciers',{citoyens :50,cond :"sup",zone1 :"Zone A",policiers :10, zone2: "Zone A"})
       }
   },
 };
