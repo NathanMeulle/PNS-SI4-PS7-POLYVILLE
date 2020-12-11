@@ -14,6 +14,7 @@ export default {
     return{
       programme:{},
       posZone: {},
+      heures: -1,
       error: "",
     }
   },
@@ -24,6 +25,7 @@ export default {
       this.programme = listeCommandes
       console.log("mon programme : ",this.programme)
       this.checkError()
+      this.isPour()
       this.getZone()
     },
     checkError(){
@@ -62,6 +64,32 @@ export default {
         }
       })
       console.log("Zone : ",this.posZone)
+    },
+    getHeures(){
+      this.programme.forEach((item,index)=>{
+        if(item.title === "heures"){
+          if(index === 0 || this.programme[index-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure"
+          else{
+            this.heures = Number(this.programme[index-1].input)}
+        }
+        console.log("heure : ",this.heures)
+      })
+    },
+    isPour(){
+      if(this.programme[0].title === 'Pour'){
+        if(this.programme[1].title==='magasins') this.forMagasin()
+        else this.error = 'Programme inconnu'
+      }
+    },
+    forMagasin(){
+      if(this.programme[2].title === "fermeture"){
+        this.getHeures()
+        console.log(this.heures)
+        if(this.heures === -1) this.error = 'Il faut donner une heure de fermeture'
+        
+        else this.$store.dispatch('setClosingHour',this.heures)
+      }
+      else this.error = 'Programme inconnu'
     }
   }
 }
