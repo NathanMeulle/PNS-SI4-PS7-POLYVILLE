@@ -12,14 +12,19 @@ export default createStore({
     state() {
         return {
             infoCircle : "",
+            idStore : 0,
         }
     },
     mutations : {
-        setInformation: (state, payload) => state.infoCircle = payload.circleinfo
+        setInformation: (state, payload) => state.infoCircle = payload.circleinfo,
+        sendId: (state,payload) => state.idStore = payload.id,
     },
     getters:{
         getInfos: state => {
             return state.infoCircle;
+        },
+        getId: state => {
+            return state.idStore;
         }
     }
 

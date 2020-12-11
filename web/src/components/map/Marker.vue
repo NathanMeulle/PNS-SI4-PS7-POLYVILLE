@@ -1,6 +1,6 @@
 <template>
     <div>
-    <l-marker :lat-lng="position" @moveend="log('moveend')" @click="toDisplay(name)">
+    <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id)">
         <MarkerPopup v-bind:msg="msg"/>
     </l-marker>
     </div>
@@ -18,6 +18,7 @@
             position: Array,
             msg : String,
             name : String,
+            id : Number,
             //icon : String,
         },
         components : {
@@ -30,7 +31,13 @@
                     type: 'setInformation',
                     circleinfo: a
                 })
-            }
+            },
+            sendId(a) {
+                store.commit( {
+                    type : "sendId",
+                    id : a,
+                })
+            },
         }
     }
 

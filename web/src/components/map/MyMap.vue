@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" style="height: 75vh; width: 150vh">
+  <div class="wrapper" style="height: 75vh; width: 200vh">
     <div class="map" style="height: 75vh; width: 100vh">
       <l-map
         v-model="zoom"
@@ -23,6 +23,7 @@
             ]"
             v-bind:msg="currentMarker.categorie"
             v-bind:name="currentMarker.nom"
+            v-bind:id="currentMarker.id"
           />
         </div>
 
@@ -80,8 +81,8 @@
         />
       </l-map>
     </div>
-    <div class="displayer" style="height: 75vh; width: 36vh">
-      <Displayer />
+    <div class="displayer" style="height: 75vh; width: 90vh">
+      <Displayer/>
     </div>
   </div>
 </template>
@@ -162,6 +163,7 @@ export default {
         circleinfo: a,
       });
     },
+
     displayCircle(a){
       if (a>200) {
         return 400
