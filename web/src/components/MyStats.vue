@@ -16,7 +16,8 @@ export default {
     },
     methods:{
       print(){
-          console.log(this.$store.getters.hoursTable(0))
+        console.log(this.$store.getters.hoursTable(0))
+          this.$store.dispatch('setClosingHour',20)
       }
   },
 };
