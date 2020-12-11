@@ -17,13 +17,13 @@
     </div>
   </div>
   <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
-    Personnes :
+    Entités :
     <div v-for='item in listPers' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
       {{ item.title }}
     </div>
   </div>
   <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
-    Quartiers :
+    Divers :
     <div v-for='item in listQuartiers' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
       {{ item.title }}
     </div>
@@ -32,7 +32,13 @@
     Mon programme :
     <div v-for='item in listProg' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
       <div v-if="item.type !== 5">{{ item.title }}</div>
-      {{item.input}}
+      <div v-else>
+        {{item.input}}
+        <label>
+          <input v-model="this.message[item.id]">
+          <button v-on:click="validation(item.id)">OK</button>
+        </label>
+      </div>
     </div>
   </div>
   <br/>
@@ -108,32 +114,41 @@ export default {
         },
         {
           id: 8,
-          title: 'Input',
-          input: '',
-          position: -1,
-          type:5,
-          list: 5
-        },
-        {
-          id: 9,
           title: 'Plus grand que',
           position: -1,
           type:1,
           list: 1
         },
         {
-          id: 10,
+          id: 9,
           title: 'Plus petit que',
           position: -1,
           type:1,
           list: 1
         },
+        {
+          id: 10,
+          title: 'heures',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 11,
+          title: 'magasins',
+          position: -1,
+          type:3,
+          list: 3
+        },
+        {
+          id: 12,
+          title: 'fermeture',
+          position: -1,
+          type:4,
+          list: 4
+        },
       ],
-      message : {
-        "0" : "",
-        "1" : "",
-        "2" : ""
-      }
+      message : {}
     }
   },
   computed: {
@@ -172,15 +187,31 @@ export default {
         this.error = "Déplacement impossible"
         item.list = item.type
       }
-      else item.list = list
+      else{
+        this.duplication(item)
+        item.list = list
+      }
       console.log("ajout à la liste : ",item.list)
       if (list === 2){
         item.position=this.listProg.length+1
       }
     },
+    duplication(item){
+      let len = this.items.length
+      let copy = {
+        id: len,
+        title: item.title,
+        position: -1,
+        type:item.type,
+        list: item.list
+      }
+      this.items[len] = copy
+    },
     validation(id){
+      this.error = ''
       const item = this.items.find(item => item.id === id)
-      item.input = this.message[item.id]
+      if(!isNaN(this.message[item.id])) item.input = this.message[item.id]
+      else this.error = 'Il faut rentrer un nombre'
       this.message[item.id] = ""
     },
     launch(){
