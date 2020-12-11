@@ -1,15 +1,20 @@
 <template>
     <div class="MapPage">
+        <div class="checkbox">
         <input type="checkbox" id="checkboxParking" value="Parking" v-model="checkedOptions">
         <label for="checkboxParking">Parking</label>
 
-        <input type="checkbox" id="checkboxCommerces" value="Commerces" v-model="checkedOptions">
+        <input type="checkbox" id="checkboxCommerces" value="Commerces" checked="true" v-model="checkedOptions">
         <label for="checkboxAffluence">Commerces</label>
 
         <input type="checkbox" id="checkboxAffluence" value="Affluence" v-model="checkedOptions">
         <label for="checkboxAffluence">Affluence</label>
 
-        <MapComponent v-bind:filterOption="checkedOptions" ></MapComponent>
+        <input type="checkbox" id="checkboxPolice" value="Police" v-model="checkedOptions">
+        <label for="checkboxPolice">Présence Policière</label>
+        </div>
+
+        <MapComponent class="map" v-bind:filterOption="checkedOptions" ></MapComponent>
     </div>
 </template>
 
@@ -23,11 +28,26 @@
         },
         data() {
             return {
-                checkedOptions: []
+                checkedOptions: ["Commerces"]
             }
         }
     };
 </script>
 
 <style scoped>
+    .checkbox {
+        border-radius: 10px;
+        list-style-type: none;
+        margin: 0;
+        width: 100px;
+        background-color: #b8b8b8d7;
+        display: inline;
+        color: #000;
+        text-align: center;
+        padding: 10px 10px 10px 10px;
+        text-decoration: none;
+    }
+    .map {
+        padding: 10px
+    }
 </style>

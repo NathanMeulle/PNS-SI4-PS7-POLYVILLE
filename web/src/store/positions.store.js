@@ -21,6 +21,7 @@ export const positionModule = {
         loadCitizens: (state) => {
                 return state.positions[0].clients;
         },
+
         citizenZoneA: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
@@ -52,6 +53,43 @@ export const positionModule = {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
                 if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+
+        policierZoneA: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+        policierZoneB: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+        policierZoneC: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+        policierZoneD: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
                     nbCitizens++;
                 }
             }

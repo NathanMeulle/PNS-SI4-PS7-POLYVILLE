@@ -43,7 +43,7 @@ export const villeModule = {
         hoursTable: (state) => (id) => {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
-                if (commerce.id === id) {
+                if(commerce.id === id){
                     horaires = commerce.horaires;
                     return horaires;
                 }
@@ -52,8 +52,8 @@ export const villeModule = {
                 }
             });
 
-            state.Ville[0].ville.parkings.forEach(parking => {
-                if (parking.id === id) {
+              state.Ville[0].ville.parkings.forEach(parking => {
+                if(parking.id === id){
                     horaires = parking.horaires;
                     return horaires;
                 }

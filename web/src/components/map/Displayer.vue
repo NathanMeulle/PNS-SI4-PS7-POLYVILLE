@@ -4,7 +4,8 @@
         <HoursChart></HoursChart>
     </div>
     <div v-else>
-        Sélectionnez un commerce
+        Sélectionnez un commerce pour afficher ses informations
+
     </div>
 
 </template>

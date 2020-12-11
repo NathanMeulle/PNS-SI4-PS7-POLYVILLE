@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper" style="height: 70vh; width: 180vh">
-    <div class="gauche" style="height: 50vh; width: 90vh">
+  <div class="wrapper" style="height: 70vh; width: 100%">
+    <div class="gauche" style="height: 50vh; width: 50%">
 
       <span id="error">{{error}}</span>
       <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="droite" style="height: 75vh; width: 80vh">
+    <div class="droite" style="height: 75vh; width: 49%">
       <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
         Mon programme :
         <div v-for='item in listProg' :key='item.title' class='drag-el' draggable="true"

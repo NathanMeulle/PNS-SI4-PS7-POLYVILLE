@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="iconType==='Parking'">
-            <l-marker :lat-lng="position" :icon="icon" @moveend="log('moveend')" @click="sendId(id)">
+            <l-marker :lat-lng="position" :icon="parking" @moveend="log('moveend')" @click="sendId(id)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
@@ -10,8 +10,13 @@
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
+        <div v-else-if="iconType==='Policier'" >
+            <l-marker :lat-lng="position" :icon="police" @moveend="log('moveend')">
+                <MarkerPopup v-bind:msg="msg"/>
+            </l-marker>
+        </div>
         <div v-else>
-            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id)">
+            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name +' :')">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
@@ -28,13 +33,18 @@
         name: "Marker",
         data() {
             return {
-                icon: icon({
+                parking: icon({
                     iconUrl: require("../../assets/placeholder.png"),
                     iconSize: [32, 37],
                     iconAnchor: [16, 37]
                 }),
                 myPosition: icon({
                     iconUrl: require("../../assets/red-marker-icon.png"),
+                    iconSize: [37, 37],
+                    iconAnchor: [16, 37]
+                }),
+                police: icon({
+                    iconUrl: require("../../assets/police-hat.png"),
                     iconSize: [37, 37],
                     iconAnchor: [16, 37]
                 }),
@@ -69,13 +79,6 @@
         }
     }
 
-//iconUrl: require('../../assets/placeholder.png'),
-
-
-
-//const iconParking = new L.Marker();
-
-//export { iconParking };
 </script>
 
 <style scoped>
