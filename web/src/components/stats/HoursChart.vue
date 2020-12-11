@@ -111,7 +111,6 @@ export default {
       return hours;
     },
     fillData() {
-        console.log(this.getHours().Lundi[0]);
         var AfternoonData;
         if (this.getHours().Lundi[1] !== undefined) {
             AfternoonData =
