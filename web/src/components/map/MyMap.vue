@@ -39,12 +39,12 @@
           />
         </div>
 
-        <Marker v-bind:position="[43.6154, 7.0719]"     
+        <Marker v-bind:position="[43.6154, 7.0719]"
         v-bind:msg="'Ma Position'" />
 
         <MyCircle
           :lat-lng="ZoneA"
-          v-bind:radius="nbrCitizenZoneA * 5"
+          v-bind:radius="displayCircle(nbrCitizenZoneA)"
           color="#2655E9"
           :fill="true"
           :fillOpacity="0.5"
@@ -53,7 +53,7 @@
         />
         <MyCircle
           :lat-lng="ZoneB"
-          v-bind:radius="nbrCitizenZoneB * 5"
+          v-bind:radius="displayCircle(nbrCitizenZoneB)"
           color="#2655E9"
           :fill="true"
           :fillOpacity="0.5"
@@ -62,7 +62,7 @@
         />
         <MyCircle
           :lat-lng="ZoneC"
-          :radius="nbrCitizenZoneC * 5"
+          :radius="displayCircle(nbrCitizenZoneC)"
           color="#2655E9"
           :fill="true"
           :fillOpacity="0.5"
@@ -71,7 +71,7 @@
         />
         <MyCircle
           :lat-lng="ZoneD"
-          :radius="nbrCitizenZoneD * 5"
+          :radius="displayCircle(nbrCitizenZoneD)"
           color="#2655E9"
           :fill="true"
           :fillOpacity="0.5"
@@ -162,6 +162,14 @@ export default {
         circleinfo: a,
       });
     },
+    displayCircle(a){
+      if (a>200) {
+        return 400
+      }
+      else {
+        return a
+      }
+    }
   },
 };
 </script>
