@@ -85,7 +85,7 @@ export default {
       if(this.programme[2].title === "fermeture"){
         this.getHeures()
         if(this.heures === -1) this.error = 'Il faut donner une heure de fermeture'
-        //else this.$store.mutations.setClosingHours(this.heures)
+        else this.$store.dispatch('setClosingHour',this.heures)
       }
       else this.error = 'Programme inconnu'
     }
