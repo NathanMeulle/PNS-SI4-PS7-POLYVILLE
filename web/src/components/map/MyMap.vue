@@ -36,11 +36,15 @@
               7.0719 + (currentParking.position.y - 10) / 1000,
             ]"
             v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
+            v-bind:iconType="'Parking'"
           />
         </div>
 
         <Marker v-bind:position="[43.6154, 7.0719]"
-        v-bind:msg="'Ma Position'" />
+        v-bind:msg="'Ma Position'"
+        v-bind:iconType="'MyPosition'"
+
+        />
 
         <MyCircle
           :lat-lng="ZoneA"
