@@ -12,10 +12,10 @@ export const villeModule = {
     },
     getters:{  
         loadCommerces: (state) => {
-        return state.ville[0].ville.commerces;
+        return state.Ville[0].ville.commerces;
         },
         loadParkings: (state) => {
-            return state.ville[0].ville.parkings;
+            return state.Ville[0].ville.parkings;
         },
         hoursTable: (state) => (id) => {
             

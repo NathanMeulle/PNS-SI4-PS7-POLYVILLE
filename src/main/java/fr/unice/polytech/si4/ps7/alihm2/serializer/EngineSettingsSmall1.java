@@ -30,8 +30,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected List<Client> clients;
     protected List<Policier> policiers;
     protected List<Parking> parkings;
-    private final int nbClients = 300; // dans la limite de 400
-    private final int nbCommerants = 20; // dans la limite de 400
+    private final int nbClients = 3000;
+    private final int nbCommerants = 30; // dans la limite de 400
     private final int nbParking = 4;
 
     public EngineSettingsSmall1() {
@@ -48,9 +48,9 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     private List<Client> initClient() {
         List<Client> tmp = new ArrayList<>();
 
-        for (int k = 0; k < nbClients; k++) { // dans la limite de k<400
-            int x = (int) (Math.random() * (this.longeur + 1));
-            int y = (int) (Math.random() * (this.largeur + 1));
+        for (int k = 0; k < nbClients; k++) {
+            double x = (Math.random() * (this.longeur + 1));
+            double y = (Math.random() * (this.largeur + 1));
             tmp.add(new Client(k, new Position(x,y), Math.random()<0.5?ModeDeplacement.BUS:ModeDeplacement.VOITURE));
         }
         return tmp;
@@ -60,9 +60,9 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         List<Policier> tmp = new ArrayList<>();
 
         for (int k = 0; k < nbClients/20; k++) {//un policier pour 20 clients
-            int x = (int) (Math.random() * (this.longeur + 1));
-            int y = (int) (Math.random() * (this.largeur + 1));
-            tmp.add(new Policier(k, new Position(x,y)));
+            double x = (Math.random() * (this.longeur + 1));
+            double y = (Math.random() * (this.largeur + 1));
+            tmp.add(new Policier(nbClients+k, new Position(x,y)));
         }
         return tmp;
 
@@ -113,7 +113,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
 
     private Horaire initHoraire() {
         Horaire tmp = new Horaire();
-        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Samedi");
+        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
         for (String j : jour){
             int matinOuverture = (int) (Math.random() * ((10 - 6) + 1)) + 6;
             int matinFermeture = (int) (Math.random() * ((14 - 11) + 1)) + 11;
@@ -121,6 +121,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
             int soirFermeture = (int) (Math.random() * ((23 - 18)) + 1) + 18;
             tmp.addHoraire(j, List.of(new PlageHoraire(matinOuverture, matinFermeture), new PlageHoraire(soirOuverture, soirFermeture)));
         }
+        tmp.addHoraire("Dimanche", List.of(new PlageHoraire(0, 0),new PlageHoraire(0, 0)));
+
         return tmp;
     }
 
@@ -132,14 +134,14 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
                 int x = (int) (Math.random() * (this.longeur + 1));
                 int y = (int) (Math.random() * (this.largeur + 1));
                 Position p = new Position(x, y);
-                tmp.add(new Parking(k, nbPlace, p, initHoraireParking()));
+                tmp.add(new Parking(k+nbCommerants, nbPlace, p, initHoraireParking()));
             }
         return tmp;
     }
 
     private Horaire initHoraireParking() {
         Horaire tmp = new Horaire();
-        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Samedi", "Dimanche");
+        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
         for (String j : jour){
             int matinOuverture = (int) (Math.random() * ((8 - 6) + 1)) + 6;
             int soirFermeture = (int) (Math.random() * ((23 - 20)) + 1) + 20;
