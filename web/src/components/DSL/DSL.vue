@@ -1,48 +1,54 @@
 <template>
-  <span id="error">{{error}}</span>
-  <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
-    Données :
-    <div v-for='item in listInput' :key='item.title' class='drag-el' draggable="true" @dragstart='startDrag($event, item)'>
-      {{item.input}}
-      <label>
-        <input v-model="this.message[item.id]">
-        <button v-on:click="validation(item.id)">OK</button>
-      </label>
+  <div class="wrapper" style="height: 70vh; width: 180vh">
+    <div class="gauche" style="height: 50vh; width: 90vh">
+
+      <span id="error">{{error}}</span>
+      <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
+        Données :
+        <div v-for='item in listInput' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{item.input}}
+          <label>
+            <input v-model="this.message[item.id]">
+            <button v-on:click="validation(item.id)">OK</button>
+          </label>
+        </div>
+      </div>
+      <div class='drop-zone' @drop='onDrop($event, 1)' @dragover.prevent @dragenter.prevent id="cond">
+        Conditions :
+        <div v-for='item in listCond' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{ item.title }}
+        </div>
+      </div>
+      <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
+        Personnes :
+        <div v-for='item in listPers' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{ item.title }}
+        </div>
+      </div>
+      <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
+        Quartiers :
+        <div v-for='item in listQuartiers' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{ item.title }}
+        </div>
+      </div>
     </div>
-  </div>
-  <div class='drop-zone' @drop='onDrop($event, 1)' @dragover.prevent @dragenter.prevent id="cond">
-    Conditions :
-    <div v-for='item in listCond' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
-      {{ item.title }}
-    </div>
-  </div>
-  <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
-    Entités :
-    <div v-for='item in listPers' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
-      {{ item.title }}
-    </div>
-  </div>
-  <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
-    Divers :
-    <div v-for='item in listQuartiers' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
-      {{ item.title }}
-    </div>
-  </div>
-  <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
-    Mon programme :
-    <div v-for='item in listProg' :key='item.title' class='drag-el'  draggable="true" @dragstart='startDrag($event, item)'>
-      <div v-if="item.type !== 5">{{ item.title }}</div>
-      <div v-else>
-        {{item.input}}
-        <label>
-          <input v-model="this.message[item.id]">
-          <button v-on:click="validation(item.id)">OK</button>
-        </label>
+    <div class="droite" style="height: 75vh; width: 80vh">
+      <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
+        Mon programme :
+        <div v-for='item in listProg' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          <div v-if="item.type !== 5">{{ item.title }}</div>
+          {{item.input}}
+        </div>
       </div>
     </div>
   </div>
-  <br/>
-  <button v-on:click="launch()">Lancer mon programme</button>
+    <br/>
+    <button v-on:click="launch()">Lancer mon programme</button>
 </template>
 
 <script>
@@ -223,10 +229,19 @@ export default {
 </script>
 
 <style scoped>
+  .droite {
+    float: right;
+    position: relative;
+    border: 1px solid black;
+  }
+  .gauche {
+    float: left;
+  }
+
 .drop-zone {
   background-color: #eee;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .drag-el {
