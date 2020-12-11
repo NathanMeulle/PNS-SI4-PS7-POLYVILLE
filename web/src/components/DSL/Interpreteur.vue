@@ -84,7 +84,9 @@ export default {
     forMagasin(){
       if(this.programme[2].title === "fermeture"){
         this.getHeures()
+        console.log(this.heures)
         if(this.heures === -1) this.error = 'Il faut donner une heure de fermeture'
+        
         else this.$store.dispatch('setClosingHour',this.heures)
       }
       else this.error = 'Programme inconnu'
