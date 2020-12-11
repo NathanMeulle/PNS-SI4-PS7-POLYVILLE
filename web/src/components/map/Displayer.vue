@@ -3,11 +3,9 @@
     <div v-if="hours===true">
         <HoursChart></HoursChart>
     </div>
-    <div>
+    <div v-else>
         Sélectionnez un commerce
     </div>
-
-
 
 </template>
 

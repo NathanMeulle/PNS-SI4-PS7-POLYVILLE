@@ -39,6 +39,8 @@
             ]"
                   v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
                   v-bind:iconType="'Parking'"
+                  v-bind:id="currentParking.id"
+                  @displayhours="displayHours=true"
           />
         </div>
 
