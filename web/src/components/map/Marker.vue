@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="iconType==='Parking'">
-            <l-marker :lat-lng="position" :icon="icon" @moveend="log('moveend')" @click="toDisplay(name)">
+            <l-marker :lat-lng="position" :icon="icon" @moveend="log('moveend')" @click="sendId(id)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
@@ -11,7 +11,7 @@
             </l-marker>
         </div>
         <div v-else>
-            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="toDisplay(name)">
+            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
@@ -44,7 +44,9 @@
             position: Array,
             msg : String,
             name : String,
+            id : Number,
             iconType : String,
+
         },
         components : {
             LMarker,
@@ -56,7 +58,13 @@
                     type: 'setInformation',
                     circleinfo: a
                 })
-            }
+            },
+            sendId(a) {
+                store.commit( {
+                    type : "sendId",
+                    id : a,
+                })
+            },
         }
     }
 

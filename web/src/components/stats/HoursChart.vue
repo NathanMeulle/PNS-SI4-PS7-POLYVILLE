@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{updateData()}}
     <div class="field is-grouped">
       <div class="control">
         <label class="checkbox">
@@ -45,7 +46,7 @@ const options = {
     ],
     yAxes: [
       {
-        
+
         ticks: {
           beginAtZero:false,
           precision: 2,
@@ -57,7 +58,7 @@ const options = {
         display: true,
         labelString: 'Hour'
         },
-        
+
         stacked: false,
         afterTickToLabelConversion : function(q){
         for(var tick in q.ticks){
@@ -85,12 +86,13 @@ export default {
     LineChart,
   },
   props: {
-    name: String,
+    id: Number,
   },
   data() {
     return {
       datacollection: this.fillData(),
       selectedTimeOfTheDay: [1, 2],
+      idCommerce : this.getId(),
     };
   },
   computed: {
@@ -99,63 +101,70 @@ export default {
     },
   },
   methods: {
+    updateData() {
+      this.datacollection = this.fillData();
+    },
+    getId(){
+        console.log("ID: ", this.$store.getters.getId);
+        return this.$store.getters.getId;
+    },
     getHours() {
-      let hours = this.$store.getters.hoursTable(0);
+      let hours = this.$store.getters.hoursTable(this.getId());
       return hours;
     },
     fillData() {
-      console.log(this.getHours().Lundi[0]);
-      var AfternoonData;
-      if(this.getHours().Lundi[1] !== undefined){
-        AfternoonData =
-        [
-         [this.getHours().Lundi[1].heureOuverture , this.getHours().Lundi[1].heureFermeture],
-            [this.getHours().Mardi[1].heureOuverture, this.getHours().Mardi[1].heureFermeture],
-            [this.getHours().Mercredi[1].heureOuverture, this.getHours().Mercredi[1].heureFermeture],
-            [this.getHours().Jeudi[1].heureOuverture, this.getHours().Jeudi[1].heureFermeture],
-            [this.getHours().Vendredi[1].heureOuverture , this.getHours().Vendredi[1].heureFermeture],
-            [this.getHours().Samedi[1].heureOuverture, this.getHours().Samedi[1].heureFermeture],
-            [this.getHours().Dimanche[1].heureOuverture, this.getHours().Dimanche[1].heureFermeture],
-        ]
-      }
-      else{ //si on a un parking par exemple
-        AfternoonData = [
-          [0, 0],
-          [0, 0],
-          [0, 0],
-          [0, 0],
-          [0, 0],
-          [0, 0],
-          [0, 0],
-        ]
-      }
-      var datacollection = {
-        2: {
-          label: "Afternoon",
-          borderColor: "rgba(50, 115, 220, 0.5)",
-          backgroundColor: "rgba(0,255,0,0.4)",
-          data: AfternoonData,
-        },
-        1: {
-          label: "Morning",
-          borderColor: "rgba(255, 56, 96, 0.5)",
-          backgroundColor: "rgba(0,255,0,0.4)",
-          
+        console.log(this.getHours().Lundi[0]);
+        var AfternoonData;
+        if (this.getHours().Lundi[1] !== undefined) {
+            AfternoonData =
+                    [
+                      [this.getHours().Lundi[1].heureOuverture, this.getHours().Lundi[1].heureFermeture],
+                      [this.getHours().Mardi[1].heureOuverture, this.getHours().Mardi[1].heureFermeture],
+                      [this.getHours().Mercredi[1].heureOuverture, this.getHours().Mercredi[1].heureFermeture],
+                      [this.getHours().Jeudi[1].heureOuverture, this.getHours().Jeudi[1].heureFermeture],
+                      [this.getHours().Vendredi[1].heureOuverture, this.getHours().Vendredi[1].heureFermeture],
+                      [this.getHours().Samedi[1].heureOuverture, this.getHours().Samedi[1].heureFermeture],
+                      [this.getHours().Dimanche[1].heureOuverture, this.getHours().Dimanche[1].heureFermeture],
+                    ]
+          } else { //si on a un parking par exemple
+            AfternoonData = [
+              [0, 0],
+              [0, 0],
+              [0, 0],
+              [0, 0],
+              [0, 0],
+              [0, 0],
+              [0, 0],
+            ]
+          }
 
-          data: [
-            [this.getHours().Lundi[0].heureOuverture, this.getHours().Lundi[0].heureFermeture],
-            [this.getHours().Mardi[0].heureOuverture, this.getHours().Mardi[0].heureFermeture],
-            [this.getHours().Mercredi[0].heureOuverture, this.getHours().Mercredi[0].heureFermeture],
-            [this.getHours().Jeudi[0].heureOuverture, this.getHours().Jeudi[0].heureFermeture],
-            [this.getHours().Vendredi[0].heureOuverture, this.getHours().Vendredi[0].heureFermeture],
-            [this.getHours().Samedi[0].heureOuverture, this.getHours().Samedi[0].heureFermeture],
-            [this.getHours().Dimanche[0].heureOuverture, this.getHours().Dimanche[0].heureFermeture],
-          ],
-        },
-      }
+
+          var datacollection = {
+            2: {
+              label: "Afternoon",
+              borderColor: "rgba(50, 115, 220, 0.5)",
+              backgroundColor: "rgba(0,255,0,0.4)",
+              data: AfternoonData,
+            },
+            1: {
+              label: "Morning",
+              borderColor: "rgba(255, 56, 96, 0.5)",
+              backgroundColor: "rgba(0,255,0,0.4)",
+
+
+              data: [
+                [this.getHours().Lundi[0].heureOuverture, this.getHours().Lundi[0].heureFermeture],
+                [this.getHours().Mardi[0].heureOuverture, this.getHours().Mardi[0].heureFermeture],
+                [this.getHours().Mercredi[0].heureOuverture, this.getHours().Mercredi[0].heureFermeture],
+                [this.getHours().Jeudi[0].heureOuverture, this.getHours().Jeudi[0].heureFermeture],
+                [this.getHours().Vendredi[0].heureOuverture, this.getHours().Vendredi[0].heureFermeture],
+                [this.getHours().Samedi[0].heureOuverture, this.getHours().Samedi[0].heureFermeture],
+                [this.getHours().Dimanche[0].heureOuverture, this.getHours().Dimanche[0].heureFermeture],
+              ],
+            },
+          }
       return datacollection;
     },
-    
   },
 };
 </script>

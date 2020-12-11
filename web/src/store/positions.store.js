@@ -4,7 +4,6 @@ export const positionModule = {
     state(){
         return{
             positions: PositionMock,
-
         }
     },
     mutations:{
