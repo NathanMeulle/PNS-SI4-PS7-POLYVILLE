@@ -1,4 +1,4 @@
-import { PositionMock } from "../mocks/Position.mock.js"
+import { PositionMock } from "@/mocks/Position.mock"
 export const positionModule = {
     namespace: false,
     state(){
@@ -7,6 +7,18 @@ export const positionModule = {
         }
     },
     mutations:{
+
+        deplacerPoliciers(state, payload) {
+            console.log(payload.nbZone)
+            let agir = false
+            if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone)
+            if(agir){
+                for(var i = 0; i<payload.args.policiers;i++){
+                    state.positions[0].policiers[i].position = [43.6204, 7.0719]
+                }
+            }
+            return Promise.resolve(undefined);
+        }
 
     },
     getters:{
@@ -69,5 +81,17 @@ export const positionModule = {
                 console.log('error ', error);
             }
         }*/
+        async deplacerPoliciers(context,args){
+            console.log(args)
+            let nbZone = 0
+            if(args.zone1 === "Zone A") nbZone = context.getters.citizenZoneA
+            if(args.zone1 === "Zone B") nbZone = context.getters.citizenZoneB
+            try{
+                context.commit('deplacerPoliciers',{args : args, nbZone: nbZone});
+            }
+            catch(error){
+                console.log('error ', error);
+            }
+        }
     }
 }

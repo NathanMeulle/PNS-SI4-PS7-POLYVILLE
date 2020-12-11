@@ -2,6 +2,7 @@ import {createWebHistory, createRouter } from "vue-router";
 import MyMap from "./components/map/MapPage";
 import MyStats from "./components/MyStats.vue";
 import MyDsl from "./components/MyDsl.vue";
+import Help from "@/components/DSL/Help";
 
 
 const routes = [
@@ -9,6 +10,7 @@ const routes = [
     { path: '/map', component: MyMap },
     { path: '/stats', component: MyStats },
     { path: '/dsl', component: MyDsl },
+    { path: '/dsl/aide', component: Help },
 
 ]
 

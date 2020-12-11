@@ -1,5 +1,5 @@
 
-import { VilleMock } from "../mocks/Ville.mock.js"
+import { VilleMock } from "@/mocks/Ville.mock"
 export const villeModule = {
     namespace: false,
     state(){
@@ -9,6 +9,15 @@ export const villeModule = {
     },
     mutations:{
 
+        setClosingHour:(state,payload) =>
+        state.Ville[0].ville.commerces.forEach(commerce => {
+            commerce.horaire.horaires.Lundi[1].heureFermeture = payload;
+            commerce.horaire.horaires.Mardi[1].heureFermeture = payload;
+            commerce.horaire.horaires.Mercredi[1].heureFermeture = payload;
+            commerce.horaire.horaires.Jeudi[1].heureFermeture = payload; //marche pas
+            commerce.horaire.horaires.Vendredi[1].heureFermeture = payload; //marche pas
+            commerce.horaire.horaires.Samedi[1].heureFermeture = payload; //marche pas
+          }),
     },
     getters:{
         loadCommerces: (state) => {
@@ -25,10 +34,6 @@ export const villeModule = {
                     horaires = commerce.horaire.horaires;
                     return horaires;
                 }
-                else {
-                    return "{heureOuverture: 7, heureFermeture: 8}";
-                }
-
               });
 
               state.Ville[0].ville.parkings.forEach(parking => {
@@ -43,6 +48,13 @@ export const villeModule = {
         },
     },
     actions: {
-
+        async setClosingHour(context,hour){
+            try{
+                context.commit('setClosingHour', hour);
+            }
+            catch(error){
+                console.log('error ', error);
+            }
+        }
     }
 }

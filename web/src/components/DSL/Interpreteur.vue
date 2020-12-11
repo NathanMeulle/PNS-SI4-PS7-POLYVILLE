@@ -13,7 +13,9 @@ export default {
   data(){
     return{
       programme:{},
-      posZone: {},
+      zones: {},
+      infOrSup: '',
+      heure: -1,
       error: "",
     }
   },
@@ -23,8 +25,50 @@ export default {
       this.error = ""
       this.programme = listeCommandes
       console.log("mon programme : ",this.programme)
+      this.Pour()
+      this.Si()
+    },
+    Si(){
       this.checkError()
-      this.getZone()
+      if(this.programme[0].title === 'Si'){
+        if(this.programme[1].title === 'citoyens') this.SiCitoyens()
+        else this.error = 'Programme inconnu'
+      }
+    },
+    SiCitoyens(){
+      let nbCitoyens = 0;
+      if(this.programme[2].title.substring(0,4) === 'Zone'){
+        this.zones[0] = this.programme[2].title
+        if(this.programme[3].title === 'Plus grand que'){
+          this.infOrSup = 'sup'
+          if(this.programme[4].title === 'Input'){
+            nbCitoyens = Number(this.programme[4].input)
+            if(this.programme[5].title === 'Alors'){
+              this.alorsCitoyens(nbCitoyens)
+            }
+            else this.error = 'Programme inconnu'
+          }
+          else this.error = "Il faut donner un nombre après la case 'citoyens'"
+        }
+        else this.error = 'Programme inconnu'
+      }
+    },
+    alorsCitoyens(nbCitoyens){
+      let nbPoliciers = 0
+      if(this.programme[6].title === 'Input'){
+        if(this.programme[7].title === 'policiers') {
+          nbPoliciers = Number(this.programme[6].input)
+          if (this.programme[8].title.substring(0, 4) === 'Zone') {
+            this.zones[1] = this.programme[8].title
+            console.log(nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1])
+            this.$store.dispatch('deplacerPoliciers',{citoyens : nbCitoyens,
+              cond : this.infOrSup,zone1 : this.zones[0],policiers : nbPoliciers,zone2: this.zones[1]})
+          }
+          else this.error = 'Programme inconnu'
+        }
+        else this.error = 'Programme inconnu'
+      }
+      else this.error = 'Programme inconnu'
     },
     checkError(){
       let valid = this.checkIfThen()
@@ -50,18 +94,31 @@ export default {
       if (posIf > posThen) return 2
       return 0
     },
-    getZone(){
-      this.programme.forEach((item)=>{
-        if(item.title === "Zone A"){
-          this.posZone[0] = 43.6204
-          this.posZone[1] = 7.0719
+    getHeure(){
+      this.programme.forEach((item,index)=>{
+        if(item.title === "heure"){
+          if(index === 0 || this.programme[index-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure"
+          else{
+            this.heure = Number(this.programme[index-1].input)}
         }
-        else if(item.title === "Zone B"){
-          this.posZone[0] = 43.6204
-          this.posZone[1] = 7.0619
-        }
+        console.log("heure : ",this.heure)
       })
-      console.log("Zone : ",this.posZone)
+    },
+    Pour(){
+      if(this.programme[0].title === 'Pour tous'){
+        if(this.programme[1].title==='magasins') this.forMagasin()
+        else this.error = 'Programme inconnu'
+      }
+    },
+    forMagasin(){
+      if(this.programme[2].title === "fermeture"){
+        this.getHeure()
+        console.log(this.heure)
+        if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
+
+        else this.$store.dispatch('setClosingHour',this.heure)
+      }
+      else this.error = 'Programme inconnu'
     }
   }
 }
