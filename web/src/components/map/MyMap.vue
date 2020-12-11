@@ -18,8 +18,8 @@
             :key="currentMarker.id"
             :commerce="currentMarker"
             v-bind:position="[
-              43.6154 + (currentMarker.position.x - 10) / 1000,
-              7.0669 + (currentMarker.position.y - 10) / 1000,
+              currentMarker.position.x,
+              currentMarker.position.y,
             ]"
             v-bind:msg="currentMarker.categorie"
             v-bind:name="currentMarker.nom"
@@ -32,8 +32,8 @@
             :key="currentParking.id"
             :parking="currentParking"
             v-bind:position="[
-              43.6154 + (currentParking.position.x - 10) / 1000,
-              7.0719 + (currentParking.position.y - 10) / 1000,
+              currentParking.position.x,
+              currentParking.position.y,
             ]"
             v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
             v-bind:iconType="'Parking'"
