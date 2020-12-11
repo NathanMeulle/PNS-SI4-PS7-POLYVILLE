@@ -1,6 +1,14 @@
 <template>
 {{display()}}
-    <HoursChart></HoursChart>
+    <div v-if="hours===true">
+        <HoursChart></HoursChart>
+    </div>
+    <div>
+        Sélectionnez un commerce
+    </div>
+
+
+
 </template>
 
 <script>
@@ -17,6 +25,7 @@
         },
         props : {
             data : String,
+            hours : Boolean,
         },
         methods : {
             display() {

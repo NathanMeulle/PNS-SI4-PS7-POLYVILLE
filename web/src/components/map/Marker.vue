@@ -60,6 +60,7 @@
                 })
             },
             sendId(a) {
+                this.$emit('displayhours',true);
                 store.commit( {
                     type : "sendId",
                     id : a,

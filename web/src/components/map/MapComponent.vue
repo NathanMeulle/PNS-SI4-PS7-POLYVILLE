@@ -24,6 +24,7 @@
             v-bind:msg="currentMarker.categorie"
             v-bind:name="currentMarker.nom"
             v-bind:id="currentMarker.id"
+            @displayhours="displayHours=true"
           />
         </div>
 
@@ -88,7 +89,7 @@
       </l-map>
     </div>
     <div class="displayer" style="height: 75vh; width: 90vh">
-      <Displayer/>
+      <Displayer v-bind:hours="displayHours"/>
     </div>
   </div>
 </template>
@@ -157,6 +158,7 @@ export default {
       ],
       iconWidth: 25,
       iconHeight: 40,
+      displayHours : false,
     };
   },
   props: {
