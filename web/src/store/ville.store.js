@@ -10,13 +10,22 @@ export const villeModule = {
     mutations:{
         
         setClosingHour:(state,payload) =>
+        
         state.Ville[0].ville.commerces.forEach(commerce => {
-            commerce.horaire.horaires.Lundi[1].heureFermeture = payload;
-            commerce.horaire.horaires.Mardi[1].heureFermeture = payload;
-            commerce.horaire.horaires.Mecredi[1].heureFermeture = payload;
-            commerce.horaire.horaires.Jeudi[1].heureFermeture = payload; //marche pas 
-            commerce.horaire.horaires.Vendredi[1].heureFermeture = payload; //marche pas 
-            commerce.horaire.horaires.Samedi[1].heureFermeture = payload; //marche pas 
+            console.log(commerce.horaires)
+            console.log(commerce.horaires.length);
+            /*for (var i = 0; i <commerce.horaire.horaires.lenght; i++){
+                
+                console.log(commerce.horaire.horaires[i]);
+                
+            }*/
+            payload;
+            /*commerce.horaire.horaires.forEach(jour => {
+                console.log(jour)
+                if (jour[1].heureFermeture > payload){ // si le magasin ferme après l'heure de fermeture imposée
+                   jour[1].heureFermeture = payload;
+                }
+            })*/
           }) 
     },
     getters:{
@@ -31,7 +40,7 @@ export const villeModule = {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
                 if(commerce.id === id){
-                    horaires = commerce.horaire.horaires;
+                    horaires = commerce.horaires;
                     return horaires;
                 }
                 else {
@@ -42,7 +51,7 @@ export const villeModule = {
 
               state.Ville[0].ville.parkings.forEach(parking => {
                 if(parking.id === id){
-                    horaires = parking.horaire.horaires;
+                    horaires = parking.horaires;
                     return horaires;
                 }
               });
