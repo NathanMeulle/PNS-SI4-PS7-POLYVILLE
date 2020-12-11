@@ -1,5 +1,5 @@
 import {createWebHistory, createRouter } from "vue-router";
-import MyMap from "./components/map/MyMap.vue";
+import MyMap from "./components/map/MapPage";
 import MyStats from "./components/MyStats.vue";
 import MyDsl from "./components/MyDsl.vue";
 
