@@ -4,7 +4,6 @@ export const positionModule = {
     state(){
         return{
             positions: PositionMock,
-
         }
     },
     mutations:{
@@ -25,7 +24,7 @@ export const positionModule = {
         citizenZoneA: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 10 && state.positions[0].clients[i].position.y < 10  ){
+                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -34,7 +33,7 @@ export const positionModule = {
         citizenZoneB: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 10 && state.positions[0].clients[i].position.y < 10  ){
+                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -43,7 +42,7 @@ export const positionModule = {
         citizenZoneC: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 10 && state.positions[0].clients[i].position.y > 10  ){
+                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -52,7 +51,7 @@ export const positionModule = {
         citizenZoneD: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 10 && state.positions[0].clients[i].position.y > 10  ){
+                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
                     nbCitizens++;
                 }
             }

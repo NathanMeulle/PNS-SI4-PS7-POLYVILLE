@@ -19,7 +19,7 @@ export const villeModule = {
             commerce.horaire.horaires.Samedi[1].heureFermeture = payload; //marche pas 
           }) 
     },
-    getters:{  
+    getters:{
         loadCommerces: (state) => {
         return state.Ville[0].ville.commerces;
         },
@@ -27,23 +27,27 @@ export const villeModule = {
             return state.Ville[0].ville.parkings;
         },
         hoursTable: (state) => (id) => {
-            
+
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
                 if(commerce.id === id){
                     horaires = commerce.horaire.horaires;
                     return horaires;
-                } 
+                }
+                else {
+                    return "{heureOuverture: 7, heureFermeture: 8}";
+                }
+
               });
 
               state.Ville[0].ville.parkings.forEach(parking => {
                 if(parking.id === id){
                     horaires = parking.horaire.horaires;
                     return horaires;
-                } 
+                }
               });
-            
-            
+
+
             return horaires;
         },
     },
