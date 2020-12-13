@@ -16,7 +16,7 @@
             </l-marker>
         </div>
         <div v-else>
-            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name +' :')">
+            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
@@ -73,6 +73,10 @@
                 this.$emit('displayhours',true);
                 store.commit( {
                     type : "sendId",
+                    id : a,
+                })
+                store.commit( {
+                    type: "addfreq",
                     id : a,
                 })
             },

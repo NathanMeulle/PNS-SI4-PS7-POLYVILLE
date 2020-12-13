@@ -1,10 +1,12 @@
 
 import { VilleMock } from "../mocks/Ville.mock.js"
+
 export const villeModule = {
     namespace: false,
     state() {
         return {
-            Ville: VilleMock
+            Ville: VilleMock,
+            freq: [],
         }
     },
     mutations: {
@@ -31,6 +33,18 @@ export const villeModule = {
                     }
                 }
             })
+        },
+        addfreq: (state,payload) => {
+            let isInit = false;
+            state.freq.forEach(map => {
+                if (map[0]===payload.id){
+                    map[1] += 1;
+                    isInit=true;
+                }
+            })
+            if (!isInit){
+                state.freq.push([payload.id,1])
+            }
         }
     },
     getters: {
@@ -62,6 +76,19 @@ export const villeModule = {
 
             return horaires;
         },
+        getfreq: (state) => (id) => {
+            state.freq.forEach(map => {
+                var freq = 0;
+                if (map[0]===id) {
+                    freq = map[1];
+                    return freq;
+                }
+                return freq;
+            })
+        },
+        getfreqTab: (state) => {
+            return state.freq;
+        }
     },
     actions: {
         async setClosingHour(context, hour) {

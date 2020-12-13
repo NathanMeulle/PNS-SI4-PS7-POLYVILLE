@@ -16,7 +16,6 @@ public class Ville {
     private List<Commerce> commerces;
     private List<Parking> parkings;
 
-
     public Ville(int longeur, int largeur, List<Commercant> commercants, List<Commerce> commerces, List<Parking> parkings) {
         this.longeur = longeur;
         this.largeur = largeur;

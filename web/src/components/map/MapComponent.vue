@@ -119,7 +119,7 @@
 <script>
 import { LMap, LTileLayer, LControlLayers } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
-import MyCircle from "./MyCircle";
+import MyCircle from "../tools/MyCircle";
 import Marker from "./Marker";
 import Displayer from "./Displayer";
 import store from "../../store/store";
@@ -210,6 +210,7 @@ export default {
       console.log(a);
     },
     toDisplay(a) {
+      this.displayHours=false;
       store.commit({
         type: "setInformation",
         circleinfo: a,
@@ -246,7 +247,11 @@ export default {
   float: right;
   position: relative;
   margin-right: 10px;
-  border: 1px solid black;
+  border-radius: 12px;
+  border: 3px solid #0cb50b;
+  background-color: rgba(237, 237, 237, 0.84);
+
+
 }
 .map {
   float: left;
