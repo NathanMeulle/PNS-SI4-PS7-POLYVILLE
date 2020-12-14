@@ -1,4 +1,5 @@
 <template>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
   <div class="wrapper" style="height: 70vh; width: 180vh">
     <div class="gauche" style="height: 50vh; width: 90vh">
 
@@ -39,10 +40,14 @@
     <div class="droite" style="height: 75vh; width: 80vh">
       <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
         Mon programme :
-        <div v-for='item in listProg' :key='item.title' class='drag-el' draggable="true"
-             @dragstart='startDrag($event, item)'>
+        <div v-for='item in listProg' :key='item.title'>
           <div v-if="item.type !== 5">{{ item.title }}</div>
           {{item.input}}
+          <div class="logo">
+            <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
+            <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
+            <i class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</i>
+          </div>
         </div>
       </div>
     </div>
@@ -222,6 +227,34 @@ export default {
     launch(){
       console.log("envoi du programme suivant : ",this.listProg)
       this.$emit("launch",this.listProg)
+    },
+    suppr(item){
+      item.list = -1
+    },
+    up(selected){
+      let save = 0
+      let check = this.listProg[0].title === selected.title
+      console.log(check)
+      this.listProg.forEach((item,index) =>{
+        if(selected.title === item.title && !check){
+          save = this.listProg[index-1].position
+          this.listProg[index-1].position = selected.position
+          selected.position = save
+        }
+      })
+    },
+    down(selected){
+      let save = 0
+      let check = this.listProg[this.listProg.length-1].title === selected.title
+      console.log("down: ",check)
+      this.listProg.forEach((item,index) =>{
+        if(selected.title === item.title && !check){
+          console.log("test")
+          save = this.listProg[index+1].position
+          this.listProg[index+1].position = selected.position
+          selected.position = save
+        }
+      })
     }
   }
 }
@@ -255,6 +288,10 @@ export default {
 
 #cond{
   margin-top: 10px;
+}
+
+.logo{
+  float: right;
 }
 
 #launch{
