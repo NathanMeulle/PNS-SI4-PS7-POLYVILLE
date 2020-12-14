@@ -111,29 +111,43 @@ export default {
       return hours;
     },
     fillData() {
-        var AfternoonData;
+        var AfternoonData = new Array(7);
+        var MorningData = new Array(7);
         if (this.getHours().Lundi[1] !== undefined) {
-            AfternoonData =
-                    [
-                      [this.getHours().Lundi[1].heureOuverture, this.getHours().Lundi[1].heureFermeture],
-                      [this.getHours().Mardi[1].heureOuverture, this.getHours().Mardi[1].heureFermeture],
-                      [this.getHours().Mercredi[1].heureOuverture, this.getHours().Mercredi[1].heureFermeture],
-                      [this.getHours().Jeudi[1].heureOuverture, this.getHours().Jeudi[1].heureFermeture],
-                      [this.getHours().Vendredi[1].heureOuverture, this.getHours().Vendredi[1].heureFermeture],
-                      [this.getHours().Samedi[1].heureOuverture, this.getHours().Samedi[1].heureFermeture],
-                      [this.getHours().Dimanche[1].heureOuverture, this.getHours().Dimanche[1].heureFermeture],
-                    ]
+          var i=0;
+           for (const [key, value] of Object.entries(this.getHours())) {
+             
+             // mise des valeur de l'après midi
+             if (value[1].heureFermeture === 0){ //cas où le commerce est fermée l'après-midi
+                AfternoonData[i] = [null,null];
+             }
+             else{
+                AfternoonData[i] = [value[1].heureOuverture, value[1].heureFermeture];
+             }
+
+             // mise des valeur du matin
+             if (value[0].heureFermeture === 0){ //cas où le commerce est fermée le matin
+                MorningData[i] = [null,null];
+             }
+             else{
+                MorningData[i] = [value[0].heureOuverture, value[0].heureFermeture];
+             }
+             i++;
+             console.log(AfternoonData);
+             key;
+           }
           } else { //si on a un parking par exemple
             AfternoonData = [
-              [0, 0],
-              [0, 0],
-              [0, 0],
-              [0, 0],
-              [0, 0],
-              [0, 0],
-              [0, 0],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
             ]
           }
+
           var datacollection = {
             2: {
               label: "Afternoon",
@@ -145,15 +159,7 @@ export default {
               label: "Morning",
               borderColor: "rgba(255, 56, 96, 0.5)",
               backgroundColor: "rgba(0,255,0,0.4)",
-              data: [
-                [this.getHours().Lundi[0].heureOuverture, this.getHours().Lundi[0].heureFermeture],
-                [this.getHours().Mardi[0].heureOuverture, this.getHours().Mardi[0].heureFermeture],
-                [this.getHours().Mercredi[0].heureOuverture, this.getHours().Mercredi[0].heureFermeture],
-                [this.getHours().Jeudi[0].heureOuverture, this.getHours().Jeudi[0].heureFermeture],
-                [this.getHours().Vendredi[0].heureOuverture, this.getHours().Vendredi[0].heureFermeture],
-                [this.getHours().Samedi[0].heureOuverture, this.getHours().Samedi[0].heureFermeture],
-                [this.getHours().Dimanche[0].heureOuverture, this.getHours().Dimanche[0].heureFermeture],
-              ],
+              data: MorningData,
             },
           }
       return datacollection;
