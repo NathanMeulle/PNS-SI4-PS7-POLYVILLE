@@ -42,7 +42,7 @@
         Mon programme :
         <div v-for='item in listProg' :key='item.title'>
           <div v-if="item.type !== 5">{{ item.title }}</div>
-          {{item.input}}
+          <div v-else>{{item.input}}</div>
           <div class="logo">
             <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
             <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
@@ -233,10 +233,10 @@ export default {
     },
     up(selected){
       let save = 0
-      let check = this.listProg[0].title === selected.title
+      let check = this.listProg[0].id === selected.id
       console.log(check)
       this.listProg.forEach((item,index) =>{
-        if(selected.title === item.title && !check){
+        if(selected.id === item.id && !check){
           save = this.listProg[index-1].position
           this.listProg[index-1].position = selected.position
           selected.position = save
@@ -245,11 +245,9 @@ export default {
     },
     down(selected){
       let save = 0
-      let check = this.listProg[this.listProg.length-1].title === selected.title
-      console.log("down: ",check)
+      let check = this.listProg[this.listProg.length-1].id === selected.id
       this.listProg.forEach((item,index) =>{
-        if(selected.title === item.title && !check){
-          console.log("test")
+        if(selected.id === item.id && !check){
           save = this.listProg[index+1].position
           this.listProg[index+1].position = selected.position
           selected.position = save
