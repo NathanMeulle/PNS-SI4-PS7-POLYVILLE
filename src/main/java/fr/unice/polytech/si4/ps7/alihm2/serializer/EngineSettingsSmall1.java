@@ -6,13 +6,10 @@ import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Parking;
 import fr.unice.polytech.si4.ps7.alihm2.serializer.data.DataCommerce;
 import fr.unice.polytech.si4.ps7.alihm2.serializer.data.DataName;
-import fr.unice.polytech.si4.ps7.alihm2.utils.Horaire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -55,8 +52,10 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         List<Client> tmp = new ArrayList<>();
 
         for (int k = 0; k < nbClients; k++) {
-            List<Double> c = createPosition();
-            tmp.add(new Client(k, new Position(c.get(0), c.get(1)), Math.random() < 0.5 ? ModeDeplacement.BUS : ModeDeplacement.VOITURE));
+            Random r = new Random();
+            double x = (r.nextGaussian() * (this.longeur + 1)) / 10000.0 + 43.6055;
+            double y = (r.nextGaussian() * (this.largeur + 1)) / 10000.0 + 7.0500;
+            tmp.add(new Client(k, new Position(x, y), Math.random() < 0.5 ? ModeDeplacement.BUS : ModeDeplacement.VOITURE));
         }
         return tmp;
     }
@@ -93,7 +92,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         Collections.shuffle(categorie);
 
         for (int k = 0; k < commercants.size(); k++) {
-            Horaire h = initHoraire();
+            HashMap<String, List<PlageHoraire>> h = initHoraire();
             Position p = commercants.get(k).getPosition();
             commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
         }
@@ -115,17 +114,17 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return new Position(x, y);
     }
 
-    private Horaire initHoraire() {
-        Horaire tmp = new Horaire();
+    private HashMap<String, List<PlageHoraire>> initHoraire() {
+        HashMap<String, List<PlageHoraire>> tmp = new HashMap<>();
         List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
         for (String j : jour) {
             int matinOuverture = (int) (Math.random() * ((10 - 6) + 1)) + 6;
             int matinFermeture = (int) (Math.random() * ((14 - 11) + 1)) + 11;
             int soirOuverture = (int) (Math.random() * ((15 - matinFermeture)) + 1) + matinFermeture;
             int soirFermeture = (int) (Math.random() * ((23 - 18)) + 1) + 18;
-            tmp.addHoraire(j, List.of(new PlageHoraire(matinOuverture, matinFermeture), new PlageHoraire(soirOuverture, soirFermeture)));
+            tmp.put(j, List.of(new PlageHoraire(matinOuverture, matinFermeture), new PlageHoraire(soirOuverture, soirFermeture)));
         }
-        tmp.addHoraire("Dimanche", List.of(new PlageHoraire(0, 0), new PlageHoraire(0, 0)));
+        tmp.put("Dimanche", List.of(new PlageHoraire(0, 0), new PlageHoraire(0, 0)));
 
         return tmp;
     }
@@ -142,13 +141,13 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return tmp;
     }
 
-    private Horaire initHoraireParking() {
-        Horaire tmp = new Horaire();
+    private HashMap<String, List<PlageHoraire>> initHoraireParking() {
+        HashMap<String, List<PlageHoraire>> tmp = new HashMap<>();
         List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
         for (String j : jour) {
             int matinOuverture = (int) (Math.random() * ((8 - 6) + 1)) + 6;
             int soirFermeture = (int) (Math.random() * ((23 - 20)) + 1) + 20;
-            tmp.addHoraire(j, List.of(new PlageHoraire(matinOuverture, soirFermeture)));
+            tmp.put(j, List.of(new PlageHoraire(matinOuverture, soirFermeture)));
         }
         return tmp;
     }

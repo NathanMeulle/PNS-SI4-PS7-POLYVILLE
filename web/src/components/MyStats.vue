@@ -16,8 +16,7 @@ export default {
     },
     methods:{
       print(){
-        console.log(this.$store.getters.hoursTable(0))
-          this.$store.dispatch('deplacerPoliciers',{citoyens :50,cond :"sup",zone1 :"Zone A",policiers :10, zone2: "Zone A"})
+          this.$store.dispatch('setClosingHour',20)
       }
   },
 };

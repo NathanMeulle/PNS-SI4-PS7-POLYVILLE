@@ -46,19 +46,17 @@ const options = {
     ],
     yAxes: [
       {
-
         ticks: {
           beginAtZero:false,
           precision: 2,
           stepSize: 2,
           reverse: true,
-          suggestedMax: 24,
+          //suggestedMax: 24,
         },
         scaleLabel: {
         display: true,
         labelString: 'Hour'
         },
-
         stacked: false,
         afterTickToLabelConversion : function(q){
         for(var tick in q.ticks){
@@ -113,7 +111,6 @@ export default {
       return hours;
     },
     fillData() {
-        console.log(this.getHours().Lundi[0]);
         var AfternoonData;
         if (this.getHours().Lundi[1] !== undefined) {
             AfternoonData =
@@ -137,8 +134,6 @@ export default {
               [0, 0],
             ]
           }
-
-
           var datacollection = {
             2: {
               label: "Afternoon",
@@ -150,8 +145,6 @@ export default {
               label: "Morning",
               borderColor: "rgba(255, 56, 96, 0.5)",
               backgroundColor: "rgba(0,255,0,0.4)",
-
-
               data: [
                 [this.getHours().Lundi[0].heureOuverture, this.getHours().Lundi[0].heureFermeture],
                 [this.getHours().Mardi[0].heureOuverture, this.getHours().Mardi[0].heureFermeture],
