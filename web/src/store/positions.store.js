@@ -14,10 +14,11 @@ export const positionModule = {
             if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone)
             if(agir){
                 for(var i = 0; i<payload.args.policiers;i++){
-                    state.positions[0].policiers[i].position = [43.6204, 7.0719]
+                    state.positions[0].policiers[i].position.x = 43.6204
+                    state.positions[0].policiers[i].position.y = 7.0789
+                    console.log(state.positions[0].policiers[i])
                 }
             }
-            return Promise.resolve(undefined);
         }
 
     },
@@ -74,7 +75,7 @@ export const positionModule = {
         policierZoneA: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
+                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -101,7 +102,7 @@ export const positionModule = {
         policierZoneD: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
+                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
                     nbCitizens++;
                 }
             }
