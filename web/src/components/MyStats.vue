@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
    Hello from Stats
    <button v-on:click ="print">Afficher nombre de citoyens de la BDD (voir console)</button>
    <HoursChart name="Chez Barreau"/>

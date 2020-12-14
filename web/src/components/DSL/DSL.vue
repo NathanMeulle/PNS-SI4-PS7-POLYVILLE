@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper" style="height: 70vh; width: 100%">
-    <div class="gauche" style="height: 50vh; width: 50%">
+  <div class="wrapper" style="height: 70vh; width: 180vh">
+    <div class="gauche" style="height: 50vh; width: 90vh">
 
       <span id="error">{{error}}</span>
       <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
@@ -22,21 +22,21 @@
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
-        Personnes :
+        Entités :
         <div v-for='item in listPers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
-        Quartiers :
+        Divers :
         <div v-for='item in listQuartiers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
         </div>
       </div>
     </div>
-    <div class="droite" style="height: 75vh; width: 49%">
+    <div class="droite" style="height: 75vh; width: 80vh">
       <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
         Mon programme :
         <div v-for='item in listProg' :key='item.title' class='drag-el' draggable="true"
@@ -44,12 +44,11 @@
           <div v-if="item.type !== 5">{{ item.title }}</div>
           {{item.input}}
         </div>
-
       </div>
     </div>
   </div>
     <br/>
-    <button v-on:click="launch()">Lancer mon programme</button>
+    <button v-on:click="launch()" id="launch">Lancer mon programme</button>
 </template>
 
 <script>
@@ -62,7 +61,7 @@ export default {
       items: [
         {
           id: 0,
-          title: 'Pour',
+          title: 'Pour tous',
           input: '',
           position: -1,
           type:1,
@@ -205,14 +204,13 @@ export default {
     },
     duplication(item){
       let len = this.items.length
-      let copy = {
+      this.items[len] = {
         id: len,
         title: item.title,
         position: -1,
-        type:item.type,
+        type: item.type,
         list: item.list
       }
-      this.items[len] = copy
     },
     validation(id){
       this.error = ''
@@ -242,7 +240,7 @@ export default {
 .drop-zone {
   background-color: #eee;
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .drag-el {
@@ -257,5 +255,9 @@ export default {
 
 #cond{
   margin-top: 10px;
+}
+
+#launch{
+  margin-top: 5%;
 }
 </style>

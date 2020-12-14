@@ -58,7 +58,7 @@
                   :fill="true"
                   :fillOpacity="0.5"
                   :fillColor="createColor(nbrCitizenZoneA)"
-                  @click="toDisplay('Zone A \n Nombre de citoyen présent : \n' + nbrCitizenZoneA)"
+                  @click="toDisplay('Zone A \n Nombre de citoyen présent : \n' + nbrCitizenZoneA+ '\nNombre de policier présent : ' + nbrPolicierZoneA)"
           />
           <MyCircle
                   :lat-lng="ZoneB"
@@ -67,7 +67,7 @@
                   :fill="true"
                   :fillOpacity="0.5"
                   :fillColor="createColor(nbrCitizenZoneA)"
-                  @click="toDisplay('Zone B \n Nombre de citoyen présent : \n' + nbrCitizenZoneB)"
+                  @click="toDisplay('Zone B \n Nombre de citoyen présent : \n' + nbrCitizenZoneB + '\nNombre de policier présent : ' + nbrPolicierZoneB)"
           />
           <MyCircle
                   :lat-lng="ZoneC"
@@ -76,7 +76,7 @@
                   :fill="true"
                   :fillOpacity="0.5"
                   :fillColor="createColor(nbrCitizenZoneC)"
-                  @click="toDisplay('Zone C \n Nombre de citoyen présent : \n' + nbrCitizenZoneC)"
+                  @click="toDisplay('Zone C \n Nombre de citoyen présent : \n' + nbrCitizenZoneC + '\nNombre de policier présent : ' + nbrPolicierZoneC)"
           />
           <MyCircle
                   :lat-lng="ZoneD"
@@ -85,7 +85,7 @@
                   :fill="true"
                   :fillOpacity="0.5"
                   :fillColor="createColor(nbrCitizenZoneD)"
-                  @click="toDisplay('Zone D \n Nombre de citoyen présent : \n' + nbrCitizenZoneD)"
+                  @click="toDisplay('Zone D \n Nombre de citoyen présent : \n' + nbrCitizenZoneD + '\nNombre de policier présent : ' + nbrPolicierZoneD)"
           />
         </div>
         <div v-if="filterOption.includes('Police')" class="police" >
@@ -255,5 +255,8 @@ export default {
 }
 .map {
   float: left;
+}
+.Affluence {
+  white-space: pre;
 }
 </style>
