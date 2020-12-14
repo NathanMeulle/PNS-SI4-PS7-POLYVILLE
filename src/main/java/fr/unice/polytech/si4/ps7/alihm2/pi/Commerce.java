@@ -6,6 +6,7 @@ import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -17,9 +18,9 @@ public class Commerce extends PI {
     private String nom;
     private Commercant commercant;
     private String categorie;
-    private HashMap<String, List<PlageHoraire>> horaires;
+    private LinkedHashMap<String, List<PlageHoraire>> horaires;
 
-    public Commerce(int id, Position position, String nom, Commercant commercant, String categorie, HashMap<String, List<PlageHoraire>> horaires) {
+    public Commerce(int id, Position position, String nom, Commercant commercant, String categorie, LinkedHashMap<String, List<PlageHoraire>> horaires) {
         super(position);
         this.id = id;
         this.nom = nom;
@@ -44,7 +45,7 @@ public class Commerce extends PI {
         return categorie;
     }
 
-    public HashMap<String, List<PlageHoraire>> getHoraires() {
+    public LinkedHashMap<String, List<PlageHoraire>> getHoraires() {
         return horaires;
     }
 }
