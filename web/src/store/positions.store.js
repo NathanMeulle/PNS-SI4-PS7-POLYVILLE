@@ -106,19 +106,11 @@ export const positionModule = {
                 }
             }
             return nbCitizens;
-        }
+        },
+
+
     },
     actions: {
-        /*async setPersonnes(context){
-            try{
-                const response = await axios.get("../mocks/Position.mock.js");
-                console.log('response', response);
-                context.commit('setMessages', {position:response.data});
-            }
-            catch(error){
-                console.log('error ', error);
-            }
-        }*/
         async deplacerPoliciers(context,args){
             console.log(args)
             let nbZone = 0
