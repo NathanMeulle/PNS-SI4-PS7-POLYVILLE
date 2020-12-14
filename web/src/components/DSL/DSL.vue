@@ -36,10 +36,10 @@
         </div>
       </div>
     </div>
-    <button v-on:click="launch()" id="launch" style="height: 75%; width: 40%">Lancer mon programme</button>
+    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%">Lancer mon programme</button>
     <br/>
-    <div class="droite" style="height: 70%; width: 35%">
-      <div style="height: 75vh; width: 70vh" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
+    <div class="droite" style="height: 75%; width: 35%">
+      <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
         <div class='drop-zone'>
           Mon programme :
           <div v-for='item in listProg' :key='item.title' class="drag-el">

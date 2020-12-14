@@ -46,3 +46,5 @@ Chaque commit doit être associé à une issue github. Le code soumis doit être
   Le code soumis doit être clair, commenté et testé pour que la pull request soit acceptée.
   
   Utiliser ensuite la commande `merge` pour fusionner les branches.
+
+  La pull request est obligatoire avant d'effectuer un merge sur Master.

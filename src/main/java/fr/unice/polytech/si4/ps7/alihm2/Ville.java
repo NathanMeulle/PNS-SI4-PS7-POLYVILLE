@@ -3,6 +3,7 @@ package fr.unice.polytech.si4.ps7.alihm2;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Parking;
+import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
 import java.util.List;
 /**
@@ -15,13 +16,15 @@ public class Ville {
     private List<Commercant> commercants;
     private List<Commerce> commerces;
     private List<Parking> parkings;
+    private List<Zone> zones;
 
-    public Ville(int longeur, int largeur, List<Commercant> commercants, List<Commerce> commerces, List<Parking> parkings) {
+    public Ville(int longeur, int largeur, List<Commercant> commercants, List<Commerce> commerces, List<Parking> parkings, List<Zone> zones) {
         this.longeur = longeur;
         this.largeur = largeur;
         this.commercants = commercants;
         this.commerces = commerces;
         this.parkings = parkings;
+        this.zones = zones;
     }
 
     public int getLongeur() {
@@ -43,5 +46,9 @@ public class Ville {
 
     public List<Parking> getParkings() {
         return parkings;
+    }
+
+    public List<Zone> getZones() {
+        return zones;
     }
 }

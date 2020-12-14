@@ -14,7 +14,7 @@ export const villeModule = {
         setClosingHour: (state, payload) => {
             state.Ville[0].ville.commerces.forEach(commerce => {
 
-                for (const [key, value] of Object.entries(commerce.horaires)) {
+                for (const [key, value] of Object.entries(commerce.horaires[0])) {
                     //console.log(`${key}: ${value}`);
                     key;
                     if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
@@ -58,7 +58,7 @@ export const villeModule = {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
                 if(commerce.id === id){
-                    horaires = commerce.horaires;
+                    horaires = commerce.horaires[0].semaine;
                     return horaires;
                 }
                 else {
@@ -68,7 +68,7 @@ export const villeModule = {
 
               state.Ville[0].ville.parkings.forEach(parking => {
                 if(parking.id === id){
-                    horaires = parking.horaires;
+                    horaires = parking.horaires[0].semaine;
                     return horaires;
                 }
             });
