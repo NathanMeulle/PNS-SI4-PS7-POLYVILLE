@@ -258,6 +258,6 @@ export default {
 }
 
 #launch{
-  margin-top: 5%;
+  margin-top: 7%;
 }
 </style>
