@@ -4,6 +4,7 @@ import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -14,9 +15,9 @@ public class Parking {
     private int id;
     private Position position;
     private int nbPlaces;
-    private HashMap<String, List<PlageHoraire>> horaires;
+    private LinkedHashMap<String, List<PlageHoraire>> horaires;
 
-    public Parking(int id, int nbPlaces, Position position, HashMap<String, List<PlageHoraire>> horaires) {
+    public Parking(int id, int nbPlaces, Position position, LinkedHashMap<String, List<PlageHoraire>> horaires) {
         this.id = id;
         this.nbPlaces = nbPlaces;
         this.position = position;

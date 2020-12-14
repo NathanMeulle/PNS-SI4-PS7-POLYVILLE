@@ -140,8 +140,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return tmp;
     }
 
-    private HashMap<String, List<PlageHoraire>> initHoraireParking() {
-        HashMap<String, List<PlageHoraire>> tmp = new HashMap<>();
+    private LinkedHashMap<String, List<PlageHoraire>> initHoraireParking() {
+        LinkedHashMap<String, List<PlageHoraire>> tmp = new LinkedHashMap<>();
         List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
         for (String j : jour) {
             int matinOuverture = (int) (Math.random() * ((8 - 6) + 1)) + 6;
