@@ -113,8 +113,9 @@ export default {
     fillData() {
         var AfternoonData = new Array(7);
         var MorningData = new Array(7);
+        var i=0;
         if (this.getHours().Lundi[1] !== undefined) {
-          var i=0;
+          
            for (const [key, value] of Object.entries(this.getHours())) {
              
              // mise des valeur de l'après midi
@@ -137,6 +138,17 @@ export default {
              key;
            }
           } else { //si on a un parking par exemple
+          i=0;
+          for (const [key, value] of Object.entries(this.getHours())) {
+            if (value[0].heureFermeture === 0){ //cas où le parking est fermée ce jour
+                MorningData[i] = [null,null];
+             }
+             else{
+                MorningData[i] = [value[0].heureOuverture, value[0].heureFermeture];
+             }
+             i++;
+             key;
+          }
             AfternoonData = [
               [null, null],
               [null, null],
