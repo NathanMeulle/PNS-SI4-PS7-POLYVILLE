@@ -64,10 +64,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         List<Policier> tmp = new ArrayList<>();
 
         for (int k = 0; k < nbClients / 20; k++) {//un policier pour 20 clients
-            Random r = new Random();
-            double x = (r.nextGaussian() * (this.longeur + 1)) / 10000.0 + 43.6055;
-            double y = (r.nextGaussian() * (this.largeur + 1)) / 10000.0 + 7.0500;
-            tmp.add(new Policier(nbClients + k, new Position(x, y)));
+            List<Double> c = createPosition();
+            tmp.add(new Policier(nbClients + k, new Position(c.get(0), c.get(1))));
         }
         return tmp;
 
