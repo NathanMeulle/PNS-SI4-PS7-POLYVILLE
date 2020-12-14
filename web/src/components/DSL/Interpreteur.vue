@@ -1,7 +1,7 @@
 <template>
   <DSL v-on:launch="getData($event)"/>
+  <br/>
   <span id="reussite">{{reussite}}</span>
-  <h1>Interpreteur</h1>
   <span id="error">{{error}}</span>
 </template>
 

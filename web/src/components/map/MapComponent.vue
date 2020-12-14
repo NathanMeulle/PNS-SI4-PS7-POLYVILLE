@@ -89,19 +89,19 @@
           />
         </div>
         <div v-if="filterOption.includes('Police')" class="police" >
-          <Marker v-if="nbrPolicierZoneA>50" v-bind:position="ZoneA"
+          <Marker v-if="nbrPolicierZoneA>=50" v-bind:position="ZoneA"
                   v-bind:msg="nbrPolicierZoneA + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
-          <Marker v-if="nbrPolicierZoneB>50" v-bind:position="ZoneB"
+          <Marker v-if="nbrPolicierZoneB>=50" v-bind:position="ZoneB"
                   v-bind:msg="nbrPolicierZoneB + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
-          <Marker v-if="nbrPolicierZoneC>50" v-bind:position="ZoneC"
+          <Marker v-if="nbrPolicierZoneC>=50" v-bind:position="ZoneC"
                   v-bind:msg="nbrPolicierZoneC + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
-          <Marker v-if="nbrPolicierZoneD>50" v-bind:position="ZoneD"
+          <Marker v-if="nbrPolicierZoneD>=50" v-bind:position="ZoneD"
                   v-bind:msg="nbrPolicierZoneD + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
