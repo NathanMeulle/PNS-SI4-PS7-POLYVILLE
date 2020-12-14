@@ -1,9 +1,8 @@
 <template>
+  <span id="error">{{error}}</span>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
-  <div class="wrapper" style="height: 70vh; width: 180vh">
-    <div class="gauche" style="height: 50vh; width: 90vh">
-
-      <span id="error">{{error}}</span>
+  <div class="wrapper" style="height: 75%; width: 100%">
+    <div class="gauche" style="height: 75%; width: 59%">
       <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
         Données :
         <div v-for='item in listInput' :key='item.title' class='drag-el' draggable="true"
@@ -37,23 +36,34 @@
         </div>
       </div>
     </div>
-    <div class="droite" style="height: 75vh; width: 80vh">
-      <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
-        Mon programme :
-        <div v-for='item in listProg' :key='item.title'>
-          <div v-if="item.type !== 5">{{ item.title }}</div>
-          <div v-else>{{item.input}}</div>
-          <div class="logo">
-            <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
-            <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
-            <i class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</i>
+    <button v-on:click="launch()" id="launch" style="height: 75%; width: 40%">Lancer mon programme</button>
+    <br/>
+    <div class="droite" style="height: 70%; width: 35%">
+      <div style="height: 75vh; width: 70vh" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
+        <div class='drop-zone'>
+          Mon programme :
+          <div v-for='item in listProg' :key='item.title' class="drag-el">
+            <div v-if="item.type !== 5">
+              {{ item.title }}
+              <div class="logo">
+                <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
+                <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
+                <i class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</i>
+              </div>
+            </div>
+            <div v-else>
+              {{item.input}}
+              <div class="logo">
+                <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
+                <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
+                <i class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-    <br/>
-    <button v-on:click="launch()" id="launch">Lancer mon programme</button>
 </template>
 
 <script>
@@ -263,6 +273,8 @@ export default {
     float: right;
     position: relative;
     border: 1px solid black;
+    margin-top: 3%;
+    right: 3%;
   }
   .gauche {
     float: left;
@@ -281,7 +293,9 @@ export default {
 }
 
 #error{
+  position: relative;
   color: red;
+  margin-top: 5%;
 }
 
 #cond{
@@ -293,6 +307,7 @@ export default {
 }
 
 #launch{
-  margin-top: 7%;
+  float: right;
+  position: relative;
 }
 </style>

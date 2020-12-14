@@ -1,8 +1,12 @@
 <template>
-  <DSL v-on:launch="getData($event)"/>
+  <div v-if="error!==''">
+    <span id="error">{{error}}</span>
+  </div>
+  <div v-else>
+    <span id="reussite">{{reussite}}</span>
+  </div>
   <br/>
-  <span id="reussite">{{reussite}}</span>
-  <span id="error">{{error}}</span>
+  <DSL v-on:launch="getData($event)"/>
 </template>
 
 <script>
