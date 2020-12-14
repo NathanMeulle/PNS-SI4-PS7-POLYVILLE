@@ -1,5 +1,6 @@
 <template>
   <DSL v-on:launch="getData($event)"/>
+  <span id="reussite">{{reussite}}</span>
   <h1>Interpreteur</h1>
   <span id="error">{{error}}</span>
 </template>
@@ -17,6 +18,7 @@ export default {
       infOrSup: '',
       heure: -1,
       error: "",
+      reussite: ""
     }
   },
 
@@ -61,6 +63,7 @@ export default {
           if (this.programme[8].title.substring(0, 4) === 'Zone') {
             this.zones[1] = this.programme[8].title
             console.log(nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1])
+            this.reussite ="Déplacement de policiers effectué"
             this.$store.dispatch('deplacerPoliciers',{citoyens : nbCitoyens,
               cond : this.infOrSup,zone1 : this.zones[0],policiers : nbPoliciers,zone2: this.zones[1]})
           }
@@ -96,10 +99,11 @@ export default {
     },
     getHeure(){
       this.programme.forEach((item,index)=>{
-        if(item.title === "heure"){
+        if(item.title === "heures"){
           if(index === 0 || this.programme[index-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure"
           else{
-            this.heure = Number(this.programme[index-1].input)}
+            this.heure = Number(this.programme[index-1].input)
+          }
         }
         console.log("heure : ",this.heure)
       })
@@ -116,7 +120,11 @@ export default {
         console.log(this.heure)
         if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
 
-        else this.$store.dispatch('setClosingHour',this.heure)
+        else{
+          this.reussite = "Changement d'heure de fermeture effectué"
+          this.$store.dispatch('setClosingHour',this.heure)
+        }
+
       }
       else this.error = 'Programme inconnu'
     }
@@ -127,6 +135,10 @@ export default {
 <style scoped>
 #error{
   color: red;
+}
+
+#reussite{
+  color: green;
 }
 
 

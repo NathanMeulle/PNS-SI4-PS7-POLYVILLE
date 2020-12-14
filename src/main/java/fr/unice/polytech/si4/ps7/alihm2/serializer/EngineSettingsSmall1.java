@@ -64,10 +64,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         List<Policier> tmp = new ArrayList<>();
 
         for (int k = 0; k < nbClients / 20; k++) {//un policier pour 20 clients
-            Random r = new Random();
-            double x = (r.nextGaussian() * (this.longeur + 1)) / 10000.0 + 43.6055;
-            double y = (r.nextGaussian() * (this.largeur + 1)) / 10000.0 + 7.0500;
-            tmp.add(new Policier(nbClients + k, new Position(x, y)));
+            List<Double> c = createPosition();
+            tmp.add(new Policier(nbClients + k, new Position(c.get(0), c.get(1))));
         }
         return tmp;
 
@@ -94,7 +92,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         Collections.shuffle(categorie);
 
         for (int k = 0; k < commercants.size(); k++) {
-            HashMap<String, List<PlageHoraire>> h = initHoraire();
+            LinkedHashMap<String, List<PlageHoraire>> h = initHoraire();
             Position p = commercants.get(k).getPosition();
             commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
         }
@@ -116,9 +114,9 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return new Position(x, y);
     }
 
-    private HashMap<String, List<PlageHoraire>> initHoraire() {
-        HashMap<String, List<PlageHoraire>> tmp = new HashMap<>();
-        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
+    private LinkedHashMap<String, List<PlageHoraire>> initHoraire() {
+        LinkedHashMap<String, List<PlageHoraire>> tmp = new LinkedHashMap<>();
+        List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
         for (String j : jour) {
             int matinOuverture = (int) (Math.random() * ((10 - 6) + 1)) + 6;
             int matinFermeture = (int) (Math.random() * ((14 - 11) + 1)) + 11;
@@ -127,7 +125,6 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
             tmp.put(j, List.of(new PlageHoraire(matinOuverture, matinFermeture), new PlageHoraire(soirOuverture, soirFermeture)));
         }
         tmp.put("Dimanche", List.of(new PlageHoraire(0, 0), new PlageHoraire(0, 0)));
-
         return tmp;
     }
 
