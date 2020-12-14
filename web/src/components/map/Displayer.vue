@@ -13,7 +13,7 @@
               fois
         </div>
     </div>
-    <div v-else>
+    <div class="welcomeText" v-else>
         Sélectionnez un commerce pour afficher ses informations
     </div>
 
@@ -69,10 +69,11 @@
 .freq {
     font-family: "Sofia", sans-serif;
     font-size: 18px;
-    border-radius: 25px;
+    border-radius: 8px;
     border: 3px solid #0cb50b;
     padding: 20px;
     margin: 10px;
+    box-shadow: 6px 6px 2px 1px rgba(42, 77, 44, 0.2);
 }
 .welcomeText {
     font-family: "Sofia", sans-serif;

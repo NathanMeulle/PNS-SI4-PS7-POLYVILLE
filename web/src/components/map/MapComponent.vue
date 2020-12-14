@@ -247,9 +247,10 @@ export default {
   float: right;
   position: relative;
   margin-right: 10px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 3px solid #0cb50b;
   background-color: rgba(237, 237, 237, 0.84);
+  box-shadow: 6px 6px 2px 1px rgba(42, 77, 44, 0.2);
 
 
 }
