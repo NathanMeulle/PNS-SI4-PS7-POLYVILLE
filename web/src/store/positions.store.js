@@ -1,13 +1,25 @@
-import { PositionMock } from "../mocks/Position.mock.js"
+import { PositionMock } from "@/mocks/Position.mock"
 export const positionModule = {
     namespace: false,
     state(){
         return{
             positions: PositionMock,
-
         }
     },
     mutations:{
+
+        deplacerPoliciers(state, payload) {
+            console.log(payload.nbZone)
+            let agir = false
+            if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone)
+            if(agir){
+                for(var i = 0; i<payload.args.policiers;i++){
+                    state.positions[0].policiers[i].position.x = 43.6204
+                    state.positions[0].policiers[i].position.y = 7.0789
+                    console.log(state.positions[0].policiers[i])
+                }
+            }
+        }
 
     },
     getters:{
@@ -22,10 +34,11 @@ export const positionModule = {
         loadCitizens: (state) => {
                 return state.positions[0].clients;
         },
+
         citizenZoneA: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 10 && state.positions[0].clients[i].position.y < 10  ){
+                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -34,7 +47,7 @@ export const positionModule = {
         citizenZoneB: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 10 && state.positions[0].clients[i].position.y < 10  ){
+                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -43,7 +56,7 @@ export const positionModule = {
         citizenZoneC: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 10 && state.positions[0].clients[i].position.y > 10  ){
+                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
                     nbCitizens++;
                 }
             }
@@ -52,23 +65,64 @@ export const positionModule = {
         citizenZoneD: (state) => {
             var nbCitizens = 0;
             for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 10 && state.positions[0].clients[i].position.y > 10  ){
+                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
                     nbCitizens++;
                 }
             }
             return nbCitizens;
-        }
+        },
+
+        policierZoneA: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+        policierZoneB: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+        policierZoneC: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+        policierZoneD: (state) => {
+            var nbCitizens = 0;
+            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
+                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
+                    nbCitizens++;
+                }
+            }
+            return nbCitizens;
+        },
+
+
     },
     actions: {
-        /*async setPersonnes(context){
+        async deplacerPoliciers(context,args){
+            console.log(args)
+            let nbZone = 0
+            if(args.zone1 === "Zone A") nbZone = context.getters.citizenZoneA
+            if(args.zone1 === "Zone B") nbZone = context.getters.citizenZoneB
             try{
-                const response = await axios.get("../mocks/Position.mock.js");
-                console.log('response', response);
-                context.commit('setMessages', {position:response.data});
+                context.commit('deplacerPoliciers',{args : args, nbZone: nbZone});
             }
             catch(error){
                 console.log('error ', error);
             }
-        }*/
+        }
     }
 }

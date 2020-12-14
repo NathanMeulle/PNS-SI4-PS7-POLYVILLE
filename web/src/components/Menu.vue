@@ -7,11 +7,6 @@
         </router-link>
       </li>
       <li>
-        <router-link  active-class="active"  to="/stats">
-          Stats
-        </router-link>
-      </li>
-      <li>
         <router-link  active-class="active" to="/dsl">
           DSL
         </router-link>

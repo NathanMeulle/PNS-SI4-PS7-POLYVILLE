@@ -1,8 +1,17 @@
 <template>
 {{display()}}
+    <div v-if="hours===true">
+        <HoursChart></HoursChart>
+    </div>
+    <div v-else>
+        Sélectionnez un commerce pour afficher ses informations
+
+    </div>
+
 </template>
 
 <script>
+    import HoursChart from "../stats/HoursChart";
     export default {
         name: "Displayer",
         data() {
@@ -10,13 +19,18 @@
               circleInfo :"test",
           }
         },
+        components: {
+          HoursChart,
+        },
         props : {
             data : String,
+            hours : Boolean,
         },
         methods : {
             display() {
                 return this.$store.getters.getInfos;
-            }
+            },
+
         }
 
     }

@@ -1,7 +1,11 @@
 package fr.unice.polytech.si4.ps7.alihm2.pi;
 
-import fr.unice.polytech.si4.ps7.alihm2.utils.Horaire;
+import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
+
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Classe représentant un parking dans la ville
  * @author nathan
@@ -10,13 +14,13 @@ public class Parking {
     private int id;
     private Position position;
     private int nbPlaces;
-    private Horaire horaire;
+    private HashMap<String, List<PlageHoraire>> horaires;
 
-    public Parking(int id, int nbPlaces, Position position, Horaire horaire) {
+    public Parking(int id, int nbPlaces, Position position, HashMap<String, List<PlageHoraire>> horaires) {
         this.id = id;
         this.nbPlaces = nbPlaces;
         this.position = position;
-        this.horaire = horaire;
+        this.horaires = horaires;
     }
 
     public int getId() {
@@ -31,7 +35,7 @@ public class Parking {
         return nbPlaces;
     }
 
-    public Horaire getHoraire() {
-        return horaire;
+    public HashMap<String, List<PlageHoraire>> getHoraires() {
+        return horaires;
     }
 }

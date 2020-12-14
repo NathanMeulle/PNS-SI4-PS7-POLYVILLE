@@ -1,14 +1,14 @@
 import {createWebHistory, createRouter } from "vue-router";
-import MyMap from "./components/map/MyMap.vue";
-import MyStats from "./components/MyStats.vue";
+import MyMap from "./components/map/MapPage";
 import MyDsl from "./components/MyDsl.vue";
+import Help from "@/components/DSL/Help";
 
 
 const routes = [
     { path: '/', component: MyMap },
     { path: '/map', component: MyMap },
-    { path: '/stats', component: MyStats },
     { path: '/dsl', component: MyDsl },
+    { path: '/dsl/aide', component: Help },
 
 ]
 
