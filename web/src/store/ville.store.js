@@ -61,9 +61,9 @@ export const villeModule = {
                     horaires = commerce.horaires;
                     return horaires;
                 }
-                else {
+                /*else {
                     return "{heureOuverture: 7, heureFermeture: 8}";
-                }
+                }*/
             });
 
               state.Ville[0].ville.parkings.forEach(parking => {

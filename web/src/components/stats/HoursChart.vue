@@ -110,10 +110,14 @@ export default {
     checkSelectedTimeOfTheDay(){ //renvoie tous les datasets à afficher selon les checkbox activées
       var res = [];
       if(this.selectedTimeOfTheDay.includes("Afternoon")){
-        res.push("Afternoon0","Afternoon1","Afternoon2","Afternoon3");
+        for(let i = 0; i < this.getHours().length; i++){
+          res.push("Afternoon"+i);
+        }
       }
       if(this.selectedTimeOfTheDay.includes("Morning")){
-        res.push("Morning0","Morning1","Morning2","Morning3");
+        for(let i = 0; i < this.getHours().length; i++){
+          res.push("Morning"+i);
+        }
       }
       return res;
     },
