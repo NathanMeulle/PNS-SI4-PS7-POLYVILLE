@@ -88,7 +88,10 @@ export const villeModule = {
         },
         getfreqTab: (state) => {
             return state.freq;
-        }
+        },
+        getZones : (state) => {
+            return state.Ville[0].ville.zones;
+        },
     },
     actions: {
         async setClosingHour(context, hour) {

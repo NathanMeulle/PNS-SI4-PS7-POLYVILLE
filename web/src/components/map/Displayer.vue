@@ -6,7 +6,7 @@
     </div>
     <div v-if="hours===true">
         <HoursChart></HoursChart>
-        <div class="freq">
+        <div class="freq" @click=" getfreq()">
             Ce point a été consulté
             {{displayfreq()}}
             {{nbrfreq}}
@@ -69,11 +69,16 @@
 .freq {
     font-family: "Sofia", sans-serif;
     font-size: 18px;
-    border-radius: 25px;
+    border-radius: 50px;
     border: 3px solid #0cb50b;
     padding: 20px;
     margin: 10px;
+    cursor: pointer;
 }
+.freq:hover {
+    box-shadow: 4px 4px 2px 1px #266027;
+}
+
 .welcomeText {
     font-family: "Sofia", sans-serif;
     font-size: 25px;
@@ -81,6 +86,5 @@
     color: #0cb50b;
     margin: 10px;
     }
-
 
 </style>

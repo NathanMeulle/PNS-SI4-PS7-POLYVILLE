@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="iconType==='Parking'">
+        <div class="parking" v-if="iconType==='Parking'">
             <l-marker :lat-lng="position" :icon="parking" @moveend="log('moveend')" @click="sendId(id)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
@@ -86,5 +86,6 @@
 </script>
 
 <style scoped>
+
 
 </style>

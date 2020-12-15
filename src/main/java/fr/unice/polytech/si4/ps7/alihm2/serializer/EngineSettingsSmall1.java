@@ -23,8 +23,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected Ville ville;
     protected List<Commercant> commercants;
     protected List<Commerce> commerces;
-    protected final int longeur = 180;
-    protected final int largeur = 315;
+    protected final int longeur = 100;
+    protected final int largeur = 300;
     protected List<Client> clients;
     protected List<Policier> policiers;
     protected List<Parking> parkings;
@@ -164,10 +164,10 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return res;
     }
     private List<Zone> initZones() {
-        Zone zoneA =  new Zone("ZoneA", new Position( 43.6204, 7.0789));
-        Zone zoneB =  new Zone("ZoneB", new Position( 43.6204, 7.0619));
-        Zone zoneC =  new Zone("ZoneC", new Position( 43.6104, 7.0789));
-        Zone zoneD =  new Zone("ZoneD", new Position( 43.6104, 7.0619));
+        Zone zoneA =  new Zone("ZoneA", new Position( 43.6254, 7.0839));
+        Zone zoneB =  new Zone("ZoneB", new Position( 43.6254, 7.0569));
+        Zone zoneC =  new Zone("ZoneC", new Position( 43.6054, 7.0839));
+        Zone zoneD =  new Zone("ZoneD", new Position( 43.6054, 7.0569));
         return List.of(zoneA, zoneB, zoneC, zoneD);
     }
 

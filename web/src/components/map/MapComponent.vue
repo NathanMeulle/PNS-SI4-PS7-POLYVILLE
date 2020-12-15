@@ -52,40 +52,16 @@
 
         <div v-if="filterOption.includes('Affluence')" class="Affluence">
           <MyCircle
-                  :lat-lng="ZoneA"
-                  v-bind:radius="displayCircle(nbrCitizenZoneA)"
-                  v-bind:color="createColor(nbrCitizenZoneA)"
-                  :fill="true"
-                  :fillOpacity="0.5"
-                  :fillColor="createColor(nbrCitizenZoneA)"
-                  @click="toDisplay('Zone A \n Nombre de citoyen présent : \n' + nbrCitizenZoneA+ '\nNombre de policier présent : ' + nbrPolicierZoneA)"
-          />
-          <MyCircle
-                  :lat-lng="ZoneB"
-                  v-bind:radius="displayCircle(nbrCitizenZoneB)"
-                  v-bind:color="createColor(nbrCitizenZoneB)"
-                  :fill="true"
-                  :fillOpacity="0.5"
-                  :fillColor="createColor(nbrCitizenZoneA)"
-                  @click="toDisplay('Zone B \n Nombre de citoyen présent : \n' + nbrCitizenZoneB + '\nNombre de policier présent : ' + nbrPolicierZoneB)"
-          />
-          <MyCircle
-                  :lat-lng="ZoneC"
-                  :radius="displayCircle(nbrCitizenZoneC)"
-                  v-bind:color="createColor(nbrCitizenZoneC)"
-                  :fill="true"
-                  :fillOpacity="0.5"
-                  :fillColor="createColor(nbrCitizenZoneC)"
-                  @click="toDisplay('Zone C \n Nombre de citoyen présent : \n' + nbrCitizenZoneC + '\nNombre de policier présent : ' + nbrPolicierZoneC)"
-          />
-          <MyCircle
-                  :lat-lng="ZoneD"
-                  :radius="displayCircle(nbrCitizenZoneD)"
-                  v-bind:color="createColor(nbrCitizenZoneD)"
-                  :fill="true"
-                  :fillOpacity="0.5"
-                  :fillColor="createColor(nbrCitizenZoneD)"
-                  @click="toDisplay('Zone D \n Nombre de citoyen présent : \n' + nbrCitizenZoneD + '\nNombre de policier présent : ' + nbrPolicierZoneD)"
+            v-for="currentCircle in Zones"
+            :key="currentCircle.id"
+            :lat-lng="[currentCircle.position.x,currentCircle.position.y]"
+            v-bind:radius="displayCircle(currentCircle.id)"
+            v-bind:color="createColor(currentCircle.id)"
+            :fill="true"
+            :fillOpacity="0.5"
+            :fillColor="createColor(currentCircle.id)"
+            @click="toDisplay('Zone :' + currentCircle.id + '\n Nombre de citoyen présent : \n' + nbrCitizenZone(currentCircle.id)+ '\nNombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
+
           />
         </div>
         <div v-if="filterOption.includes('Police')" class="police" >
@@ -147,22 +123,6 @@ export default {
       console.log("citizens", this.$store.getters.loadCitizens());
       return this.$store.getters.loadCitizens;
     },
-    nbrCitizenZoneA() {
-      console.log("citizen zone A", this.$store.getters.citizenZoneA);
-      return this.$store.getters.citizenZoneA;
-    },
-    nbrCitizenZoneD() {
-      console.log("citizen zone D", this.$store.getters.citizenZoneD);
-      return this.$store.getters.citizenZoneD;
-    },
-    nbrCitizenZoneB() {
-      console.log("citizen zone D", this.$store.getters.citizenZoneB);
-      return this.$store.getters.citizenZoneB;
-    },
-    nbrCitizenZoneC() {
-      console.log("citizen zone D", this.$store.getters.citizenZoneC);
-      return this.$store.getters.citizenZoneC;
-    },
     nbrPolicierZoneA() {
       console.log("policier zone A", this.$store.getters.policierZoneA);
       return this.$store.getters.policierZoneA;
@@ -182,10 +142,8 @@ export default {
   },
   data() {
     return {
-      ZoneA: [43.6204, 7.0789],
-      ZoneB: [43.6204, 7.0619],
-      ZoneC: [43.6104, 7.0789],
-      ZoneD: [43.6104, 7.0619],
+      Zones : store.getters.getZones,
+      Citizens : store.getters.loadCitizens,
       circleRedPosition: [43.6194, 7.0669],
       zoom: 15,
       maxZoom: 18,
@@ -206,6 +164,13 @@ export default {
     },
   },
   methods: {
+    nbrCitizenZone(a) {
+      console.log("citizen zone", this.$store.getters.citizenZoneA);
+      return this.$store.getters.getCitizen(a);
+    },
+    nbrPolicierZone(a) {
+      return this.$store.getters.getPoliciers(a);
+    },
     log(a) {
       console.log(a);
     },
@@ -217,19 +182,21 @@ export default {
       });
     },
     displayCircle(a){
-      if (a>400) {
+      let nbrCitizen = this.nbrCitizenZone(a);
+      if (nbrCitizen>400) {
         return 400
       }
       else {
-        return a
+        return nbrCitizen
       }
     },
-    createColor(nb){
-      if(nb<400){
+    createColor(a){
+      let nbrCitizen = this.nbrCitizenZone(a);
+      if(nbrCitizen<400){
         return "#13db20"
       }
       else {
-        if (nb<1000) {
+        if (nbrCitizen<1000) {
           return "#db8611"
         }
         else {
@@ -247,10 +214,9 @@ export default {
   float: right;
   position: relative;
   margin-right: 10px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 3px solid #0cb50b;
   background-color: rgba(237, 237, 237, 0.84);
-
 
 }
 .map {
