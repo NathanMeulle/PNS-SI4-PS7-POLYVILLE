@@ -164,10 +164,10 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return res;
     }
     private List<Zone> initZones() {
-        Zone zoneA =  new Zone("ZoneA", new Position( 43.6254, 7.0839));
-        Zone zoneB =  new Zone("ZoneB", new Position( 43.6254, 7.0569));
-        Zone zoneC =  new Zone("ZoneC", new Position( 43.6054, 7.0839));
-        Zone zoneD =  new Zone("ZoneD", new Position( 43.6054, 7.0569));
+        Zone zoneA =  new Zone("Zone A", new Position( 43.6254, 7.0839));
+        Zone zoneB =  new Zone("Zone B", new Position( 43.6254, 7.0569));
+        Zone zoneC =  new Zone("Zone C", new Position( 43.6054, 7.0839));
+        Zone zoneD =  new Zone("Zone D", new Position( 43.6054, 7.0569));
         return List.of(zoneA, zoneB, zoneC, zoneD);
     }
 
