@@ -24,7 +24,7 @@
                                 </u>
                                   {{getNom()[0]}} <br>
                                    {{getNom()[1]}} <br>
-                                 23 rue de l'Exemple
+                                 {{getAdress()}}
                             </slot>
                         </div>
                         <div class="modal-footer-wrapper" style="height: 40px; width: 100%">
@@ -87,6 +87,9 @@
             },
             getType() {
                 return this.$store.getters.getTypeCommerce(this.id);
+            },
+            getAdress() {
+                return this.$store.getters.getAdressCommerce(this.id);
             }
 
         }

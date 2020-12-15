@@ -16,32 +16,32 @@
             </l-marker>
         </div>
         <div v-else-if="iconType==='Pharmacie'" >
-            <l-marker :lat-lng="position" :icon="Pharmacie" @moveend="log('moveend')">
+            <l-marker :lat-lng="position" :icon="Pharmacie" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
         <div v-else-if="iconType==='Boulangerie'" >
-            <l-marker :lat-lng="position" :icon="Boulangerie" @moveend="log('moveend')">
+            <l-marker :lat-lng="position" :icon="Boulangerie" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
         <div v-else-if="iconType==='Fleuriste'" >
-            <l-marker :lat-lng="position" :icon="Fleuriste" @moveend="log('moveend')">
+            <l-marker :lat-lng="position" :icon="Fleuriste" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
         <div v-else-if="iconType==='Bar'" >
-            <l-marker :lat-lng="position" :icon="Bar" @moveend="log('moveend')">
+            <l-marker :lat-lng="position" :icon="Bar" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
         <div v-else-if="iconType==='SuperMarché'" >
-            <l-marker :lat-lng="position" :icon="SuperMarche" @moveend="log('moveend')">
+            <l-marker :lat-lng="position" :icon="SuperMarche" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
         <div v-else-if="iconType==='Restaurant'" >
-            <l-marker :lat-lng="position" :icon="Restaurant" @moveend="log('moveend')">
+            <l-marker :lat-lng="position" :icon="Restaurant" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>

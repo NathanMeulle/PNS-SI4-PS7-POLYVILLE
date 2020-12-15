@@ -125,6 +125,15 @@ export const villeModule = {
             })
             return type;
         },
+        getAdressCommerce : (state) => (id) => {
+            let adress = "";
+            state.Ville[0].ville.commerces.forEach(commerce => {
+                if (commerce.id === id) {
+                    adress = commerce.adresse;
+                }
+            })
+            return adress;
+        }
     },
     actions: {
         async setClosingHour(context, hour) {
