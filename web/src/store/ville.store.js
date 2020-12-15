@@ -58,7 +58,7 @@ export const villeModule = {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
                 if(commerce.id === id){
-                    horaires = commerce.horaires[0].semaine;
+                    horaires = commerce.horaires;
                     return horaires;
                 }
                 else {
@@ -68,7 +68,7 @@ export const villeModule = {
 
               state.Ville[0].ville.parkings.forEach(parking => {
                 if(parking.id === id){
-                    horaires = parking.horaires[0].semaine;
+                    horaires = parking.horaires;
                     return horaires;
                 }
             });
