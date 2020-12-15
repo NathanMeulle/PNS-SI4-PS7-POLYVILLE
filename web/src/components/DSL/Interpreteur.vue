@@ -30,6 +30,7 @@ export default {
     getData(listeCommandes){
       this.error = ""
       this.programme = listeCommandes
+      if(this.programme.length===0) this.error="Programme vide"
       console.log("mon programme : ",this.programme)
       this.Pour()
       this.Si()

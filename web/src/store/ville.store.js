@@ -1,5 +1,5 @@
 
-import { VilleMock } from "../mocks/Ville.mock.js"
+import { VilleMock } from "@/mocks/Ville.mock"
 
 export const villeModule = {
     namespace: false,

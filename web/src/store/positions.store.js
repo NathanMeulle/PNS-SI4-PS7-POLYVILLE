@@ -1,7 +1,5 @@
 import { PositionMock } from "@/mocks/Position.mock"
-
-function isInSquare(x,y,a,b){
-
+export function isInSquare(x, y, a, b){
     let bottomLeftX = (a-0.010);
     let bottomLeftY = (b-0.010);
     let topRightX = (a+0.010);
@@ -17,7 +15,6 @@ function isInSquare(x,y,a,b){
 
     return (inX && inY);
 }
-
 export const positionModule = {
     namespace: false,
     state(){
@@ -26,29 +23,6 @@ export const positionModule = {
         }
     },
     mutations:{
-
-        deplacerPoliciers(state, payload) {
-            console.log(payload.nbZone)
-            console.log("policiers :",payload.nbPoliciers)
-            console.log(payload.args.policiers)
-            let agir = false
-            if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone)
-            if(agir){
-                let i = 0
-                i += payload.nbPoliciers;
-                let j = 0
-                while(i<payload.args.policiers){
-                    console.log(i)
-                    if (!(state.positions[0].policiers[j].position.x > 43.6154 && state.positions[0].policiers[j].position.y > 7.0669)){
-                        console.log("oui")
-                        state.positions[0].policiers[j].position.x = 43.6204
-                        state.positions[0].policiers[j].position.y = 7.0789
-                        i++
-                    }
-                    j++
-                }
-            }
-        }
 
     },
     getters:{
@@ -175,21 +149,5 @@ export const positionModule = {
 
     },
     actions: {
-        async deplacerPoliciers(context,args){
-            console.log(args)
-            let nbZone = 0
-            let nbPoliciers = 0
-            if(args.zone1 === "Zone A") {
-                nbZone = context.getters.citizenZoneA
-                nbPoliciers = context.getters.policierZoneA
-            }
-            if(args.zone1 === "Zone B") nbZone = context.getters.citizenZoneB
-            try{
-                context.commit('deplacerPoliciers',{args : args, nbZone: nbZone, nbPoliciers: nbPoliciers});
-            }
-            catch(error){
-                console.log('error ', error);
-            }
-        },
     }
 }
