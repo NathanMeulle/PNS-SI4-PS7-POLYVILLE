@@ -103,6 +103,28 @@ export const villeModule = {
                 }
             })
         },
+        getNomCommerce : (state) => (id) => {
+            let nom = [];
+            state.Ville[0].ville.commerces.forEach( commerce => {
+                if (commerce.id === id) {
+                    nom.push(commerce.commercant.nom);
+                    nom.push(commerce.commercant.prenom);
+                    nom.push(commerce.nom);
+                    console.log('NOM COMMERCANT',nom )
+                }
+            })
+            return nom;
+        },
+        getTypeCommerce :   (state) => (id) => {
+             let type = "";
+             state.Ville[0].ville.commerces.forEach(commerce => {
+                if (commerce.id === id) {
+                    type = commerce.categorie;
+                    console.log('TYPE COMMERCANT', type)
+                 }
+            })
+            return type;
+        },
     },
     actions: {
         async setClosingHour(context, hour) {

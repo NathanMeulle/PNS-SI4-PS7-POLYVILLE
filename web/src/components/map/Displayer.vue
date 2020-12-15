@@ -6,12 +6,10 @@
     </div>
     <div v-if="hours===true">
         <HoursChart></HoursChart>
-        <div class="freq" @click=" getfreq()">
-            Ce point a été consulté
-            {{displayfreq()}}
-            {{nbrfreq}}
-              fois
+        <div class="freq" @click="(showModal = true)">
+                + d'infos ?
         </div>
+        <PopUp v-if="showModal" @close="showModal = false"/>
     </div>
     <div v-else>
         Sélectionnez un commerce pour afficher ses informations
@@ -22,16 +20,20 @@
 
 <script>
     import HoursChart from "../stats/HoursChart";
+    import PopUp from "./PopUp";
     export default {
         name: "Displayer",
         data() {
           return {
               circleInfo :"test",
               nbrfreq:0,
+              showModal: false,
           }
         },
         components: {
           HoursChart,
+            PopUp,
+
         },
         props : {
             data : String,
@@ -45,20 +47,6 @@
                 console.log("ID: ", this.$store.getters.getId);
                 return this.$store.getters.getId;
             },
-            getfreq() {
-                console.log("FREQs: ", this.$store.getters.getfreqTab[0]);
-                return this.$store.getters.getfreqTab;
-            },
-            displayfreq() {
-                this.getfreq().forEach(map => {
-                    if (map[0]=== this.getId()){
-                        console.log('FREQ: ',map[1]);
-                        this.nbrfreq=map[1];
-                        return map[1];
-                    }
-                })
-
-            }
 
         }
 
