@@ -143,9 +143,13 @@
     }
 
     .modal-default-button {
+        width: 60px;
         float: right;
         margin: 5px;
         border-radius: 5px;
+        text-align: center;
+        color: #0cb50b;
+        font-family: "Sofia", sans-serif;
         border: 3px solid #0cb50b;
         cursor: pointer;
     }

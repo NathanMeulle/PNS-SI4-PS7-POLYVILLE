@@ -62,9 +62,12 @@
     padding: 20px;
     margin: 10px;
     cursor: pointer;
+    box-shadow: 4px 4px 2px 1px #266027;
 }
 .freq:hover {
-    box-shadow: 4px 4px 2px 1px #266027;
+    border: 5px solid #0cb50b;
+    background-color : lightgrey;
+
 }
 
 .welcomeText {
