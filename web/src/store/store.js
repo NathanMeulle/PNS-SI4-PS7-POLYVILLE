@@ -52,6 +52,10 @@ export default createStore({
                     a = this.state.villeModule.Ville[0].ville.zones[0].position.x
                     b = this.state.villeModule.Ville[0].ville.zones[0].position.y
                 }
+                if(payload.args.zone2 === "Zone B"){
+                    a = this.state.villeModule.Ville[0].ville.zones[1].position.x
+                    b = this.state.villeModule.Ville[0].ville.zones[1].position.y
+                }
                 let policiers = this.state.positionsModule.positions[0].policiers
                 while(i<payload.args.policiers){
                     if (!isInSquare(policiers[j].position.x,policiers[j].position.y,a,b)){

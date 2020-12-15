@@ -152,11 +152,9 @@ export default {
   },
   methods: {
     nbrCitizenZone(a) {
-      console.log("citizen zone", this.$store.getters.citizenZoneA);
       return this.$store.getters.getCitizen(a);
     },
     nbrPolicierZone(a) {
-      console.log('NOMBRE POLICIER :', a, ' ', this.$store.getters.getPoliciers(a) )
       return this.$store.getters.getPoliciers(a);
     },
     getPositionZone(a) {
