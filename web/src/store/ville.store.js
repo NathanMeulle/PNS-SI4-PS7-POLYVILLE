@@ -1,5 +1,5 @@
 
-import { VilleMock } from "../mocks/Ville.mock.js"
+import { VilleMock } from "@/mocks/Ville.mock"
 
 export const villeModule = {
     namespace: false,
@@ -88,7 +88,21 @@ export const villeModule = {
         },
         getfreqTab: (state) => {
             return state.freq;
-        }
+        },
+        getZones : (state) => {
+            return state.Ville[0].ville.zones;
+        },
+        getPositionZone : (state) => (id) =>{
+            let pos = [];
+            state.Ville[0].ville.zones.forEach( zone => {
+                if (zone.id === id) {
+                    pos.push(zone.position.x);
+                    pos.push(zone.position.y);
+                    console.log('POSITION ZONE', zone.id, ' ', pos);
+                    return pos;
+                }
+            })
+        },
     },
     actions: {
         async setClosingHour(context, hour) {

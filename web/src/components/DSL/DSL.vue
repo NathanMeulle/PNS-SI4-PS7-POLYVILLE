@@ -46,17 +46,17 @@
             <div v-if="item.type !== 5">
               {{ item.title }}
               <div class="logo">
-                <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
-                <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
-                <i class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</i>
+                <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</em>
               </div>
             </div>
             <div v-else>
               {{item.input}}
               <div class="logo">
-                <i class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</i>
-                <i class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</i>
-                <i class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</i>
+                <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</em>
               </div>
             </div>
           </div>
@@ -149,20 +149,34 @@ export default {
         },
         {
           id: 10,
-          title: 'heures',
+          title: 'Zone C',
           position: -1,
           type:4,
           list: 4
         },
         {
           id: 11,
+          title: 'Zone D',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 12,
+          title: 'heures',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 13,
           title: 'magasins',
           position: -1,
           type:3,
           list: 3
         },
         {
-          id: 12,
+          id: 14,
           title: 'fermeture',
           position: -1,
           type:4,
@@ -205,7 +219,6 @@ export default {
       const itemID = evt.dataTransfer.getData('itemID')
       const item = this.items.find(item => item.id === Number(itemID))
       if(item.list === 2 || list!==2){
-        this.error = "Déplacement impossible"
         item.list = item.type
       }
       else{
@@ -231,7 +244,7 @@ export default {
       this.error = ''
       const item = this.items.find(item => item.id === id)
       if(!isNaN(this.message[item.id])) item.input = this.message[item.id]
-      else this.error = 'Il faut rentrer un nombre'
+      else this.error = 'Le champ est vide'
       this.message[item.id] = ""
     },
     launch(){

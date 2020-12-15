@@ -24,7 +24,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected List<Commercant> commercants;
     protected List<Commerce> commerces;
     protected final int longeur = 180;
-    protected final int largeur = 315;
+    protected final int largeur = 310;
+    protected final double d = 0.04;
     protected List<Client> clients;
     protected List<Policier> policiers;
     protected List<Parking> parkings;
@@ -56,8 +57,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         List<Client> tmp = new ArrayList<>();
         for (int k = 0; k < NB_CLIENTS; k++) {
             Random r = new Random();
-            double x = (r.nextGaussian() * (this.longeur + 1)) / 10000.0 + 43.6055;
-            double y = (r.nextGaussian() * (this.largeur + 1)) / 10000.0 + 7.0500;
+            double x = (r.nextGaussian() * this.d) / 7 + 43.6154;
+            double y = (r.nextGaussian() * this.d) / 7  + 7.0719;
             tmp.add(new Client(k, new Position(x, y), Math.random() < 0.5 ? ModeDeplacement.BUS : ModeDeplacement.VOITURE));
         }
         return tmp;
@@ -162,10 +163,10 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         return res;
     }
     private List<Zone> initZones() {
-        Zone zoneA =  new Zone("ZoneA", new Position( 43.6204, 7.0789));
-        Zone zoneB =  new Zone("ZoneB", new Position( 43.6204, 7.0619));
-        Zone zoneC =  new Zone("ZoneC", new Position( 43.6104, 7.0789));
-        Zone zoneD =  new Zone("ZoneD", new Position( 43.6104, 7.0619));
+        Zone zoneA =  new Zone("Zone A", new Position( 43.6254, 7.0839));
+        Zone zoneB =  new Zone("Zone B", new Position( 43.6254, 7.0569));
+        Zone zoneC =  new Zone("Zone C", new Position( 43.6054, 7.0839));
+        Zone zoneD =  new Zone("Zone D", new Position( 43.6054, 7.0569));
         return List.of(zoneA, zoneB, zoneC, zoneD);
     }
 
