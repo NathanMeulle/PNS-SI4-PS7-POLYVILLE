@@ -24,6 +24,7 @@
             v-bind:msg="currentMarker.categorie"
             v-bind:name="currentMarker.nom"
             v-bind:id="currentMarker.id"
+            v-bind:iconType="currentMarker.categorie"
             @displayhours="displayHours=true"
             @click="toDisplay('Bienvenue ' + id)"
           />
@@ -69,19 +70,19 @@
         <div v-if="filterOption.includes('Police')" class="police" >
           <Marker v-if="nbrPolicierZone('Zone A')>=50" v-bind:position="zoneA"
                   v-bind:msg="nbrPolicierZone('Zone A') + ' policiers'"
-                  v-bind:iconType="'Policier'"
+                  v-bind:iconType="'police'"
           />
           <Marker v-if="nbrPolicierZone('Zone B')>=50" v-bind:position="zoneB"
                   v-bind:msg="nbrPolicierZone('Zone B') + ' policiers'"
-                  v-bind:iconType="'Policier'"
+                  v-bind:iconType="'police'"
           />
           <Marker v-if="nbrPolicierZone('Zone C')>=50" v-bind:position="zoneC"
                   v-bind:msg="nbrPolicierZone('Zone C') + ' policiers'"
-                  v-bind:iconType="'Policier'"
+                  v-bind:iconType="'police'"
           />
           <Marker v-if="nbrPolicierZone('Zone D')>=50" v-bind:position="zoneD"
                   v-bind:msg="nbrPolicierZone('Zone D') + ' policiers'"
-                  v-bind:iconType="'Policier'"
+                  v-bind:iconType="'police'"
           />
 
 

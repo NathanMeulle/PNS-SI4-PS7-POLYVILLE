@@ -94,11 +94,15 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         DataCommerce data = new DataCommerce();
         ArrayList<String> categorie = data.getCategorie();
         Collections.shuffle(categorie);
+        DataName dataName = new DataName();
+        ArrayList<String> nom = dataName.getNom();
+        Collections.shuffle(nom); //Mélange de la liste
 
         for (int k = 0; k < commercants.size(); k++) {
             List<Semaine> h = initHoraire();
             Position p = commercants.get(k).getPosition();
-            commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
+            int i = (int) (Math.random() * 120);
+            commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h, i + (i%3==0?" avenue de ":" rue de ") + dataName.getNom().get(i)));
         }
     }
 

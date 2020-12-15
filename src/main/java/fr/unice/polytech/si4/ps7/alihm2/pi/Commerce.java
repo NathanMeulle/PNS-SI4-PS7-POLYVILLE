@@ -16,14 +16,16 @@ public class Commerce extends PI {
     private Commercant commercant;
     private String categorie;
     private List<Semaine> horaires;
+    private String adresse;
 
-    public Commerce(int id, Position position, String nom, Commercant commercant, String categorie, List<Semaine> horaires) {
+    public Commerce(int id, Position position, String nom, Commercant commercant, String categorie, List<Semaine> horaires, String adresse) {
         super(position);
         this.id = id;
         this.nom = nom;
         this.commercant = commercant;
         this.categorie = categorie;
         this.horaires = horaires;
+        this.adresse = adresse;
     }
 
     public int getId() {
@@ -44,5 +46,9 @@ public class Commerce extends PI {
 
     public List<Semaine> getHoraires() {
         return horaires;
+    }
+
+    public String getAdresse() {
+        return adresse;
     }
 }
