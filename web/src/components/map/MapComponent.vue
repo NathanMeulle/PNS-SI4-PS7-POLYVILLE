@@ -34,10 +34,11 @@
                   v-for="currentParking in parkingStore"
                   :key="currentParking.id"
                   :parking="currentParking"
-                  v-bind:position="[
-              currentParking.position.x,
-              currentParking.position.y,
-            ]"
+                  v-bind:position="
+                             [
+                             currentParking.position.x,
+                             currentParking.position.y,
+                             ]"
                   v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
                   v-bind:iconType="'Parking'"
                   v-bind:id="currentParking.id"
@@ -63,6 +64,7 @@
             @click="toDisplay('Zone :' + currentCircle.id + '\n Nombre de citoyen présent : \n' + nbrCitizenZone(currentCircle.id)+ '\nNombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
 
           />
+
         </div>
         <div v-if="filterOption.includes('Police')" class="police" >
           <Marker v-if="nbrPolicierZoneA>=50" v-bind:position="ZoneA"
@@ -119,25 +121,21 @@ export default {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
     },
-    citizen() {
-      console.log("citizens", this.$store.getters.loadCitizens());
-      return this.$store.getters.loadCitizens;
-    },
     nbrPolicierZoneA() {
       console.log("policier zone A", this.$store.getters.policierZoneA);
-      return this.$store.getters.policierZoneA;
+      return this.$store.getters.getPoliciers("ZoneA");
     },
     nbrPolicierZoneD() {
       console.log("policier zone D", this.$store.getters.policierZoneD);
-      return this.$store.getters.policierZoneD;
+      return this.$store.getters.getPoliciers("ZoneD");
     },
     nbrPolicierZoneB() {
       console.log("policier zone D", this.$store.getters.policierZoneB);
-      return this.$store.getters.policierZoneB;
+      return this.$store.getters.getPoliciers("ZoneB");
     },
     nbrPolicierZoneC() {
       console.log("policier zone D", this.$store.getters.policierZoneC);
-      return this.$store.getters.policierZoneC;
+      return this.$store.getters.getPoliciers("ZoneC");
     },
   },
   data() {
@@ -145,7 +143,7 @@ export default {
       Zones : store.getters.getZones,
       Citizens : store.getters.loadCitizens,
       circleRedPosition: [43.6194, 7.0669],
-      zoom: 15,
+      zoom: 14,
       maxZoom: 18,
       minZoom: 13,
       maxBounds: [

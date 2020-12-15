@@ -23,8 +23,9 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected Ville ville;
     protected List<Commercant> commercants;
     protected List<Commerce> commerces;
-    protected final int longeur = 100;
-    protected final int largeur = 300;
+    protected final int longeur = 180;
+    protected final int largeur = 310;
+    protected final double d = 0.04;
     protected List<Client> clients;
     protected List<Policier> policiers;
     protected List<Parking> parkings;
@@ -58,8 +59,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
 
         for (int k = 0; k < nbClients; k++) {
             Random r = new Random();
-            double x = (r.nextGaussian() * (this.longeur + 1)) / 10000.0 + 43.6055;
-            double y = (r.nextGaussian() * (this.largeur + 1)) / 10000.0 + 7.0500;
+            double x = (r.nextGaussian() * this.d) / 7 + 43.6154;
+            double y = (r.nextGaussian() * this.d) / 7  + 7.0719;
             tmp.add(new Client(k, new Position(x, y), Math.random() < 0.5 ? ModeDeplacement.BUS : ModeDeplacement.VOITURE));
         }
         return tmp;
