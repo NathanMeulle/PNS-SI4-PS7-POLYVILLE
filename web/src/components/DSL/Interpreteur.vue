@@ -6,7 +6,7 @@
     <span id="reussite">{{reussite}}</span>
   </div>
   <br/>
-  <DSL v-on:launch="getData($event)"/>
+  <DSL v-on:launch="getData($event,false)" v-on:check="getData($event,true)"/>
 </template>
 
 <script>
@@ -22,12 +22,14 @@ export default {
       infOrSup: '',
       heure: -1,
       error: "",
-      reussite: ""
+      reussite: "",
+      check: false,
     }
   },
 
   methods:{
-    getData(listeCommandes){
+    getData(listeCommandes,check){
+      this.check = check
       this.error = ""
       this.programme = listeCommandes
       if(this.programme.length===0) this.error="Programme vide"
@@ -126,8 +128,16 @@ export default {
         if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
 
         else{
-          this.reussite = "Changement d'heure de fermeture effectué"
-          this.$store.dispatch('setClosingHour',this.heure)
+          if(!this.check){
+            this.reussite = "Changement d'heure de fermeture effectué"
+            this.$store.dispatch('setClosingHour',this.heure)
+          }
+          else {
+            this.programme[this.programme.length] = "changement d'heure de fermeture des magasins"
+            console.log(this.programme)
+            this.$store.commit('setNewMacro', this.programme)
+            this.reussite = "Raccourci créé"
+          }
         }
 
       }

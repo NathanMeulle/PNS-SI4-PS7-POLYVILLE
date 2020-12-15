@@ -14,7 +14,7 @@ export const villeModule = {
         setClosingHour: (state, payload) => {
             state.Ville[0].ville.commerces.forEach(commerce => {
 
-                for (const [key, value] of Object.entries(commerce.horaires[0])) {
+                for (const [key, value] of Object.entries(commerce.horaires[0].semaine)) {
                     //console.log(`${key}: ${value}`);
                     key;
                     if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée

@@ -1,6 +1,8 @@
 import {createStore} from 'vuex'
 import { villeModule } from './ville.store.js';
 import { positionModule } from './positions.store.js';
+import { macroModule } from './macro.store.js'
+
 
 function isInSquare(x,y,a,b){
 
@@ -25,6 +27,7 @@ export default createStore({
     modules: {
         villeModule: villeModule,
         positionsModule: positionModule,
+        macroModule: macroModule,
     },
     state() {
         return {
