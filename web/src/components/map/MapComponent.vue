@@ -67,20 +67,20 @@
 
         </div>
         <div v-if="filterOption.includes('Police')" class="police" >
-          <Marker v-if="nbrPolicierZoneA>=50" v-bind:position="ZoneA"
-                  v-bind:msg="nbrPolicierZoneA + ' policiers'"
+          <Marker v-if="nbrPolicierZone('Zone A')>=50" v-bind:position="zoneA"
+                  v-bind:msg="nbrPolicierZone('Zone A') + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
-          <Marker v-if="nbrPolicierZoneB>=50" v-bind:position="ZoneB"
-                  v-bind:msg="nbrPolicierZoneB + ' policiers'"
+          <Marker v-if="nbrPolicierZone('Zone B')>=50" v-bind:position="zoneB"
+                  v-bind:msg="nbrPolicierZone('Zone B') + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
-          <Marker v-if="nbrPolicierZoneC>=50" v-bind:position="ZoneC"
-                  v-bind:msg="nbrPolicierZoneC + ' policiers'"
+          <Marker v-if="nbrPolicierZone('Zone C')>=50" v-bind:position="zoneC"
+                  v-bind:msg="nbrPolicierZone('Zone C') + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
-          <Marker v-if="nbrPolicierZoneD>=50" v-bind:position="ZoneD"
-                  v-bind:msg="nbrPolicierZoneD + ' policiers'"
+          <Marker v-if="nbrPolicierZone('Zone D')>=50" v-bind:position="zoneD"
+                  v-bind:msg="nbrPolicierZone('Zone D') + ' policiers'"
                   v-bind:iconType="'Policier'"
           />
 
@@ -121,22 +121,6 @@ export default {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
     },
-    nbrPolicierZoneA() {
-      console.log("policier zone A", this.$store.getters.policierZoneA);
-      return this.$store.getters.getPoliciers("ZoneA");
-    },
-    nbrPolicierZoneD() {
-      console.log("policier zone D", this.$store.getters.policierZoneD);
-      return this.$store.getters.getPoliciers("ZoneD");
-    },
-    nbrPolicierZoneB() {
-      console.log("policier zone D", this.$store.getters.policierZoneB);
-      return this.$store.getters.getPoliciers("ZoneB");
-    },
-    nbrPolicierZoneC() {
-      console.log("policier zone D", this.$store.getters.policierZoneC);
-      return this.$store.getters.getPoliciers("ZoneC");
-    },
   },
   data() {
     return {
@@ -153,6 +137,11 @@ export default {
       iconWidth: 25,
       iconHeight: 40,
       displayHours : false,
+      zoneA : [43.6254,7.0839],
+      zoneB :[43.6254,7.0569],
+      zoneC :[ 43.6054,7.0839],
+      zoneD : [ 43.6054,7.0569],
+
     };
   },
   props: {
@@ -167,7 +156,11 @@ export default {
       return this.$store.getters.getCitizen(a);
     },
     nbrPolicierZone(a) {
+      console.log('NOMBRE POLICIER :', a, ' ', this.$store.getters.getPoliciers(a) )
       return this.$store.getters.getPoliciers(a);
+    },
+    getPositionZone(a) {
+      return this.$store.getters.getPositionZone(a);
     },
     log(a) {
       console.log(a);

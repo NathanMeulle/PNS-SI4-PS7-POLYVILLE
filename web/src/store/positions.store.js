@@ -54,7 +54,6 @@ export const positionModule = {
                   }
               }
           })
-            console.log('NBR CITIZEN: ', nbCitizen, ' ', myZone);
         return nbCitizen;
         },
         getPoliciers: (state, getters) => (myZone) => {
