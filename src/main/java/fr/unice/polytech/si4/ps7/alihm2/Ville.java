@@ -3,7 +3,6 @@ package fr.unice.polytech.si4.ps7.alihm2;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Parking;
-import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 
 import java.util.List;
 /**

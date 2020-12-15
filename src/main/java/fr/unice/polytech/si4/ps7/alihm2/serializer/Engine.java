@@ -11,7 +11,7 @@ import java.io.PrintStream;
  * @author nathan
  */
 public class Engine {
-    public static EngineSettingsInterface engineSettings = new EngineSettingsSmall1();//A modifier pour changer la simulation
+    public static final EngineSettingsInterface engineSettings = new EngineSettingsSmall1();//A modifier pour changer la simulation
 
 
 
@@ -27,32 +27,35 @@ public class Engine {
     }
 
     private static void saveJsonFile(String json, String jsonPosition) {
+        PrintStream fichierDeSortie = null;
+        PrintStream fichierDeSortie2 = null;
         try {
             // Enregistre la sortie initiale.
             PrintStream sortieOriginale = System.out;
 
             // Créé un nouveau fichier de sortie
             String path = System.getProperty("user.dir") + "/web/src/mocks"; // Chemin direct vers les mocks de vueJS
-            PrintStream fichierDeSortie = new PrintStream(path + "/Ville.mock.js");
-            PrintStream fichierDeSortie2 = new PrintStream(path + "/Position.mock.js");
+            fichierDeSortie = new PrintStream(path + "/Ville.mock.js");
+            fichierDeSortie2 = new PrintStream(path + "/Position.mock.js");
             System.out.println("\n Json Créé !");
 
             // Redirige la sortie vers le fichier .js
             System.setOut(fichierDeSortie);
-            System.out.println("export const VilleMock = [\n");
-            System.out.println(json);
-            System.out.println("\n]");
+            System.out.println("export const VilleMock = [\n" + json + "\n]");
 
             System.setOut(fichierDeSortie2);
-            System.out.println("export const PositionMock = [\n");
-            System.out.println(jsonPosition);
-            System.out.println("\n]");
+            System.out.println("export const PositionMock = [\n" + jsonPosition + "\n]");
 
             System.setOut(sortieOriginale);
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
-        }
+        } finally {
+            assert fichierDeSortie != null;
+            fichierDeSortie.close();
+            assert fichierDeSortie2 != null;
+            fichierDeSortie2.close();
+    }
     }
 
 
