@@ -24,22 +24,26 @@
                                 </u>
                                   {{getNom()[0]}} <br>
                                    {{getNom()[1]}} <br>
-                                 23 rue de l'Example
+                                 23 rue de l'Exemple
                             </slot>
                         </div>
+                        <div class="modal-footer-wrapper" style="height: 40px; width: 100%">
+                            <div class="modal-footer" style="width: 50%">
+                                <slot name="footer">
+                                    Ce point a été consulté
+                                    {{displayfreq()}}
+                                    {{nbrfreq}}
+                                    fois
 
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                Ce point a été consulté
-                                {{displayfreq()}}
-                                {{nbrfreq}}
-                                fois
-
-                            </slot>
+                                </slot>
+                            </div>
                             <div class="modal-default-button" @click="$emit('close')">
                                 fermer
                             </div>
+
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -113,10 +117,12 @@
 
     .modal-container {
         width: 500px;
+        height: 220px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
-        border-radius: 2px;
+        border-radius: 10px;
+        border: 3px solid #0cb50b;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
         transition: all 0.3s ease;
         font-family: Helvetica, Arial, sans-serif;
@@ -141,20 +147,30 @@
         font-family: "Sofia", sans-serif;
         font-size: 15px;
     }
+    .modal-footer{
+        margin: 20px 0;
+        color: #312f31;
+        font-family: "Sofia", sans-serif;
+        font-size: 15px;
+    }
 
     .modal-default-button {
-        width: 60px;
         float: right;
-        margin: 5px;
-        border-radius: 5px;
+        width: 30%;
+        float: right;
+        border-radius: 50px;
+        margin: auto;
         text-align: center;
         color: #0cb50b;
         font-family: "Sofia", sans-serif;
+        font-size: 18px;
         border: 3px solid #0cb50b;
         cursor: pointer;
+        box-shadow: 4px 4px 2px 1px #266027;
     }
     .modal-default-button:hover {
-        box-shadow: 4px 4px 2px 1px #266027;
+        border: 5px solid #0cb50b;
+        background-color : lightgrey;
     }
 
     .modal-enter .modal-container,

@@ -61,7 +61,7 @@
             :fill="true"
             :fillOpacity="0.5"
             :fillColor="createColor(currentCircle.id)"
-            @click="toDisplay('Zone :' + currentCircle.id + '\n Nombre de citoyen présent : \n' + nbrCitizenZone(currentCircle.id)+ '\nNombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
+            @click="toDisplay(  currentCircle.id + ':  Nombre de citoyen présent : ' + nbrCitizenZone(currentCircle.id)+ ' Nombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
 
           />
 
