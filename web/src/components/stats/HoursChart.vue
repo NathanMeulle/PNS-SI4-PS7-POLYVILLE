@@ -172,7 +172,14 @@ export default {
               borderColor: "rgba(255, 56, 96, 0.5)",
               backgroundColor: "rgba(0,255,0,0.4)",
               data: MorningData,
+              
             },
+            3: {
+              label: "haha",
+              borderColor: "rgba(50, 115, 220, 0.5)",
+              backgroundColor: "rgba(0,255,255,0.4)",
+              data: AfternoonData,
+            }
           }
       return datacollection;
     },
