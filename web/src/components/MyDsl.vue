@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button v-on:click="oui()">TEST 51 policiers zone A si citoyens > 50</button>
     <router-link active-class="active" to="/dsl/aide" id="help">
       <button>Aide</button>
     </router-link>
@@ -18,10 +17,6 @@ export default {
   components: {Interpreteur},
 
   methods:{
-      oui(){
-        this.$store.dispatch('deplacerPoliciers',{citoyens : 50,
-          cond : 'sup',zone1 : "Zone A",policiers : 51,zone2: "Zone A"})
-      }
   }
 
 };
