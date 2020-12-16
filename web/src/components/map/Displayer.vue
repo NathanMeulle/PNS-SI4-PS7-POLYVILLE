@@ -5,7 +5,7 @@
         {{display()}}
     </div>
     <div v-if="hours===true">
-        <HoursChart></HoursChart>
+         <HoursChart></HoursChart>
         <div class="freq" @click="(showModal = true)">
                 + d'infos ?
         </div>

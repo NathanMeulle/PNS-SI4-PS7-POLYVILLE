@@ -27,7 +27,7 @@
         <label class="container" for="checkboxPolice">
             <input type="checkbox" id="checkboxPolice" value="Police" v-model="loadCheckbox" v-on:input="doSelect('Police')">
             <span class="checkmark">
-                Présence Policère
+                Présence Policière
             </span>
         </label>
 
@@ -109,9 +109,9 @@
     .navbar {
         overflow: hidden;
         font-family: Arial;
-        border: 3px solid #0cb50b;
-        border-radius: 10px;
-        box-shadow: 4px 4px 2px 1px #266027;
+        border: 2px solid #cbcbcb;
+        border-radius: 3px;
+        background-color: #cbcbcb;
         height: 100%;
         width: 100%;
         margin: 4px;
@@ -135,7 +135,7 @@
         font-family: "Sofia", sans-serif;
         font-size: 16px;
         padding: 14px 50px;
-        background-color: inherit;
+        background-color: white ;
         border: 2px solid #0cb50b;
         border-radius: 25px;
         margin: 2px;
@@ -208,7 +208,9 @@
         width: 25px;
         padding: 14px 15px;
         position: relative;
+        background-color: white ;
         border: 2px solid #0cb50b;
+        box-shadow: 4px 4px 2px 1px #266027;
         border-radius: 25px;
         margin: 2px;
         z-index: 2;
@@ -216,7 +218,8 @@
 
     /* On mouse-over, add a grey background color */
     .container:hover input ~ .checkmark {
-        background-color: lightslategrey;
+        background-color: #cbcbcb;
+        border: 5px solid #0cb50b;
     }
 
     /* When the checkbox is checked, add a blue background */
