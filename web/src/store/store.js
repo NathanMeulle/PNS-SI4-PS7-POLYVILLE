@@ -30,11 +30,20 @@ export default createStore({
         return {
             infoCircle : "",
             idStore : 0,
+            checkedOptions: []
         }
     },
     mutations : {
         setInformation: (state, payload) => state.infoCircle = payload.circleinfo,
         sendId: (state,payload) => state.idStore = payload.id,
+        setCheckbox(state, payload) {
+            if (!state.checkedOptions.includes(payload.CheckedBox)) {
+                state.checkedOptions.push(payload.CheckedBox);
+            } else {
+                state.checkedOptions.splice(state.checkedOptions.indexOf(payload.CheckedBox), 1);
+            }
+        },
+
 
         deplacerPoliciers(state, payload) {
             console.log(payload.nbZone)
@@ -74,6 +83,9 @@ export default createStore({
         },
         getId: state => {
             return state.idStore;
+        },
+        getCheckBox: state => {
+            return state.checkedOptions;
         }
     },
     actions:{
