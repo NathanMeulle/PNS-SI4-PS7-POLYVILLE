@@ -20,8 +20,15 @@ export const dslModule = {
         },
 
         addRegle(state,payload){
-            state.regles.push(payload)
-        }
+            let existe = false
+            state.regles.forEach((regle)=>{
+                if(regle.titre === payload.titre) {
+                    existe = true
+                    regle.valeur = payload.valeur
+                }
+            })
+            if(!existe) state.regles.push(payload)
+        },
     },
     getters:{
         getMacros: state => {
@@ -29,6 +36,13 @@ export const dslModule = {
         },
         getRegles: state => {
             return state.regles;
+        },
+        getRegleHeureFermeture: state =>{
+            let heure = -1
+            state.regles.forEach((regle) =>{
+                if(regle.titre === 'Fermeture magasins') heure = regle.valeur
+            })
+            return heure
         }
     },
     actions:{

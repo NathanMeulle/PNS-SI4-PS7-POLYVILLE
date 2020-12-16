@@ -1,5 +1,5 @@
 <template>
-  <PopUp>ICI</PopUp>
+  <PopUp v-if="showModal" v-on:close="showModal = false" :value="type" @input="type = $event"/>
   <div v-if="error!==''">
     <span id="error">{{error}}</span>
   </div>
@@ -13,7 +13,7 @@
 <script>
 
 import DSL from "@/components/DSL/DSL";
-import PopUp from "@/components/DSL/PopUp.vue"
+import PopUp from "@/components/DSL/PopUpDSL.vue"
 
 export default {
   name: "Interpreteur",
@@ -28,6 +28,8 @@ export default {
       error: "",
       reussite: "",
       check: false,
+      showModal: false,
+      type: ""
     }
   },
 
@@ -134,8 +136,11 @@ export default {
             this.reussite = "Changement d'heure de fermeture effectué"
             let regles = this.$store.getters.getRegles
             let existe = this.verifierExistence('Fermeture magasins',regles)
-            console.log("existence : ",existe)
-            this.$store.dispatch('setClosingHour',this.heure)
+            if(!existe) this.$store.dispatch('setClosingHour',this.heure)
+            else {
+              this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"}
+              this.showModal=true
+            }
           }
           else {
             this.programme[this.programme.length] = "changement d'heure de fermeture des magasins"
@@ -151,9 +156,7 @@ export default {
     verifierExistence(titre,regles){
       let existence = false
       regles.forEach((item)=>{
-        console.log("test : ",item.titre,titre)
         if(item.titre === titre){
-          console.log("ici")
           existence = true
         }
       })
