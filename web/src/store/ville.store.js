@@ -1,11 +1,22 @@
 import { VilleMock } from "@/mocks/Ville.mock"
 import { dslModule } from "@/store/dsl.store";
 
+function clone(obj){
+    let copy = null
+    try{
+        copy = JSON.parse(JSON.stringify(obj));
+    } catch(ex){
+        alert("Erreur de copie");
+    }
+    return copy;
+}
+
 export const villeModule = {
     namespace: false,
     state() {
         return {
             Ville: VilleMock,
+            VilleCopie: clone(VilleMock),
             freq: [],
             dslModule: dslModule
         }
@@ -13,27 +24,28 @@ export const villeModule = {
     mutations: {
 
         setClosingHour: (state, payload) => {
-            state.Ville[0].ville.commerces.forEach(commerce => {
+            state.Ville[0].ville.commerces = clone(state.VilleCopie[0].ville.commerces)
+            if(payload !== -1) {
+                state.Ville[0].ville.commerces.forEach(commerce => {
 
-                for (const [key, value] of Object.entries(commerce.horaires[0].semaine)) {
-                    //console.log(`${key}: ${value}`);
-                    key;
-                    if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
-                        value[0].heureOuverture = 0;
-                        value[0].heureFermeture = 0;
+                    for (const [key, value] of Object.entries(commerce.horaires[0].semaine)) {
+                        //console.log(`${key}: ${value}`);
+                        key;
+                        if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
+                            value[0].heureOuverture = 0;
+                            value[0].heureFermeture = 0;
+                        } else if (value[0].heureFermeture > payload) {// si le magasin ferme le matin après l'heure de fermeture imposée
+                            value[0].heureFermeture = payload;
+                        }
+                        if (value[1].heureOuverture > payload) { // si le magasin ouvre l'après-midi après l'heure de fermeture imposée
+                            value[1].heureOuverture = 0;
+                            value[1].heureFermeture = 0;
+                        } else if (value[1].heureFermeture > payload) {// si le magasin ferme le l'après-midi après l'heure de fermeture imposée
+                            value[1].heureFermeture = payload;
+                        }
                     }
-                    else if (value[0].heureFermeture > payload) {// si le magasin ferme le matin après l'heure de fermeture imposée
-                        value[0].heureFermeture = payload;
-                    }
-                    if (value[1].heureOuverture > payload) { // si le magasin ouvre l'après-midi après l'heure de fermeture imposée
-                        value[1].heureOuverture = 0;
-                        value[1].heureFermeture = 0;
-                    }
-                    else if (value[1].heureFermeture > payload){// si le magasin ferme le l'après-midi après l'heure de fermeture imposée
-                        value[1].heureFermeture = payload;
-                    }
-                }
-            })
+                })
+            }
         },
         addfreq: (state,payload) => {
             let isInit = false;

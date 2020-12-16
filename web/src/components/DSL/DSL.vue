@@ -53,6 +53,10 @@
             </div>
             <div v-else>
               {{item.input}}
+              <label>
+                <input v-model="this.message[item.id]">
+                <button v-on:click="validation(item.id)">OK</button>
+              </label>
               <div class="logo">
                 <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
                 <em class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</em>
@@ -179,6 +183,13 @@ export default {
         {
           id: 14,
           title: 'fermeture',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 15,
+          title: 'réinitialiser',
           position: -1,
           type:4,
           list: 4

@@ -11,7 +11,9 @@ export const dslModule = {
         addMacro(state,payload){
             let macroDejaPresente = false
             state.macro.forEach((item)=>{
-                if(item[item.length] === payload[payload.length]){
+                console.log("1 : ",item)
+                console.log("2 : ",payload)
+                if(item[item.length-1] === payload[payload.length-1]){
                     macroDejaPresente = true
                     console.log("Macro déjà créée")
                 }

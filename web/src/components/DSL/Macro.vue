@@ -10,6 +10,7 @@
         <div v-if="item.title === 'Input'">
           <div>Entrer les données concernant ce programme :
             <label>
+              {{item.input}}
               <input v-model="this.message[item.id]">
               <button v-on:click="validation(item.id,macro)">OK</button>
             </label>
@@ -44,7 +45,7 @@ name: "Macro",
   },
   created() {
     this.mesMacros = this.$store.getters.getMacros
-    console.log(this.mesMacros)
+    console.log("macros: ",this.mesMacros)
   },
   methods:{
     validation(id,macro){
@@ -55,18 +56,19 @@ name: "Macro",
       console.log("changement input", this.mesMacros)
     },
     use(macro,type){
-      if(type === "changement d'heure de fermeture des magasins" ) {
+      if(type === "changement d'heure de fermeture des magasins") {
         this.reussite = "Changement d'heure de fermeture effectué"
         let regles = this.$store.getters.getRegles
+        console.log('regles : ',regles)
         let existe = this.verifierExistence('Fermeture magasins',regles)
         console.log("aled : ",existe)
         if(!existe) this.$store.dispatch('setClosingHour',macro[3].input)
         else {
-          console.log("icibg",macro)
           this.type = {programme: macro,titre: "Conflit concernant l'heure de fermeture des magasins"}
           this.showModal=true
         }
       }
+      else if(type === "réinitialisation des horaires de fermeture des magasins") this.$store.dispatch('setClosingHour',-1)
     },
     verifierExistence(titre,regles){
       let existence = false

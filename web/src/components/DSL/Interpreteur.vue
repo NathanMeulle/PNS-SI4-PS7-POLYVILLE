@@ -130,7 +130,7 @@ export default {
       if(this.programme[2].title === "fermeture"){
         this.getHeure()
         if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
-
+        else if (this.heure<0 || this.heure>24) this.error = "Le nombre donné n'est pas une heure"
         else{
           if(!this.check){
             this.reussite = "Changement d'heure de fermeture effectué"
@@ -149,9 +149,26 @@ export default {
             this.reussite = "Raccourci créé"
           }
         }
-
+      }
+      else if(this.programme[2].title === "réinitialiser"){
+        this.reinit()
       }
       else this.error = 'Programme inconnu'
+    },
+    reinit(){
+      if(this.programme.length===5 && (this.programme[3].title === "heures" && this.programme[4].title === "fermeture")){
+        if(!this.check) {
+          this.$store.dispatch('setClosingHour', -1)
+          this.reussite = "Horaires des magasins réinitialisées"
+        }
+        else {
+            this.programme[this.programme.length] = "réinitialisation des horaires de fermeture des magasins"
+            console.log(this.programme)
+            this.$store.commit('addMacro', this.programme)
+            this.reussite = "Raccourci créé"
+          }
+      }
+      else this.error = 'Si vous voulez réinitialiser les heures de fermetures, ajoutez les cases "heures" et "fermeture" dans cet ordre.'
     },
     verifierExistence(titre,regles){
       let existence = false

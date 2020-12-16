@@ -18,8 +18,9 @@
             </slot>
             <slot name="header" v-if="type==='Conflit concernant l\'heure de fermeture des magasins'">
               <br/>
+                <button class="choix" v-on:click="changerHeureFermeture(choix.apres),$emit('close')" v-if="choix.apres!==-1">{{choix.apres}}h</button>
+              <button class="choix" v-on:click="changerHeureFermeture(choix.apres),$emit('close')" v-else>Réinitialiser les horaires</button>
               <button class="choix" v-on:click="changerHeureFermeture(choix.avant),$emit('close')">{{choix.avant}}h</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.apres),$emit('close')">{{choix.apres}}h</button>
             </slot>
           </div>
           <br/>
@@ -56,11 +57,18 @@ export default {
     },
     conflitHeureFermeture(){
       let heure = this.$store.getters.getRegleHeureFermeture
-      this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : "+heure+"h." +
-          "\nVous avez essayé d'appliquer une nouvelle règle pour : "+this.programme[3].input+"h." +
-          "\nQuelle heure voulez vous choisir ?"
-      this.choix = {avant: Number(this.programme[3].input), apres: heure}
-      console.log(this.choix)
+      if(heure!== -1) {
+        this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h." +
+            "\nVous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h." +
+            "\nQuelle heure voulez vous choisir ?"
+      }
+        else{
+          this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires." +
+            "\nVous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h." +
+            "\nQuelle heure voulez vous choisir ?"
+        }
+        this.choix = {avant: Number(this.programme[3].input), apres: heure}
+        console.log(this.choix)
     },
     changerHeureFermeture(heure){
       this.$store.dispatch('setClosingHour',heure)
