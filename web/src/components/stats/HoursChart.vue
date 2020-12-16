@@ -10,7 +10,7 @@
             value="Morning"
             v-model="selectedTimeOfTheDay"
           />
-          Morning
+          Matin
         </label>
       </div>
       <div class="control">
@@ -21,7 +21,7 @@
             value="Afternoon"
             v-model="selectedTimeOfTheDay"
           />
-          Afternoon
+          Après-midi
         </label>
       </div>
     </div>
@@ -30,13 +30,13 @@
       :width="500"
       :height="300"
       :labels="[
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday ',
-        'Friday',
-        'Saturday',
-        'Sunday',
+        'Lundi',
+        'Mardi',
+        'Mercredi',
+        'Jeudi ',
+        'Vendredi',
+        'Samedi',
+        'Dimanche',
       ]"
       :datasets="displayedDatasets"
       :options="$options.options"
@@ -251,45 +251,20 @@ export default {
         }
         let week = j + 1;
         datacollection["Afternoon" + j] = {
-          label: "week" + week,
+          label: "semaine" + week,
           borderColor: "rgba(50, 115, 220, 0.5)",
           backgroundColor: colors[j % 6],
           data: AfternoonData,
           stack: j,
         };
         datacollection["Morning" + j] = {
-          label: "week" + week + " ",
+          label: "semaine" + week + " ",
           borderColor: "rgba(255, 56, 96, 0.5)",
           backgroundColor: colors[j % 6],
           data: MorningData,
           stack: j,
         };
       }
-
-      /*var datacollection = {
-        Afternoon: {
-          label: "Afternoon",
-          borderColor: "rgba(50, 115, 220, 0.5)",
-          backgroundColor: "rgba(0,255,0,0.4)",
-          data: AfternoonData,
-          stack: 1,
-        },
-        Morning: {
-          label: "Morning",
-          borderColor: "rgba(255, 56, 96, 0.5)",
-          backgroundColor: "rgba(0,255,0,0.4)",
-          data: MorningData,
-          stack: 1,
-        },
-        3: {
-          label: "haha",
-          borderColor: "rgba(50, 115, 220, 0.5)",
-          backgroundColor: "rgba(0,255,255,0.4)",
-          data: AfternoonData,
-          stack: 2,
-        },
-      };
-      datacollection;*/
       return datacollection;
     },
   },
