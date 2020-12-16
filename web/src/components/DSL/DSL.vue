@@ -63,6 +63,7 @@
         </div>
       </div>
     </div>
+    <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%">Créer un raccourci pour ce programme</button>
   </div>
 </template>
 
@@ -251,6 +252,10 @@ export default {
       console.log("envoi du programme suivant : ",this.listProg)
       this.$emit("launch",this.listProg)
     },
+    macro(){
+      console.log("envoi du programme suivant : ",this.listProg)
+      this.$emit("check",this.listProg)
+    },
     suppr(item){
       item.list = -1
     },
@@ -317,6 +322,10 @@ export default {
 
 .logo{
   float: right;
+}
+
+#creationMacro{
+  margin-top: 3%;
 }
 
 #launch{

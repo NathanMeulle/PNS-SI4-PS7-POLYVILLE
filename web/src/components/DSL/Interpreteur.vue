@@ -1,4 +1,5 @@
 <template>
+  <PopUp v-if="showModal" v-on:close="showModal = false" :value="type" @input="type = $event"/>
   <div v-if="error!==''">
     <span id="error">{{error}}</span>
   </div>
@@ -6,14 +7,17 @@
     <span id="reussite">{{reussite}}</span>
   </div>
   <br/>
-  <DSL v-on:launch="getData($event)"/>
+  <DSL v-on:launch="getData($event,false)" v-on:check="getData($event,true)"/>
 </template>
 
 <script>
+
 import DSL from "@/components/DSL/DSL";
+import PopUp from "@/components/DSL/PopUpDSL.vue"
+
 export default {
   name: "Interpreteur",
-  components: {DSL},
+  components: {DSL,PopUp},
 
   data(){
     return{
@@ -22,12 +26,16 @@ export default {
       infOrSup: '',
       heure: -1,
       error: "",
-      reussite: ""
+      reussite: "",
+      check: false,
+      showModal: false,
+      type: ""
     }
   },
 
   methods:{
-    getData(listeCommandes){
+    getData(listeCommandes,check){
+      this.check = check
       this.error = ""
       this.programme = listeCommandes
       if(this.programme.length===0) this.error="Programme vide"
@@ -110,7 +118,6 @@ export default {
             this.heure = Number(this.programme[index-1].input)
           }
         }
-        console.log("heure : ",this.heure)
       })
     },
     Pour(){
@@ -122,16 +129,38 @@ export default {
     forMagasin(){
       if(this.programme[2].title === "fermeture"){
         this.getHeure()
-        console.log(this.heure)
         if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
 
         else{
-          this.reussite = "Changement d'heure de fermeture effectué"
-          this.$store.dispatch('setClosingHour',this.heure)
+          if(!this.check){
+            this.reussite = "Changement d'heure de fermeture effectué"
+            let regles = this.$store.getters.getRegles
+            let existe = this.verifierExistence('Fermeture magasins',regles)
+            if(!existe) this.$store.dispatch('setClosingHour',this.heure)
+            else {
+              this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"}
+              this.showModal=true
+            }
+          }
+          else {
+            this.programme[this.programme.length] = "changement d'heure de fermeture des magasins"
+            console.log(this.programme)
+            this.$store.commit('addMacro', this.programme)
+            this.reussite = "Raccourci créé"
+          }
         }
 
       }
       else this.error = 'Programme inconnu'
+    },
+    verifierExistence(titre,regles){
+      let existence = false
+      regles.forEach((item)=>{
+        if(item.titre === titre){
+          existence = true
+        }
+      })
+      return existence
     }
   }
 }

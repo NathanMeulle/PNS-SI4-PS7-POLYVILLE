@@ -1,5 +1,5 @@
-
 import { VilleMock } from "@/mocks/Ville.mock"
+import { dslModule } from "@/store/dsl.store";
 
 export const villeModule = {
     namespace: false,
@@ -7,6 +7,7 @@ export const villeModule = {
         return {
             Ville: VilleMock,
             freq: [],
+            dslModule: dslModule
         }
     },
     mutations: {
@@ -14,7 +15,7 @@ export const villeModule = {
         setClosingHour: (state, payload) => {
             state.Ville[0].ville.commerces.forEach(commerce => {
 
-                for (const [key, value] of Object.entries(commerce.horaires[0])) {
+                for (const [key, value] of Object.entries(commerce.horaires[0].semaine)) {
                     //console.log(`${key}: ${value}`);
                     key;
                     if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
@@ -103,11 +104,43 @@ export const villeModule = {
                 }
             })
         },
+        getNomCommerce : (state) => (id) => {
+            let nom = [];
+            state.Ville[0].ville.commerces.forEach( commerce => {
+                if (commerce.id === id) {
+                    nom.push(commerce.commercant.nom);
+                    nom.push(commerce.commercant.prenom);
+                    nom.push(commerce.nom);
+                    console.log('NOM COMMERCANT',nom )
+                }
+            })
+            return nom;
+        },
+        getTypeCommerce :   (state) => (id) => {
+             let type = "";
+             state.Ville[0].ville.commerces.forEach(commerce => {
+                if (commerce.id === id) {
+                    type = commerce.categorie;
+                    console.log('TYPE COMMERCANT', type)
+                 }
+            })
+            return type;
+        },
+        getAdressCommerce : (state) => (id) => {
+            let adress = "";
+            state.Ville[0].ville.commerces.forEach(commerce => {
+                if (commerce.id === id) {
+                    adress = commerce.adresse;
+                }
+            })
+            return adress;
+        }
     },
     actions: {
         async setClosingHour(context, hour) {
             try {
                 context.commit('setClosingHour', hour);
+                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour})
             }
             catch (error) {
                 console.log('error ', error);

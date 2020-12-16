@@ -1,6 +1,8 @@
 import {createStore} from 'vuex'
 import { villeModule } from './ville.store.js';
 import { positionModule } from './positions.store.js';
+import { dslModule } from './dsl.store.js'
+
 
 function isInSquare(x,y,a,b){
 
@@ -25,6 +27,7 @@ export default createStore({
     modules: {
         villeModule: villeModule,
         positionsModule: positionModule,
+        dslModule: dslModule,
     },
     state() {
         return {
@@ -61,9 +64,17 @@ export default createStore({
                     a = this.state.villeModule.Ville[0].ville.zones[0].position.x
                     b = this.state.villeModule.Ville[0].ville.zones[0].position.y
                 }
-                if(payload.args.zone2 === "Zone B"){
+                else if(payload.args.zone2 === "Zone B"){
                     a = this.state.villeModule.Ville[0].ville.zones[1].position.x
                     b = this.state.villeModule.Ville[0].ville.zones[1].position.y
+                }
+                else if(payload.args.zone2 === "Zone C"){
+                    a = this.state.villeModule.Ville[0].ville.zones[2].position.x
+                    b = this.state.villeModule.Ville[0].ville.zones[2].position.y
+                }
+                else if(payload.args.zone2 === "Zone D"){
+                    a = this.state.villeModule.Ville[0].ville.zones[3].position.x
+                    b = this.state.villeModule.Ville[0].ville.zones[3].position.y
                 }
                 let policiers = this.state.positionsModule.positions[0].policiers
                 while(i<payload.args.policiers){
