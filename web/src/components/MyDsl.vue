@@ -11,17 +11,19 @@
 
 <script>
 
-import Interpreteur from "@/components/DSL/Interpreteur";
+import Interpreteur from "../components/DSL/Interpreteur";
 
 export default {
-    name:"MyDsl",
+  name: "MyDsl",
   components: {Interpreteur},
 
-  methods:{
-      oui(){
-        this.$store.dispatch('deplacerPoliciers',{citoyens : 50,
-          cond : 'sup',zone1 : "Zone A",policiers : 51,zone2: "Zone A"})
-      }
+  methods: {
+    oui() {
+      this.$store.dispatch('deplacerPoliciers', {
+        citoyens: 50,
+        cond: 'sup', zone1: "Zone A", policiers: 51, zone2: "Zone A"
+      })
+    }
   }
 
 };
