@@ -54,6 +54,9 @@ export const villeModule = {
         loadParkings: (state) => {
             return state.Ville[0].ville.parkings;
         },
+        getWeeksNumber: (state) =>{
+            return state.Ville[0].ville.commerces[0].horaires.length;
+        },
         hoursTable: (state) => (id) => {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
