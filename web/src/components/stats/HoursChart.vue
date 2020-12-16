@@ -1,5 +1,6 @@
 <template>
   <div>
+    Graphique des horaires du magasin
     {{ updateData() }}
     <div class="field is-grouped">
       <div class="control">

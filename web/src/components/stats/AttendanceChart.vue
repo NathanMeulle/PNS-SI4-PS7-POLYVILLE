@@ -1,5 +1,6 @@
 <template>
   <div>
+      Graphique de l'affluence moyenne du magasin
     {{ updateData() }}
     <div class="field is-grouped">
       <div class="control">
@@ -47,7 +48,7 @@
 <script>
 //import numeral from "numeral";
 import LineChart from "./LineChart";
-import store from '../../store/store';
+import numeral from "numeral";
 const options = {
   scales: {
     xAxes: [
@@ -59,69 +60,30 @@ const options = {
       {
         ticks: {
           beginAtZero: false,
-          /*precision: 2,
-          stepSize: 2,
-          reverse: true,*/
           suggestedMax: 500,
         },
         scaleLabel: {
           display: true,
           labelString: "Clients",
         },
-        stacked: false,
+        stacked: true,
       },
     ],
   },
   responsive: true,
   legend: {
-    position: "top",
-    labels: {
-      filter: function (item) {
-        if (!document.getElementById("AfternoonBox").checked) {
-          return item.text.includes(" "); //fait apparaître les légendes de l'après-midi
-        } else {
-          return !item.text.includes(" "); //fait disparaître les légendes de l'après-midi
-        }
-      },
-    },
-    onClick: function (e, legendItem) {
-      
-      // permet de lier les après-midi aux matinées dans la légende
-      // afin d'avec 1 clic masque/afficher les horaires de la semaines
-      var index = legendItem.datasetIndex;
-      var ci = this.chart;
-      var alreadyHidden =
-        ci.getDatasetMeta(index).hidden === null
-          ? false
-          : ci.getDatasetMeta(index).hidden;
-
-      ci.data.datasets.forEach(function (e, i) {
-        var meta = ci.getDatasetMeta(i);
-        let indexForAfternoonLegend = index + store.getters.getWeeksNumber; //sert à s'adapter au nombre de semaines
-        if (i !== index && i !== indexForAfternoonLegend) {
-          if (!alreadyHidden) {
-            meta.hidden = meta.hidden === null ? !meta.hidden : null;
-          } else if (meta.hidden === null) {
-            meta.hidden = true;
-          }
-        } else {
-          meta.hidden = null;
-        }
-      });
-
-      ci.update();
-    },
+    display: false
   },
   tooltips: {
     mode: "index",
     // permet l'affichage des données quand on passe la souris sur le graph
-    /*callbacks: {
+    callbacks: {
       label(tooltipItem, data) {
         const label = data.datasets[tooltipItem.datasetIndex].label;
-        const value = numeral(tooltipItem.yLabel).format("$0,0");
+        const value = numeral(tooltipItem.yLabel).format("0");
         return `${label}: ${value}`;
       },
-    },*/
+    },
   },
 };
 export default {
@@ -151,15 +113,18 @@ export default {
     checkSelectedTimeOfTheDay() {
       //renvoie tous les datasets à afficher selon les checkbox activées
       var res = [];
-      if (this.selectedTimeOfTheDay.includes("Afternoon")) {
-        for (let i = 0; i < this.getSchedule().length; i++) {
-          res.push("Afternoon" + i);
-        }
+      if (this.selectedTimeOfTheDay.includes("Afternoon") && !this.selectedTimeOfTheDay.includes("Morning")) {
+        //box après-midi cochée
+        res.push("Afternoon");
       }
-      if (this.selectedTimeOfTheDay.includes("Morning")) {
-        for (let i = 0; i < this.getSchedule().length; i++) {
-          res.push("Morning" + i);
-        }
+      else if (this.selectedTimeOfTheDay.includes("Morning")&& !this.selectedTimeOfTheDay.includes("Afternoon")) {
+        //box matin cochée
+        res.push("Morning");
+
+      }
+      else if (this.selectedTimeOfTheDay.includes("Morning")&& this.selectedTimeOfTheDay.includes("Afternoon")){
+        //box matin et après-midi cochées
+        res.push("Total");
       }
       return res;
     },
@@ -185,20 +150,21 @@ export default {
       var i = 0;
       var semaine = null;
       var datacollection = {};
-      for (let j = 0; j < this.getSchedule().length; j++) {
+      var AfternoonData = new Array(0,0,0,0,0,0,0);
+      var MorningData = new Array(0,0,0,0,0,0,0);
+      var DayData = new Array(0,0,0,0,0,0,0);
+      var weeksCount = this.getSchedule().length;
+      for (let j = 0; j < weeksCount; j++) {
         semaine = this.getSchedule()[j].semaine;
         i = 0;
-        let AfternoonData = new Array(7);
-        let MorningData = new Array(7);
+        
         if (semaine.Lundi[1] !== undefined) {
           for (const [key, value] of Object.entries(semaine)) {
-            // mise des valeur de l'après midi
-              AfternoonData[i] = [
-                value[1].affluence,
-              ];
-              MorningData[i] = [
-                value[0].affluence,
-              ];
+            // mise des valeur
+            
+              AfternoonData[i] += value[1].affluence;
+              MorningData[i] += value[0].affluence;
+              DayData[i] += AfternoonData[i] + MorningData[i];
             i++;
             key;
           }
@@ -206,40 +172,57 @@ export default {
           //si on a un parking par exemple
           i = 0;
           for (const [key, value] of Object.entries(semaine)) {
-              MorningData[i] = [
-                value[0].affluence,
-              ];
-            
+              MorningData[i] += value[0].affluence;
+              DayData[i] += MorningData[i];
             i++;
             key;
             }
           
           AfternoonData = [
-            [null, null],
-            [null, null],
-            [null, null],
-            [null, null],
-            [null, null],
-            [null, null],
-            [null, null],
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
           ];
+            }
         }
-        let week = j + 1;
-        datacollection["Afternoon" + j] = {
-          label: "semaine" + week,
+        
+        for (let j=0; j < 7;j++ ){
+            MorningData[j] = MorningData[j]/weeksCount;
+            if(AfternoonData[j] !== null){
+                AfternoonData[j] = AfternoonData[j]/weeksCount;
+                DayData[j] = MorningData[j] + AfternoonData[j];
+            }
+            else{
+                 DayData[j] = MorningData[j]
+            }
+        }
+
+        datacollection["Afternoon"] = {
+          label: "Après-midi",
           borderColor: "rgba(50, 115, 220, 0.5)",
-          backgroundColor: colors[j % 6],
+          backgroundColor: colors[1],
           data: AfternoonData,
-          stack: j,
+          steppedLine: 'middle',
         };
-        datacollection["Morning" + j] = {
-          label: "semaine" + week + " ",
+        datacollection["Morning"] = {
+          label: "Matin" + " ",
           borderColor: "rgba(255, 56, 96, 0.5)",
-          backgroundColor: colors[j % 6],
+          backgroundColor: colors[0],
           data: MorningData,
-          stack: j,
+          steppedLine: 'middle',
         };
-        }
+        datacollection["Total"] = {
+          label: "Total",
+          borderColor: "rgba(255, 56, 96, 0.5)",
+          backgroundColor: colors[2],
+          data: DayData,
+          steppedLine: 'middle',
+        };
+        
       return datacollection;
     },
   },
