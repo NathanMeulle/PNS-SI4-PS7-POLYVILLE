@@ -120,16 +120,19 @@
     .dropdown .dropbtn {
         font-family: "Sofia", sans-serif;
         font-size: 16px;
-        padding: 14px 16px;
+        padding: 14px 50px;
         background-color: inherit;
+        border: 2px solid #0cb50b;
+        border-radius: 25px;
+        margin: 2px;
     }
 
     /* Add a red background color to navbar links on hover */
     .navbar a:hover .dropdown:hover .dropbtn {
-        border: 5px solid #0cb50b;
-        background-color : lightgrey;
+
     }
     .dropdown:hover .dropbtn {
+        background-color : lightgrey;
     }
 
 
