@@ -26,7 +26,7 @@ export const dslModule = {
             state.regles.forEach((regle)=>{
                 if(regle.titre === payload.titre) {
                     existe = true
-                    regle.valeur = payload.valeur
+                    if(payload.valeur!==-1) regle.valeur = payload.valeur
                 }
             })
             if(!existe) state.regles.push(payload)

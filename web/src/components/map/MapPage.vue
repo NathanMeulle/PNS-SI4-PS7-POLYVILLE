@@ -15,16 +15,19 @@
         </div>
 
         <MapComponent class="map" v-bind:filterOption="checkedOptions" ></MapComponent>
+      <AffichageRegles/>
     </div>
 </template>
 
 <script>
     import MapComponent from "./MapComponent";
+    import AffichageRegles from "@/components/map/AffichageRegles";
 
     export default {
         name: "MapPage",
         components: {
             MapComponent,
+          AffichageRegles,
         },
         data() {
             return {
