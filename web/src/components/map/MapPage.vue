@@ -1,4 +1,7 @@
 <template>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+
     <div class="MapPage">
         <div class="checkbox">
         <input type="checkbox" id="checkboxParking" value="Parking" v-model="checkedOptions">
@@ -12,9 +15,27 @@
 
         <input type="checkbox" id="checkboxPolice" value="Police" v-model="checkedOptions">
         <label for="checkboxPolice">Présence Policière</label>
-        </div>
 
-        <MapComponent class="map" v-bind:filterOption="checkedOptions" ></MapComponent>
+        </div>
+        <div class="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Afficher
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#" @click="storeToDisplay = 'Bar',log('TEST : ' + storeToDisplay)">Bar</a>
+                    <a href="#" @click="storeToDisplay='Restaurant'">Restaurants</a>
+                    <a href="#" @click="storeToDisplay='Boulangerie'">Boulangerie</a>
+                    <a href="#" @click="storeToDisplay='Pharmacie'">Pharmacie</a>
+                    <a href="#" @click="storeToDisplay='SuperMarché'">Epiceries & Supermarchés</a>
+                    <a href="#" @click="storeToDisplay='all'">Tout</a>
+
+                </div>
+            </div>
+        </div>
+        <MapComponent class="map" v-bind:filterOption="checkedOptions" v-bind:filterStore="storeToDisplay"></MapComponent>
+
     </div>
 </template>
 
@@ -28,26 +49,108 @@
         },
         data() {
             return {
-                checkedOptions: ["Commerces"]
+                checkedOptions: ["Commerces"],
+                storeToDisplay : "all"
             }
+        },
+        methods : {
+            log(a) {
+                console.log(a);
+            },
         }
     };
 </script>
 
 <style scoped>
     .checkbox {
+        height: 100%;
+        width: 100%;
         border-radius: 10px;
         list-style-type: none;
-        margin: 0;
-        width: 100px;
-        background-color: #b8b8b8d7;
         display: inline;
         color: #000;
         text-align: center;
+        background-color: #555555;
         padding: 10px 10px 10px 10px;
         text-decoration: none;
     }
     .map {
-        padding: 10px
+        padding: 10px;
+        z-index: -1;
     }
+    .navbar {
+        width: 20%;
+        overflow: hidden;
+        font-family: Arial;
+        float: right;
+    }
+
+    /* Links inside the navbar */
+    .navbar a {
+        float: right;
+        font-size: 16px;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    /* The dropdown container */
+    .dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+    /* Dropdown button */
+    .dropdown .dropbtn {
+        font-family: "Sofia", sans-serif;
+        font-size: 16px;
+        outline: none;
+        color: black;
+        border-radius: 10px;
+        border: 3px solid #0cb50b;
+        padding: 14px 16px;
+        background-color: inherit;
+        box-shadow: 4px 4px 2px 1px #266027;
+        margin: 0; /* Important for vertical align on mobile phones */
+    }
+
+    /* Add a red background color to navbar links on hover */
+    .navbar a:hover .dropdown:hover .dropbtn {
+        border: 5px solid #0cb50b;
+        background-color : lightgrey;
+    }
+    .dropdown:hover .dropbtn {
+    }
+
+
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    /* Add a grey background color to dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
 </style>

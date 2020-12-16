@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" style="height: 75vh; width: 100%">
-    <div class="map" style="height: 75vh; width: 59%">
+    <div class="map" style="height: 75vh; width: 59%;">
       <l-map
               v-model="zoom"
               v-model:zoom="zoom"
@@ -10,16 +10,18 @@
               v-model:maxBounds="maxBounds"
               @move="log('move'+zoom)"
       >
-        <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-        <l-control-layers/>
+        <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
+        <l-control-layers style="z-index: -5"/>
         <div v-if="filterOption.includes('Commerces')" class="commerces">
-          <Marker
-                  v-for="currentMarker in commerceStore"
-                  :key="currentMarker.id"
-                  :commerce="currentMarker"
-                  v-bind:position="[
-              currentMarker.position.x,
-              currentMarker.position.y,
+          <div v-if="filterStore == 'all'">
+            {{log(filterStore)}}
+            <Marker
+            v-for="currentMarker in commerceStore"
+            :key="currentMarker.id"
+            :commerce="currentMarker"
+            v-bind:position="[
+            currentMarker.position.x,
+            currentMarker.position.y,
             ]"
             v-bind:msg="currentMarker.categorie"
             v-bind:name="currentMarker.nom"
@@ -27,24 +29,44 @@
             v-bind:iconType="currentMarker.categorie"
             @displayhours="displayHours=true"
             @click="toDisplay('Bienvenue ' + id)"
-          />
+            />
+          </div>
+          <div v-if="filterStore !='all'">
+            {{log(filterStore)}}
+            <Marker
+                    v-for="currentMarker in storeToDisplay"
+                    :key="currentMarker.id"
+                    :commerce="currentMarker"
+                    v-bind:position="[
+            currentMarker.position.x,
+            currentMarker.position.y,
+            ]"
+                    v-bind:msg="currentMarker.categorie"
+                    v-bind:name="currentMarker.nom"
+                    v-bind:id="currentMarker.id"
+                    v-bind:iconType="currentMarker.categorie"
+                    @displayhours="displayHours=true"
+                    @click="toDisplay('Bienvenue' + id)"
+            />
+          </div>
+
         </div>
 
-        <div v-if="filterOption.includes('Parking')" class="parkings">
+        <div v-if="filterOption.includes('Parking')" class="parkings">c
           <Marker
-                  v-for="currentParking in parkingStore"
-                  :key="currentParking.id"
-                  :parking="currentParking"
-                  v-bind:position="
+                v-for="currentParking in parkingStore"
+                :key="currentParking.id"
+                :parking="currentParking"
+                v-bind:position="
                              [
                              currentParking.position.x,
                              currentParking.position.y,
                              ]"
-                  v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
-                  v-bind:iconType="'Parking'"
-                  v-bind:id="currentParking.id"
-                  @displayhours="displayHours=true"
-          />
+                v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
+                v-bind:iconType="'Parking'"
+                v-bind:id="currentParking.id"
+                @displayhours="displayHours=true"
+        />
         </div>
 
         <Marker v-bind:position="[43.6154, 7.0719]"
@@ -122,6 +144,17 @@ export default {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
     },
+    storeToDisplay() {
+      let store = [];
+      this.$store.getters.loadCommerces.forEach(theStore => {
+        if (theStore.categorie === this.filterStore) {
+          store.push(theStore);
+        }
+      })
+      console.log(store);
+      return store;
+    }
+
   },
   data() {
     return {
@@ -142,6 +175,7 @@ export default {
       zoneB :[43.6254,7.0569],
       zoneC :[ 43.6054,7.0839],
       zoneD : [ 43.6054,7.0569],
+      filter : "",
 
     };
   },
@@ -150,6 +184,10 @@ export default {
       type: Array,
       required: true
     },
+    filterStore : {
+      type: String,
+      required : true
+    }
   },
   methods: {
     nbrCitizenZone(a) {
@@ -193,8 +231,10 @@ export default {
           return "#db1106"
         }
       }
-    }
+    },
+
   },
+
 };
 </script>
 
@@ -211,8 +251,11 @@ export default {
 }
 .map {
   float: left;
+  z-index: -1;
 }
 .Affluence {
   white-space: pre;
 }
+
+
 </style>
