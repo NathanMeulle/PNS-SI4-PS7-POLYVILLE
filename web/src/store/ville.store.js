@@ -1,5 +1,5 @@
-
 import { VilleMock } from "@/mocks/Ville.mock"
+import { dslModule } from "@/store/dsl.store";
 
 export const villeModule = {
     namespace: false,
@@ -7,6 +7,7 @@ export const villeModule = {
         return {
             Ville: VilleMock,
             freq: [],
+            dslModule: dslModule
         }
     },
     mutations: {
@@ -97,6 +98,7 @@ export const villeModule = {
         async setClosingHour(context, hour) {
             try {
                 context.commit('setClosingHour', hour);
+                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour})
             }
             catch (error) {
                 console.log('error ', error);

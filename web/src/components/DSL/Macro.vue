@@ -32,15 +32,12 @@ name: "Macro",
   data(){
     return {
       mesMacros :{},
-      newMacro:{},
       message: {},
       reussite: ""
     }
   },
   created() {
-    this.newMacro = this.$store.getters.getNewMacro
-    console.log("nouvelle macro : ",this.newMacro)
-    if(this.newMacro !== undefined) this.mesMacros[this.newMacro.length] = this.newMacro
+    this.mesMacros = this.$store.getters.getMacros
     console.log(this.mesMacros)
   },
   methods:{

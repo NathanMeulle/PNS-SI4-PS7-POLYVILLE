@@ -1,4 +1,5 @@
 <template>
+  <PopUp>ICI</PopUp>
   <div v-if="error!==''">
     <span id="error">{{error}}</span>
   </div>
@@ -10,10 +11,13 @@
 </template>
 
 <script>
+
 import DSL from "@/components/DSL/DSL";
+import PopUp from "@/components/DSL/PopUp.vue"
+
 export default {
   name: "Interpreteur",
-  components: {DSL},
+  components: {DSL,PopUp},
 
   data(){
     return{
@@ -112,7 +116,6 @@ export default {
             this.heure = Number(this.programme[index-1].input)
           }
         }
-        console.log("heure : ",this.heure)
       })
     },
     Pour(){
@@ -124,24 +127,37 @@ export default {
     forMagasin(){
       if(this.programme[2].title === "fermeture"){
         this.getHeure()
-        console.log(this.heure)
         if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
 
         else{
           if(!this.check){
             this.reussite = "Changement d'heure de fermeture effectué"
+            let regles = this.$store.getters.getRegles
+            let existe = this.verifierExistence('Fermeture magasins',regles)
+            console.log("existence : ",existe)
             this.$store.dispatch('setClosingHour',this.heure)
           }
           else {
             this.programme[this.programme.length] = "changement d'heure de fermeture des magasins"
             console.log(this.programme)
-            this.$store.commit('setNewMacro', this.programme)
+            this.$store.commit('addMacro', this.programme)
             this.reussite = "Raccourci créé"
           }
         }
 
       }
       else this.error = 'Programme inconnu'
+    },
+    verifierExistence(titre,regles){
+      let existence = false
+      regles.forEach((item)=>{
+        console.log("test : ",item.titre,titre)
+        if(item.titre === titre){
+          console.log("ici")
+          existence = true
+        }
+      })
+      return existence
     }
   }
 }
