@@ -93,6 +93,48 @@ export const villeModule = {
         getZones : (state) => {
             return state.Ville[0].ville.zones;
         },
+        getPositionZone : (state) => (id) =>{
+            let pos = [];
+            state.Ville[0].ville.zones.forEach( zone => {
+                if (zone.id === id) {
+                    pos.push(zone.position.x);
+                    pos.push(zone.position.y);
+                    console.log('POSITION ZONE', zone.id, ' ', pos);
+                    return pos;
+                }
+            })
+        },
+        getNomCommerce : (state) => (id) => {
+            let nom = [];
+            state.Ville[0].ville.commerces.forEach( commerce => {
+                if (commerce.id === id) {
+                    nom.push(commerce.commercant.nom);
+                    nom.push(commerce.commercant.prenom);
+                    nom.push(commerce.nom);
+                    console.log('NOM COMMERCANT',nom )
+                }
+            })
+            return nom;
+        },
+        getTypeCommerce :   (state) => (id) => {
+             let type = "";
+             state.Ville[0].ville.commerces.forEach(commerce => {
+                if (commerce.id === id) {
+                    type = commerce.categorie;
+                    console.log('TYPE COMMERCANT', type)
+                 }
+            })
+            return type;
+        },
+        getAdressCommerce : (state) => (id) => {
+            let adress = "";
+            state.Ville[0].ville.commerces.forEach(commerce => {
+                if (commerce.id === id) {
+                    adress = commerce.adresse;
+                }
+            })
+            return adress;
+        }
     },
     actions: {
         async setClosingHour(context, hour) {

@@ -1,4 +1,18 @@
 import { PositionMock } from "@/mocks/Position.mock"
+
+
+/**
+ *
+ * Test if a point is on a square of center (a,b)
+ *
+ * @param x -> coordinate x of the citizen / policeman
+ * @param y ->  coordinate y of the citizen / policeman
+ * @param a -> coordinate x of the center of the zone
+ * @param b -> coordinate y of the center of the zone
+ * @returns boolean
+ */
+
+
 export function isInSquare(x, y, a, b){
     let bottomLeftX = (a-0.010);
     let bottomLeftY = (b-0.010);
@@ -54,7 +68,6 @@ export const positionModule = {
                   }
               }
           })
-            console.log('NBR CITIZEN: ', nbCitizen, ' ', myZone);
         return nbCitizen;
         },
         getPoliciers: (state, getters) => (myZone) => {
@@ -70,80 +83,6 @@ export const positionModule = {
                 }
             })
             return nbCitizen;
-        },
-
-        citizenZoneA: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        citizenZoneB: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        citizenZoneC: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        citizenZoneD: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-
-        policierZoneA: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        policierZoneB: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        policierZoneC: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        policierZoneD: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
         },
 
 

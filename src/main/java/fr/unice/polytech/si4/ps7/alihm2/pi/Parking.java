@@ -1,10 +1,8 @@
 package fr.unice.polytech.si4.ps7.alihm2.pi;
 
-import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Semaine;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

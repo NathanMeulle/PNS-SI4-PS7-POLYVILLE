@@ -30,11 +30,10 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected List<Policier> policiers;
     protected List<Parking> parkings;
     protected List<Zone> zones;
-    private final int nbClients = 3000;
-    private final int nbCommerants = 30; // dans la limite de 400
-    private final int nbParking = 4;
-    private final int nbSemaineHoraire = 4;
-
+    private static final int NB_CLIENTS = 3000;
+    private static final int NB_COMMERANTS = 30; // dans la limite de 400
+    private static final int NB_PARKING = 4;
+    private static final int NB_SEMAINE_HORAIRE = 4;
 
     public EngineSettingsSmall1() {
         this.oM = new ObjectMapper();
@@ -56,8 +55,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
 
     private List<Client> initClient() {
         List<Client> tmp = new ArrayList<>();
-
-        for (int k = 0; k < nbClients; k++) {
+        for (int k = 0; k < NB_CLIENTS; k++) {
             Random r = new Random();
             double x = (r.nextGaussian() * this.d) / 7 + 43.6154;
             double y = (r.nextGaussian() * this.d) / 7  + 7.0719;
@@ -69,9 +67,9 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     private List<Policier> initPolicier() {
         List<Policier> tmp = new ArrayList<>();
 
-        for (int k = 0; k < nbClients / 20; k++) {//un policier pour 20 clients
+        for (int k = 0; k < NB_CLIENTS / 20; k++) {//un policier pour 20 clients
             List<Double> c = createPosition();
-            tmp.add(new Policier(nbClients + k, new Position(c.get(0), c.get(1))));
+            tmp.add(new Policier(NB_CLIENTS + k, new Position(c.get(0), c.get(1))));
         }
         return tmp;
 
@@ -86,7 +84,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         Collections.shuffle(prenom);
 
         List<Commercant> commercantList = new ArrayList<>();
-        for (int k = 0; k < nbCommerants; k++) {
+        for (int k = 0; k < NB_COMMERANTS; k++) {
             commercantList.add(new Commercant(initPositionCommerces(), nom.get(k), prenom.get(k)));
         }
         return commercantList;
@@ -96,11 +94,15 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         DataCommerce data = new DataCommerce();
         ArrayList<String> categorie = data.getCategorie();
         Collections.shuffle(categorie);
+        DataName dataName = new DataName();
+        ArrayList<String> nom = dataName.getNom();
+        Collections.shuffle(nom); //Mélange de la liste
 
         for (int k = 0; k < commercants.size(); k++) {
             List<Semaine> h = initHoraire();
             Position p = commercants.get(k).getPosition();
-            commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h));
+            int i = (int) (Math.random() * 120);
+            commerces.add(new Commerce(k, p, "Chez " + commercants.get(k).getNom(), commercants.get(k), categorie.get(k % categorie.size()), h, i + (i%3==0?" avenue de ":" rue de ") + dataName.getNom().get(i)));
         }
     }
 
@@ -123,14 +125,14 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     private List<Semaine> initHoraire() {
         List<Semaine> res = new ArrayList<>();
         List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
-        for (int i = 0 ; i < nbSemaineHoraire; i++) {
+        for (int i = 0; i < NB_SEMAINE_HORAIRE; i++) {
             LinkedHashMap<String, List<PlageHoraire>> tmp = new LinkedHashMap<>();
             for (String j : jour) {
                 int matinOuverture = (int) (Math.random() * ((10 - 6) + 1)) + 6;
                 int matinFermeture = (int) (Math.random() * ((14 - 11) + 1)) + 11;
                 int soirOuverture = (int) (Math.random() * ((15 - matinFermeture)) + 1) + matinFermeture;
                 int soirFermeture = (int) (Math.random() * ((23 - 18)) + 1) + 18;
-                tmp.put(j, List.of(new PlageHoraire(matinOuverture, matinFermeture, (int) (Math.random() * (nbClients/10 + 1))), new PlageHoraire(soirOuverture, soirFermeture, (int) (Math.random() * (nbClients/10 + 1)))));
+                tmp.put(j, List.of(new PlageHoraire(matinOuverture, matinFermeture, (int) (Math.random() * (NB_CLIENTS /10.0 + 1))), new PlageHoraire(soirOuverture, soirFermeture, (int) (Math.random() * (NB_CLIENTS /10.0 + 1)))));
             }
             tmp.put("Dimanche", List.of(new PlageHoraire(0, 0, 0), new PlageHoraire(0, 0, 0)));
             res.add(new Semaine(tmp));
@@ -141,11 +143,11 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
 
     private List<Parking> initParkings() {
         List<Parking> tmp = new ArrayList<>();
-        for (int k = 0; k < nbParking; k++) {
+        for (int k = 0; k < NB_PARKING; k++) {
             int nbPlace = (int) (Math.random() * ((300 - 50) + 1)) + 50;
             List<Double> c = createPosition();
             Position p = new Position(c.get(0), c.get(1));
-            tmp.add(new Parking(k + nbCommerants, nbPlace, p, initHoraireParking()));
+            tmp.add(new Parking(k + NB_COMMERANTS, nbPlace, p, initHoraireParking()));
         }
         return tmp;
     }
@@ -153,12 +155,12 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     private List<Semaine> initHoraireParking() {
         List<Semaine> res = new ArrayList<>();
         List<String> jour = List.of("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
-        for (int i = 0 ; i < nbSemaineHoraire; i++) {
+        for (int i = 0; i < NB_SEMAINE_HORAIRE; i++) {
             LinkedHashMap<String, List<PlageHoraire>> tmp = new LinkedHashMap<>();
             for (String j : jour) {
                 int matinOuverture = (int) (Math.random() * ((8 - 6) + 1)) + 6;
                 int soirFermeture = (int) (Math.random() * ((23 - 20)) + 1) + 20;
-                tmp.put(j, List.of(new PlageHoraire(matinOuverture, soirFermeture, (int) (Math.random() * (nbClients / 10 + 1)))));
+                tmp.put(j, List.of(new PlageHoraire(matinOuverture, soirFermeture, (int) (Math.random() * (NB_CLIENTS / 10.0 + 1)))));
             }
             res.add(new Semaine(tmp));
         }

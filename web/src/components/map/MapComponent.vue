@@ -24,6 +24,7 @@
             v-bind:msg="currentMarker.categorie"
             v-bind:name="currentMarker.nom"
             v-bind:id="currentMarker.id"
+            v-bind:iconType="currentMarker.categorie"
             @displayhours="displayHours=true"
             @click="toDisplay('Bienvenue ' + id)"
           />
@@ -61,27 +62,27 @@
             :fill="true"
             :fillOpacity="0.5"
             :fillColor="createColor(currentCircle.id)"
-            @click="toDisplay('Zone :' + currentCircle.id + '\n Nombre de citoyen présent : \n' + nbrCitizenZone(currentCircle.id)+ '\nNombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
+            @click="toDisplay(  currentCircle.id + ':  Nombre de citoyen présent : ' + nbrCitizenZone(currentCircle.id)+ ' Nombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
 
           />
 
         </div>
         <div v-if="filterOption.includes('Police')" class="police" >
-          <Marker v-if="nbrPolicierZoneA>=50" v-bind:position="ZoneA"
-                  v-bind:msg="nbrPolicierZoneA + ' policiers'"
-                  v-bind:iconType="'Policier'"
+          <Marker v-if="nbrPolicierZone('Zone A')>=50" v-bind:position="zoneA"
+                  v-bind:msg="nbrPolicierZone('Zone A') + ' policiers'"
+                  v-bind:iconType="'police'"
           />
-          <Marker v-if="nbrPolicierZoneB>=50" v-bind:position="ZoneB"
-                  v-bind:msg="nbrPolicierZoneB + ' policiers'"
-                  v-bind:iconType="'Policier'"
+          <Marker v-if="nbrPolicierZone('Zone B')>=50" v-bind:position="zoneB"
+                  v-bind:msg="nbrPolicierZone('Zone B') + ' policiers'"
+                  v-bind:iconType="'police'"
           />
-          <Marker v-if="nbrPolicierZoneC>=50" v-bind:position="ZoneC"
-                  v-bind:msg="nbrPolicierZoneC + ' policiers'"
-                  v-bind:iconType="'Policier'"
+          <Marker v-if="nbrPolicierZone('Zone C')>=50" v-bind:position="zoneC"
+                  v-bind:msg="nbrPolicierZone('Zone C') + ' policiers'"
+                  v-bind:iconType="'police'"
           />
-          <Marker v-if="nbrPolicierZoneD>=50" v-bind:position="ZoneD"
-                  v-bind:msg="nbrPolicierZoneD + ' policiers'"
-                  v-bind:iconType="'Policier'"
+          <Marker v-if="nbrPolicierZone('Zone D')>=50" v-bind:position="zoneD"
+                  v-bind:msg="nbrPolicierZone('Zone D') + ' policiers'"
+                  v-bind:iconType="'police'"
           />
 
 
@@ -121,22 +122,6 @@ export default {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
     },
-    nbrPolicierZoneA() {
-      console.log("policier zone A", this.$store.getters.policierZoneA);
-      return this.$store.getters.getPoliciers("ZoneA");
-    },
-    nbrPolicierZoneD() {
-      console.log("policier zone D", this.$store.getters.policierZoneD);
-      return this.$store.getters.getPoliciers("ZoneD");
-    },
-    nbrPolicierZoneB() {
-      console.log("policier zone D", this.$store.getters.policierZoneB);
-      return this.$store.getters.getPoliciers("ZoneB");
-    },
-    nbrPolicierZoneC() {
-      console.log("policier zone D", this.$store.getters.policierZoneC);
-      return this.$store.getters.getPoliciers("ZoneC");
-    },
   },
   data() {
     return {
@@ -153,6 +138,11 @@ export default {
       iconWidth: 25,
       iconHeight: 40,
       displayHours : false,
+      zoneA : [43.6254,7.0839],
+      zoneB :[43.6254,7.0569],
+      zoneC :[ 43.6054,7.0839],
+      zoneD : [ 43.6054,7.0569],
+
     };
   },
   props: {
@@ -163,11 +153,13 @@ export default {
   },
   methods: {
     nbrCitizenZone(a) {
-      console.log("citizen zone", this.$store.getters.citizenZoneA);
       return this.$store.getters.getCitizen(a);
     },
     nbrPolicierZone(a) {
       return this.$store.getters.getPoliciers(a);
+    },
+    getPositionZone(a) {
+      return this.$store.getters.getPositionZone(a);
     },
     log(a) {
       console.log(a);
