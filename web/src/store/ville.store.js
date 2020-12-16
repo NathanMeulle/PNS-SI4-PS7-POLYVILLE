@@ -55,21 +55,24 @@ export const villeModule = {
         loadParkings: (state) => {
             return state.Ville[0].ville.parkings;
         },
+        getWeeksNumber: (state) =>{
+            return state.Ville[0].ville.commerces[0].horaires.length;
+        },
         hoursTable: (state) => (id) => {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
                 if(commerce.id === id){
-                    horaires = commerce.horaires[0].semaine;
+                    horaires = commerce.horaires;
                     return horaires;
                 }
-                else {
+                /*else {
                     return "{heureOuverture: 7, heureFermeture: 8}";
-                }
+                }*/
             });
 
               state.Ville[0].ville.parkings.forEach(parking => {
                 if(parking.id === id){
-                    horaires = parking.horaires[0].semaine;
+                    horaires = parking.horaires;
                     return horaires;
                 }
             });
