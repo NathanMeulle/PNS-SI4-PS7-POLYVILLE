@@ -21,7 +21,7 @@
         </div>
             <div class="dropdown">
                 <button class="dropbtn">
-                    Afficher
+                    {{storeToDisplay}}
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
@@ -30,7 +30,7 @@
                     <a href="#" @click="storeToDisplay='Boulangerie'">Boulangerie</a>
                     <a href="#" @click="storeToDisplay='Pharmacie'">Pharmacie</a>
                     <a href="#" @click="storeToDisplay='SuperMarché'">Epiceries & Supermarchés</a>
-                    <a href="#" @click="storeToDisplay='all'">Tout</a>
+                    <a href="#" @click="storeToDisplay='Tout'">Tout</a>
 
                 </div>
             </div>
@@ -51,7 +51,7 @@
         data() {
             return {
                 checkedOptions: ["Commerces"],
-                storeToDisplay : "all"
+                storeToDisplay : "Tout"
             }
         },
         methods : {

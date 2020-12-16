@@ -13,7 +13,7 @@
         <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
         <l-control-layers style="z-index: -5"/>
         <div v-if="filterOption.includes('Commerces')" class="commerces">
-          <div v-if="filterStore == 'all'">
+          <div v-if="filterStore == 'Tout'">
             {{log(filterStore)}}
             <Marker
             v-for="currentMarker in commerceStore"
