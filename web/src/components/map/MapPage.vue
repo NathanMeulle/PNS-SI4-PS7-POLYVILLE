@@ -10,7 +10,7 @@
         <label for="checkboxParking">Parking</label>
 
         <input type="checkbox" id="checkboxCommerces" value="Commerces" v-model="loadCheckbox" v-on:input="doSelect('Commerces')">
-        <label for="checkboxAffluence">Commerces</label>
+        <label for="checkboxCommerces">Commerces</label>
 
         <input type="checkbox" id="checkboxAffluence" value="Affluence" v-model="loadCheckbox" v-on:input="doSelect('Affluence')">
         <label for="checkboxAffluence">Affluence</label>
