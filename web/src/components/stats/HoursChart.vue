@@ -1,5 +1,6 @@
 <template>
   <div>
+    Graphique des horaires du magasin
     {{ updateData() }}
     <div class="field is-grouped">
       <div class="control">
@@ -26,7 +27,7 @@
       </div>
     </div>
 
-    <line-chart
+    <bar-chart
       :width="500"
       :height="300"
       :labels="[
@@ -40,13 +41,13 @@
       ]"
       :datasets="displayedDatasets"
       :options="$options.options"
-    ></line-chart>
+    ></bar-chart>
   </div>
 </template>
 
 <script>
 //import numeral from "numeral";
-import LineChart from "./LineChart";
+import BarChart from "./BarChart";
 import store from '../../store/store';
 const options = {
   scales: {
@@ -88,8 +89,6 @@ const options = {
           return !item.text.includes(" "); //fait disparaître les légendes de l'après-midi
         }
       },
-
-      fontColor: "rgb(255, 99, 132)",
     },
     onClick: function (e, legendItem) {
       
@@ -121,6 +120,7 @@ const options = {
   },
   tooltips: {
     mode: "index",
+    // permet l'affichage des données quand on passe la souris sur le graph
     /*callbacks: {
       label(tooltipItem, data) {
         const label = data.datasets[tooltipItem.datasetIndex].label;
@@ -134,7 +134,7 @@ export default {
   name: "Hours-chart",
   options,
   components: {
-    LineChart,
+    BarChart,
   },
   props: {
     id: Number,

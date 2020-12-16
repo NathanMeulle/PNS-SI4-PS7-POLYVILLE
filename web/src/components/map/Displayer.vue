@@ -5,7 +5,8 @@
         {{display()}}
     </div>
     <div v-if="hours===true">
-         <HoursChart></HoursChart>
+        <HoursChart></HoursChart>
+        <AttendanceChart></AttendanceChart>
         <div class="freq" @click="(showModal = true)">
                 + d'infos ?
         </div>
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+    import AttendanceChart from "../stats/AttendanceChart";
     import HoursChart from "../stats/HoursChart";
     import PopUp from "./PopUp";
     export default {
@@ -32,8 +34,8 @@
         },
         components: {
           HoursChart,
-            PopUp,
-
+          AttendanceChart,
+          PopUp,
         },
         props : {
             data : String,
