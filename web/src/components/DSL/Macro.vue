@@ -1,5 +1,6 @@
 <template>
   <h1>Mes raccourcis : </h1>
+  <PopUp v-if="showModal" v-on:close="showModal = false" :value="type" @input="type = $event"/>
   <br/>
   <div id="reussite">{{reussite}}</div>
   <div v-for="macro in this.mesMacros" :key="macro">
@@ -27,13 +28,18 @@
 
 <script>
 
+import PopUp from "@/components/DSL/PopUpDSL";
+
 export default {
 name: "Macro",
+  components:{PopUp},
   data(){
     return {
       mesMacros :{},
       message: {},
-      reussite: ""
+      reussite: "",
+      showModal: false,
+      type: ""
     }
   },
   created() {
@@ -49,12 +55,27 @@ name: "Macro",
       console.log("changement input", this.mesMacros)
     },
     use(macro,type){
-      console.log("use: ",macro,type)
-      console.log(Number(macro[3].input))
       if(type === "changement d'heure de fermeture des magasins" ) {
-        this.$store.dispatch('setClosingHour',Number(macro[3].input))
-        this.reussite = "Changement d'heure de fermeture des magasins réussie"
+        this.reussite = "Changement d'heure de fermeture effectué"
+        let regles = this.$store.getters.getRegles
+        let existe = this.verifierExistence('Fermeture magasins',regles)
+        console.log("aled : ",existe)
+        if(!existe) this.$store.dispatch('setClosingHour',macro[3].input)
+        else {
+          console.log("icibg",macro)
+          this.type = {programme: macro,titre: "Conflit concernant l'heure de fermeture des magasins"}
+          this.showModal=true
+        }
       }
+    },
+    verifierExistence(titre,regles){
+      let existence = false
+      regles.forEach((item)=>{
+        if(item.titre === titre){
+          existence = true
+        }
+      })
+      return existence
     }
   }
 }
