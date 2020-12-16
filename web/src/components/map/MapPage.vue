@@ -1,8 +1,10 @@
 <template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 
     <div class="MapPage">
+        <div class="navbar">
         <div class="checkbox">
         <input type="checkbox" id="checkboxParking" value="Parking" v-model="checkedOptions">
         <label for="checkboxParking">Parking</label>
@@ -17,7 +19,6 @@
         <label for="checkboxPolice">Présence Policière</label>
 
         </div>
-        <div class="navbar">
             <div class="dropdown">
                 <button class="dropbtn">
                     Afficher
@@ -63,40 +64,40 @@
 
 <style scoped>
     .checkbox {
-        height: 100%;
-        width: 100%;
-        border-radius: 10px;
-        list-style-type: none;
-        display: inline;
-        color: #000;
-        text-align: center;
-        background-color: #555555;
-        padding: 10px 10px 10px 10px;
-        text-decoration: none;
+        float: left;
+        width: 59%;
+        font-family: "Sofia", sans-serif;
+        font-size: 16px;
+        color: black;
+        padding: 14px 16px;
+        background-color: inherit;
+
     }
     .map {
         padding: 10px;
         z-index: -1;
     }
     .navbar {
-        width: 20%;
         overflow: hidden;
         font-family: Arial;
-        float: right;
+        border: 3px solid #0cb50b;
+        border-radius: 10px;
+        box-shadow: 4px 4px 2px 1px #266027;
+        height: 100%;
+        width: 100%;
+        margin: 4px;
     }
 
     /* Links inside the navbar */
     .navbar a {
         float: right;
         font-size: 16px;
-        color: black;
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
     }
     /* The dropdown container */
     .dropdown {
-        float: left;
         overflow: hidden;
     }
 
@@ -104,14 +105,8 @@
     .dropdown .dropbtn {
         font-family: "Sofia", sans-serif;
         font-size: 16px;
-        outline: none;
-        color: black;
-        border-radius: 10px;
-        border: 3px solid #0cb50b;
         padding: 14px 16px;
         background-color: inherit;
-        box-shadow: 4px 4px 2px 1px #266027;
-        margin: 0; /* Important for vertical align on mobile phones */
     }
 
     /* Add a red background color to navbar links on hover */
@@ -129,7 +124,6 @@
         position: absolute;
         background-color: #f9f9f9;
         min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
     }
 
