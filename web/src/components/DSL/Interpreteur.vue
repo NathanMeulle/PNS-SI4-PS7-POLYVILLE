@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import DSL from "@/components/DSL/DSL";
+import DSL from "./DSL";
 export default {
   name: "Interpreteur",
   components: {DSL},

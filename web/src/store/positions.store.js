@@ -1,4 +1,4 @@
-import { PositionMock } from "@/mocks/Position.mock"
+import { PositionMock } from "../mocks/Position.mock"
 
 
 /**
