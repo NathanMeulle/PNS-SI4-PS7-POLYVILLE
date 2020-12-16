@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <bar-chart
+    <line-chart
       :width="500"
       :height="300"
       :labels="[
@@ -40,13 +40,13 @@
       ]"
       :datasets="displayedDatasets"
       :options="$options.options"
-    ></bar-chart>
+    ></line-chart>
   </div>
 </template>
 
 <script>
 //import numeral from "numeral";
-import BarChart from "./BarChart";
+import LineChart from "./LineChart";
 import store from '../../store/store';
 const options = {
   scales: {
@@ -59,21 +59,16 @@ const options = {
       {
         ticks: {
           beginAtZero: false,
-          precision: 2,
+          /*precision: 2,
           stepSize: 2,
-          reverse: true,
-          //suggestedMax: 24,
+          reverse: true,*/
+          suggestedMax: 500,
         },
         scaleLabel: {
           display: true,
-          labelString: "Hour",
+          labelString: "Clients",
         },
         stacked: false,
-        afterTickToLabelConversion: function (q) {
-          for (var tick in q.ticks) {
-            q.ticks[tick] += "h";
-          }
-        },
       },
     ],
   },
@@ -133,7 +128,7 @@ export default {
   name: "Hours-chart",
   options,
   components: {
-    BarChart,
+    LineChart,
   },
   props: {
     id: Number,
@@ -157,12 +152,12 @@ export default {
       //renvoie tous les datasets à afficher selon les checkbox activées
       var res = [];
       if (this.selectedTimeOfTheDay.includes("Afternoon")) {
-        for (let i = 0; i < this.getHours().length; i++) {
+        for (let i = 0; i < this.getSchedule().length; i++) {
           res.push("Afternoon" + i);
         }
       }
       if (this.selectedTimeOfTheDay.includes("Morning")) {
-        for (let i = 0; i < this.getHours().length; i++) {
+        for (let i = 0; i < this.getSchedule().length; i++) {
           res.push("Morning" + i);
         }
       }
@@ -174,7 +169,7 @@ export default {
     getId() {
       return this.$store.getters.getId;
     },
-    getHours() {
+    getSchedule() {
       let hours = this.$store.getters.hoursTable(this.getId());
       return hours;
     },
@@ -190,54 +185,35 @@ export default {
       var i = 0;
       var semaine = null;
       var datacollection = {};
-      for (let j = 0; j < this.getHours().length; j++) {
-        semaine = this.getHours()[j].semaine;
+      for (let j = 0; j < this.getSchedule().length; j++) {
+        semaine = this.getSchedule()[j].semaine;
         i = 0;
         let AfternoonData = new Array(7);
         let MorningData = new Array(7);
         if (semaine.Lundi[1] !== undefined) {
           for (const [key, value] of Object.entries(semaine)) {
             // mise des valeur de l'après midi
-            if (value[1].heureFermeture === 0) {
-              //cas où le commerce est fermée l'après-midi
-              AfternoonData[i] = [null, null];
-            } else {
               AfternoonData[i] = [
-                value[1].heureOuverture,
-                value[1].heureFermeture,
+                value[1].affluence,
               ];
-            }
-
-            // mise des valeur du matin
-            if (value[0].heureFermeture === 0) {
-              //cas où le commerce est fermée le matin
-              MorningData[i] = [null, null];
-            } else {
               MorningData[i] = [
-                value[0].heureOuverture,
-                value[0].heureFermeture,
+                value[0].affluence,
               ];
-            }
             i++;
-
             key;
           }
         } else {
           //si on a un parking par exemple
           i = 0;
           for (const [key, value] of Object.entries(semaine)) {
-            if (value[0].heureFermeture === 0) {
-              //cas où le parking est fermée ce jour
-              MorningData[i] = [null, null];
-            } else {
               MorningData[i] = [
-                value[0].heureOuverture,
-                value[0].heureFermeture,
+                value[0].affluence,
               ];
-            }
+            
             i++;
             key;
-          }
+            }
+          
           AfternoonData = [
             [null, null],
             [null, null],
@@ -263,7 +239,7 @@ export default {
           data: MorningData,
           stack: j,
         };
-      }
+        }
       return datacollection;
     },
   },
