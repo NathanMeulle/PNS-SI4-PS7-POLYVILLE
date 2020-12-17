@@ -165,8 +165,8 @@ export default {
       maxZoom: 18,
       minZoom: 13,
       maxBounds: [
-        [43.6054, 7.0569],
-        [43.6254, 7.085],
+        [43.5904, 7.0419],
+        [43.6404, 7.100],
       ],
       iconWidth: 25,
       iconHeight: 40,
