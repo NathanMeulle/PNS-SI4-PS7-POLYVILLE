@@ -102,7 +102,7 @@ export default createStore({
             nbPoliciers = context.getters.getPoliciers(args.zone2)
             try{
                 context.commit('deplacerPoliciers',{args : args, nbZone: nbZone, nbPoliciers: nbPoliciers});
-                context.commit('addRegle', {titre : 'Presence policier',valeur : nbPoliciers})
+                context.commit('addRegle', {titre : 'Presence policier',valeur : nbPoliciers,checked: false})
             }
             catch(error){
                 console.log('error ', error);

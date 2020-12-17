@@ -1,7 +1,7 @@
 <template>
   <div v-for="regle in regles" :key="regle">
     <div v-if="regle.valeur !== -1">
-      <input type="checkbox" id="{{regle.title}}" v-model="checked" v-on:click="action(regle)">
+      <input type="checkbox" id="{{regle.titre}}"  v-model="regle.checked" v-on:click="action(regle)">
       <label>{{regle.titre}}</label>
     </div>
   </div>
@@ -21,11 +21,11 @@ name: "AffichageRegles",
   methods:{
     action(regle){
       if(regle.titre === "Fermeture magasins"){
-        if(!this.checked) this.$store.dispatch('setClosingHour',regle.valeur)
+        if(!regle.checked) this.$store.dispatch('setClosingHour',regle.valeur)
         else this.$store.dispatch('setClosingHour',-1)
       }
       if (regle.titre === "Presence policier"){
-        if (this.checked) {
+        if (regle.checked) {
           store.commit({
             type: "stopDisplayPolice"
           });
