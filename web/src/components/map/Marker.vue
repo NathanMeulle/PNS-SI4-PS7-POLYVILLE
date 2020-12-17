@@ -26,7 +26,7 @@
 
 <script>
     import {icon} from "leaflet";
-    import {LMarker} from "@vue-leaflet/vue-leaflet";
+    import {LMarker} from "../../../node_modules_intern/@vue-leaflet/vue-leaflet";
     import MarkerPopup from "./MarkerPopup";
     import store from "../../store/store";
     export default {
