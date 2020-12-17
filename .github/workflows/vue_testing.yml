@@ -34,8 +34,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name:  Install Dependencies and Run VueJS Tests
+      - name:  Install Dependencies
         run: npm install
-             npm run test:unit
+      - name: Run VueJS Tests
+        run: npm run test:unit
 
       
