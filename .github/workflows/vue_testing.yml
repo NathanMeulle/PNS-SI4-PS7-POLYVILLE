@@ -38,6 +38,7 @@ jobs:
         working-directory: web
         run: npm install
       - name: Run VueJS Tests
+        working-directory: web
         run: npm run test:unit
 
       
