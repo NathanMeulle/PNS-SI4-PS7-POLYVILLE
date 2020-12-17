@@ -7,6 +7,8 @@
 ![](https://img.shields.io/badge/Tools-Maven-informational?style=flat&logo=maven&logoColor=white&color=4581E5)
 ![](https://img.shields.io/badge/Editor-IntelliJ_IDEA-informational?style=flat&logo=intellij-idea&logoColor=white&color=4581E5)
 
+![Java CI with Maven](https://github.com/PNS-PS7and8/ps7-20-21-al-ihm2/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 
 ## Team
 - [Julien Kaplan](https://github.com/JulienK-hub)

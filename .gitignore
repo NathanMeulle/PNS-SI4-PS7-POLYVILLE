@@ -49,3 +49,5 @@ yarn-error.log*
 
 # Editor settings
 .vscode
+
+web/coverage
