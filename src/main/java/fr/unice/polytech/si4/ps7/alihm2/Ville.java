@@ -10,15 +10,15 @@ import java.util.List;
  * @author nathan
  */
 public class Ville {
-    private int longeur;
+    private int longueur;
     private int largeur;
     private List<Commercant> commercants;
     private List<Commerce> commerces;
     private List<Parking> parkings;
     private List<Zone> zones;
 
-    public Ville(int longeur, int largeur, List<Commercant> commercants, List<Commerce> commerces, List<Parking> parkings, List<Zone> zones) {
-        this.longeur = longeur;
+    public Ville(int longueur, int largeur, List<Commercant> commercants, List<Commerce> commerces, List<Parking> parkings, List<Zone> zones) {
+        this.longueur = longueur;
         this.largeur = largeur;
         this.commercants = commercants;
         this.commerces = commerces;
@@ -26,8 +26,8 @@ public class Ville {
         this.zones = zones;
     }
 
-    public int getLongeur() {
-        return longeur;
+    public int getLongueur() {
+        return longueur;
     }
 
     public int getLargeur() {

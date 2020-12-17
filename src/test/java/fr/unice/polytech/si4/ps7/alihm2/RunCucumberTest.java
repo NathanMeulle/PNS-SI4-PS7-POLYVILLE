@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.conception.l.stepdefs;
+package fr.unice.polytech.si4.ps7.alihm2;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
