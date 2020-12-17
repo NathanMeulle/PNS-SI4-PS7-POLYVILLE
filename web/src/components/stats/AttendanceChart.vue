@@ -1,6 +1,6 @@
 <template>
   <div>
-      Graphique de l'affluence moyenne du magasin
+      <br>Graphique de l'affluence moyenne du magasin
     {{ updateData() }}
     <div class="field is-grouped">
       <div class="control">
@@ -157,12 +157,12 @@ export default {
       for (let j = 0; j < weeksCount; j++) {
         semaine = this.getSchedule()[j].semaine;
         i = 0;
-        
+
         if (semaine.Lundi[1] !== undefined) {
           // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
             // mise des valeur
-            
+
               AfternoonData[i] += value[1].affluence;
               MorningData[i] += value[0].affluence;
               DayData[i] += AfternoonData[i] + MorningData[i];
@@ -177,7 +177,7 @@ export default {
               DayData[i] += MorningData[i];
             i++;
             }
-          
+
           AfternoonData = [
             null,
             null,
@@ -189,7 +189,7 @@ export default {
           ];
             }
         }
-        
+
         for (let j=0; j < 7;j++ ){
             MorningData[j] = MorningData[j]/weeksCount;
             if(AfternoonData[j] !== null){
@@ -222,7 +222,7 @@ export default {
           data: DayData,
           steppedLine: 'middle',
         };
-        
+
       return datacollection;
     },
   },

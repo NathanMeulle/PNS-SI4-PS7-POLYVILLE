@@ -111,7 +111,7 @@
         </div>
       </l-map>
     </div>
-    <div class="displayer" style="height: 100%; width: 38%">
+    <div class="displayer" style="width: 38%">
       <Displayer v-bind:hours="displayHours"/>
     </div>
   </div>
@@ -241,6 +241,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .displayer {
+  min-height: 70vh;
   float: right;
   position: relative;
   margin-right: 10px;
