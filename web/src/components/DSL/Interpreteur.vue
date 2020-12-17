@@ -80,10 +80,15 @@ export default {
             if(!this.macro) {
               let regles = this.$store.getters.getRegles
               let existe = this.verifierExistence('Presence policier',regles)
+              console.log("existe :",existe)
               if (!existe) this.$store.dispatch('deplacerPoliciers', {
                 citoyens: nbCitoyens,
                 cond: this.infOrSup, zone1: this.zones[0], policiers: nbPoliciers, zone2: this.zones[1]
               })
+              else {
+                this.type = {programme: this.programme,titre: "Conflit concernant le déplacement des policiers"}
+                this.showModal=true
+              }
             }
             else{
               this.programme[this.programme.length] = "déplacement de policiers "+this.zones[1]+" en fonction des citoyens "+

@@ -22,6 +22,11 @@
               <button class="choix" v-on:click="changerHeureFermeture(choix.apres),$emit('close')" v-else>Réinitialiser les horaires</button>
               <button class="choix" v-on:click="changerHeureFermeture(choix.avant),$emit('close')">{{choix.avant}}h</button>
             </slot>
+            <slot name="header" v-if="type==='Conflit concernant le déplacement des policiers'">
+              <br/>
+              <button class="choix" v-on:click="changerPoliciers(choix.avant),$emit('close')">{{choix.avant}}</button>
+              <button class="choix" v-on:click="changerPoliciers(choix.apres),$emit('close')">{{choix.apres}}</button>
+            </slot>
           </div>
           <br/>
           <div class="modal-header">
@@ -54,6 +59,17 @@ export default {
   methods : {
     afficherConflit(){
       if(this.type === "Conflit concernant l'heure de fermeture des magasins") this.conflitHeureFermeture()
+      else if (this.type === "Conflit concernant le déplacement des policiers") this.conflitPoliciers()
+    },
+    conflitPoliciers(){
+      let tab = this.$store.getters.getReglePoliciers
+      console.log(tab)
+      this.texte = "Une règle (n°1) concernant le déplacement de policiers dans une zone est déjà en place : "+tab[2]+" policiers "+
+          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+"." +
+          "\nVous avez essayé d'appliquer la règle suivante (n°2) : "+this.programme[6].input+" policiers "+
+          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+"."+
+          "\nQuelle règle voulez vous appliquer ?"
+      this.choix = {avant: "Règle n°1", apres: "Règle n°2"}
     },
     conflitHeureFermeture(){
       let heure = this.$store.getters.getRegleHeureFermeture
@@ -72,6 +88,15 @@ export default {
     },
     changerHeureFermeture(heure){
       this.$store.dispatch('setClosingHour',heure)
+    },
+    changerPoliciers(regle){
+      if(regle === "Règle n°2"){
+        if(this.programme[3].title === 'Plus grand que'){
+          this.$store.dispatch('deplacerPoliciers', {
+            citoyens: this.programme[4].input,
+            cond: 'sup', zone1: this.programme[2].title, policiers: this.programme[6].input, zone2: this.programme[8].title})
+        }
+      }
     }
 
   },

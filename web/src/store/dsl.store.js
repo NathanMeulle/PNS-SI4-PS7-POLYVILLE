@@ -45,7 +45,14 @@ export const dslModule = {
                 if(regle.titre === 'Fermeture magasins') heure = regle.valeur
             })
             return heure
-        }
+        },
+        getReglePoliciers: state =>{
+            let tab = []
+            state.regles.forEach((regle) =>{
+                if(regle.titre === 'Presence policier') tab = regle.valeur
+            })
+            return tab
+        },
     },
     actions:{
 

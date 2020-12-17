@@ -77,10 +77,16 @@ name: "Macro",
       if (macro[3].title === 'Plus grand que') {
         infOrSup = 'sup'
       }
-      console.log("ici : ",nbCitoyens,infOrSup,zones[0],nbPoliciers,zones[1])
+      let regles = this.$store.getters.getRegles
+      let existe = this.verifierExistence('Presence policier',regles)
+      console.log("existe :",existe)
       this.reussite ="Déplacement de policiers effectué"
-      this.$store.dispatch('deplacerPoliciers', {citoyens: nbCitoyens,
+      if(!existe) this.$store.dispatch('deplacerPoliciers', {citoyens: nbCitoyens,
         cond: infOrSup, zone1: zones[0], policiers: nbPoliciers, zone2: zones[1]})
+      else {
+        this.type = {programme: macro,titre: "Conflit concernant le déplacement des policiers"}
+        this.showModal=true
+      }
     },
     macroChangementHeureFermeture(macro){
       this.reussite = "Changement d'heure de fermeture effectué"
@@ -97,6 +103,7 @@ name: "Macro",
     verifierExistence(titre,regles){
       let existence = false
       regles.forEach((item)=>{
+        console.log(item)
         if(item.titre === titre){
           existence = true
         }
