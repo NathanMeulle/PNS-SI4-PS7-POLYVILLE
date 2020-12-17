@@ -42,9 +42,9 @@ export const positionModule = {
     getters:{
         numberOfCitizens: (state) => {
             var nbCitizens = 0;
+            // eslint-disable-next-line no-unused-vars
             state.positions[0].clients.forEach(id => {
                 nbCitizens += 1;
-                id;
             });
             return nbCitizens;
         },

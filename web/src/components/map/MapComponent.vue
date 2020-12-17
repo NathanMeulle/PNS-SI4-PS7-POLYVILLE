@@ -111,14 +111,14 @@
         </div>
       </l-map>
     </div>
-    <div class="displayer" style="height: 100%; width: 38%">
+    <div class="displayer" style="width: 38%">
       <Displayer v-bind:hours="displayHours"/>
     </div>
   </div>
 </template>
 
 <script>
-import { LMap, LTileLayer, LControlLayers } from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer, LControlLayers } from "../../../node_modules_intern/@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import MyCircle from "../tools/MyCircle";
 import Marker from "./Marker";
@@ -145,14 +145,14 @@ export default {
       return this.$store.getters.loadParkings;
     },
     storeToDisplay() {
-      let store = [];
+      let storeTmp = [];
       this.$store.getters.loadCommerces.forEach(theStore => {
         if (theStore.categorie === this.filterStore) {
-          store.push(theStore);
+          storeTmp.push(theStore);
         }
       })
-      console.log(store);
-      return store;
+      console.log(storeTmp);
+      return storeTmp;
     }
 
   },
@@ -165,8 +165,8 @@ export default {
       maxZoom: 18,
       minZoom: 13,
       maxBounds: [
-        [43.6054, 7.0569],
-        [43.6254, 7.085],
+        [43.5904, 7.0419],
+        [43.6404, 7.100],
       ],
       iconWidth: 25,
       iconHeight: 40,
@@ -241,6 +241,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .displayer {
+  min-height: 70vh;
   float: right;
   position: relative;
   margin-right: 10px;

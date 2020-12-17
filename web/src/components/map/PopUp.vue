@@ -26,6 +26,9 @@
                                    {{getNom()[1]}} <br>
                                  {{getAdress()}}
                             </slot>
+                            <div class="chartAttendance">
+                                <attendance-chart></attendance-chart>
+                            </div>
                         </div>
                         <div class="modal-footer-wrapper" style="height: 40px; width: 100%">
                             <div class="modal-footer" style="width: 50%">
@@ -51,6 +54,7 @@
 </template>
 
 <script>
+    import AttendanceChart from "../stats/AttendanceChart";
     export default {
         name: "PopUp",
         data() {
@@ -59,6 +63,9 @@
                 id : this.getId(),
                 nom : "",
             }
+        },
+        components : {
+            AttendanceChart,
         },
         computed : {
         },
@@ -120,7 +127,7 @@
 
     .modal-container {
         width: 500px;
-        height: 220px;
+        height: 600px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
@@ -160,7 +167,6 @@
     .modal-default-button {
         float: right;
         width: 30%;
-        float: right;
         border-radius: 50px;
         margin: auto;
         text-align: center;
@@ -180,6 +186,9 @@
     .modal-leave-active .modal-container {
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
+    }
+    .chartAttendance {
+        margin: 10px 0;
     }
 
 </style>

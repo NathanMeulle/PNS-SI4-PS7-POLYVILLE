@@ -197,6 +197,7 @@ export default {
         let AfternoonData = new Array(7);
         let MorningData = new Array(7);
         if (semaine.Lundi[1] !== undefined) {
+          // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
             // mise des valeur de l'après midi
             if (value[1].heureFermeture === 0) {
@@ -221,11 +222,11 @@ export default {
             }
             i++;
 
-            key;
           }
         } else {
           //si on a un parking par exemple
           i = 0;
+          // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
             if (value[0].heureFermeture === 0) {
               //cas où le parking est fermée ce jour
@@ -237,7 +238,6 @@ export default {
               ];
             }
             i++;
-            key;
           }
           AfternoonData = [
             [null, null],
