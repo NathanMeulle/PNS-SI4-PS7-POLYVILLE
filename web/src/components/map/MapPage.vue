@@ -49,6 +49,8 @@
             </div>
         </div>
 
+        <MapComponent class="map" v-bind:filterOption="checkedOptions" ></MapComponent>
+      <AffichageRegles/>
         <MapComponent class="map" v-bind:filterOption="loadCheckbox" v-bind:filterStore="storeToDisplay" ></MapComponent>
 
     </div>
@@ -56,12 +58,14 @@
 
 <script>
     import MapComponent from "./MapComponent";
+    import AffichageRegles from "@/components/map/AffichageRegles";
     import store from "../../store/store";
 
     export default {
         name: "MapPage",
         components: {
             MapComponent,
+          AffichageRegles,
         },
         data() {
             return {
@@ -140,7 +144,7 @@
         border-radius: 25px;
         margin: 2px;
     }
-    
+
     .dropdown:hover .dropbtn {
         background-color : lightgrey;
     }

@@ -11,7 +11,9 @@ export const dslModule = {
         addMacro(state,payload){
             let macroDejaPresente = false
             state.macro.forEach((item)=>{
-                if(item[item.length] === payload[payload.length]){
+                console.log("1 : ",item)
+                console.log("2 : ",payload)
+                if(item[item.length-1] === payload[payload.length-1]){
                     macroDejaPresente = true
                     console.log("Macro déjà créée")
                 }
@@ -24,7 +26,7 @@ export const dslModule = {
             state.regles.forEach((regle)=>{
                 if(regle.titre === payload.titre) {
                     existe = true
-                    regle.valeur = payload.valeur
+                    if(payload.valeur!==-1) regle.valeur = payload.valeur
                 }
             })
             if(!existe) state.regles.push(payload)
@@ -43,7 +45,14 @@ export const dslModule = {
                 if(regle.titre === 'Fermeture magasins') heure = regle.valeur
             })
             return heure
-        }
+        },
+        getReglePoliciers: state =>{
+            let tab = []
+            state.regles.forEach((regle) =>{
+                if(regle.titre === 'Presence policier') tab = regle.valeur
+            })
+            return tab
+        },
     },
     actions:{
 

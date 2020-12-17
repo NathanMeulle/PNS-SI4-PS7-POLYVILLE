@@ -53,6 +53,10 @@
             </div>
             <div v-else>
               {{item.input}}
+              <label>
+                <input v-model="message[item.id]">
+                <button v-on:click="validation(item.id)">OK</button>
+              </label>
               <div class="logo">
                 <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
                 <em class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</em>
@@ -183,6 +187,13 @@ export default {
           type:4,
           list: 4
         },
+        {
+          id: 15,
+          title: 'réinitialiser',
+          position: -1,
+          type:4,
+          list: 4
+        },
       ],
       message : {}
     }
@@ -254,7 +265,7 @@ export default {
     },
     macro(){
       console.log("envoi du programme suivant : ",this.listProg)
-      this.$emit("check",this.listProg)
+      this.$emit("macro",this.listProg)
     },
     suppr(item){
       item.list = -1

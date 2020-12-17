@@ -33,12 +33,15 @@ export default createStore({
         return {
             infoCircle : "",
             idStore : 0,
-            checkedOptions: ["Commerces"]
+            checkedOptions: ["Commerces"],
+            displaypolice : false,
         }
     },
     mutations : {
         setInformation: (state, payload) => state.infoCircle = payload.circleinfo,
         sendId: (state,payload) => state.idStore = payload.id,
+        displayPolice: (state) => state.displaypolice = true,
+        stopDisplayPolice: (state) => state.displaypolice = false,
         setCheckbox(state, payload) {
             if (!state.checkedOptions.includes(payload.CheckedBox)) {
                 state.checkedOptions.push(payload.CheckedBox);
@@ -97,6 +100,9 @@ export default createStore({
         },
         getCheckBox: state => {
             return state.checkedOptions;
+        },
+        getDisplayPolice: state => {
+            return state.displaypolice;
         }
     },
     actions:{
@@ -108,6 +114,8 @@ export default createStore({
             nbPoliciers = context.getters.getPoliciers(args.zone2)
             try{
                 context.commit('deplacerPoliciers',{args : args, nbZone: nbZone, nbPoliciers: nbPoliciers});
+                context.commit('addRegle', {titre : 'Presence policier',valeur : [args.citoyens,args.zone1,
+                        args.policiers,args.zone2]})
             }
             catch(error){
                 console.log('error ', error);
