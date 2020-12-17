@@ -78,7 +78,9 @@ export default {
             console.log("ici : ",nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1])
             this.reussite ="Déplacement de policiers effectué"
             if(!this.macro) {
-              this.$store.dispatch('deplacerPoliciers', {
+              let regles = this.$store.getters.getRegles
+              let existe = this.verifierExistence('Presence policier',regles)
+              if (!existe) this.$store.dispatch('deplacerPoliciers', {
                 citoyens: nbCitoyens,
                 cond: this.infOrSup, zone1: this.zones[0], policiers: nbPoliciers, zone2: this.zones[1]
               })

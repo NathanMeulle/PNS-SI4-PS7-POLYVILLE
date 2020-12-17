@@ -3,7 +3,7 @@
   <PopUp v-if="showModal" v-on:close="showModal = false" :value="type" @input="type = $event"/>
   <br/>
   <div id="reussite">{{reussite}}</div>
-  <div v-for="macro in this.mesMacros" :key="macro">
+  <div v-for="macro in mesMacros" :key="macro">
     <div id="macro">
       <div>Raccourci : {{macro[macro.length-1]}}</div>
       <div v-for="item in macro" :key="item.title">

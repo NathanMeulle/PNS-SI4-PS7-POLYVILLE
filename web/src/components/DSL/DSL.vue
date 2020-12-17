@@ -54,7 +54,7 @@
             <div v-else>
               {{item.input}}
               <label>
-                <input v-model="this.message[item.id]">
+                <input v-model="message[item.id]">
                 <button v-on:click="validation(item.id)">OK</button>
               </label>
               <div class="logo">

@@ -33,11 +33,14 @@ export default createStore({
         return {
             infoCircle : "",
             idStore : 0,
+            displaypolice : false,
         }
     },
     mutations : {
         setInformation: (state, payload) => state.infoCircle = payload.circleinfo,
         sendId: (state,payload) => state.idStore = payload.id,
+        displayPolice: (state) => state.displaypolice = true,
+        stopDisplayPolice: (state) => state.displaypolice = false,
 
         deplacerPoliciers(state, payload) {
             console.log(payload.nbZone)
@@ -85,6 +88,9 @@ export default createStore({
         },
         getId: state => {
             return state.idStore;
+        },
+        getDisplayPolice: state => {
+            return state.displaypolice;
         }
     },
     actions:{
@@ -96,6 +102,7 @@ export default createStore({
             nbPoliciers = context.getters.getPoliciers(args.zone2)
             try{
                 context.commit('deplacerPoliciers',{args : args, nbZone: nbZone, nbPoliciers: nbPoliciers});
+                context.commit('addRegle', {titre : 'Presence policier',valeur : nbPoliciers})
             }
             catch(error){
                 console.log('error ', error);

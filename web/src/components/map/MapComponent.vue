@@ -67,7 +67,7 @@
           />
 
         </div>
-        <div v-if="filterOption.includes('Police')" class="police" >
+        <div v-if="filterOption.includes('Police') || displayPolice" class="police" >
           <Marker v-if="nbrPolicierZone('Zone A')>=50" v-bind:position="zoneA"
                   v-bind:msg="nbrPolicierZone('Zone A') + ' policiers'"
                   v-bind:iconType="'police'"
@@ -122,6 +122,9 @@ export default {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
     },
+    displayPolice() {
+      return this.$store.getters.getDisplayPolice;
+    }
   },
   data() {
     return {
