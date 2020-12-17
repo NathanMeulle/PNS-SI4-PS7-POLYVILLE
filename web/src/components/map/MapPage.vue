@@ -48,10 +48,8 @@
                 </div>
             </div>
         </div>
-
-        <MapComponent class="map" v-bind:filterOption="checkedOptions" ></MapComponent>
-      <AffichageRegles/>
         <MapComponent class="map" v-bind:filterOption="loadCheckbox" v-bind:filterStore="storeToDisplay" ></MapComponent>
+      <AffichageRegles/>
 
     </div>
 </template>
