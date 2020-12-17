@@ -1,15 +1,15 @@
 <template>
-  <div class="wrapper" style="height: 70vh; width: 180vh">
-    <div class="gauche" style="height: 50vh; width: 90vh">
-
-      <span id="error">{{error}}</span>
+  <span id="error">{{error}}</span>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+  <div class="wrapper" style="height: 75%; width: 100%">
+    <div class="gauche" style="height: 75%; width: 59%">
       <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
         Données :
         <div v-for='item in listInput' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{item.input}}
           <label>
-            <input v-model="this.message[item.id]">
+            <input v-model="message[item.id]">
             <button v-on:click="validation(item.id)">OK</button>
           </label>
         </div>
@@ -36,19 +36,39 @@
         </div>
       </div>
     </div>
-    <div class="droite" style="height: 75vh; width: 80vh">
-      <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
-        Mon programme :
-        <div v-for='item in listProg' :key='item.title' class='drag-el' draggable="true"
-             @dragstart='startDrag($event, item)'>
-          <div v-if="item.type !== 5">{{ item.title }}</div>
-          {{item.input}}
+    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%">Lancer mon programme</button>
+    <br/>
+    <div class="droite" style="height: 75%; width: 35%">
+      <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
+        <div class='drop-zone'>
+          Mon programme :
+          <div v-for='item in listProg' :key='item.title' class="drag-el">
+            <div v-if="item.type !== 5">
+              {{ item.title }}
+              <div class="logo">
+                <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</em>
+              </div>
+            </div>
+            <div v-else>
+              {{item.input}}
+              <label>
+                <input v-model="message[item.id]">
+                <button v-on:click="validation(item.id)">OK</button>
+              </label>
+              <div class="logo">
+                <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-up" v-on:click="up(item)">&emsp;&emsp;</em>
+                <em class="fas fa-arrow-down" v-on:click="down(item)">&emsp;&emsp;</em>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%">Créer un raccourci pour ce programme</button>
   </div>
-    <br/>
-    <button v-on:click="launch()" id="launch">Lancer mon programme</button>
 </template>
 
 <script>
@@ -134,21 +154,42 @@ export default {
         },
         {
           id: 10,
-          title: 'heures',
+          title: 'Zone C',
           position: -1,
           type:4,
           list: 4
         },
         {
           id: 11,
+          title: 'Zone D',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 12,
+          title: 'heures',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 13,
           title: 'magasins',
           position: -1,
           type:3,
           list: 3
         },
         {
-          id: 12,
+          id: 14,
           title: 'fermeture',
+          position: -1,
+          type:4,
+          list: 4
+        },
+        {
+          id: 15,
+          title: 'réinitialiser',
           position: -1,
           type:4,
           list: 4
@@ -188,9 +229,8 @@ export default {
     onDrop (evt, list) {
       this.error = ''
       const itemID = evt.dataTransfer.getData('itemID')
-      const item = this.items.find(item => item.id === Number(itemID))
+      const item = this.items.find(itemTmp => itemTmp.id === Number(itemID))
       if(item.list === 2 || list!==2){
-        this.error = "Déplacement impossible"
         item.list = item.type
       }
       else{
@@ -214,14 +254,44 @@ export default {
     },
     validation(id){
       this.error = ''
-      const item = this.items.find(item => item.id === id)
+      const item = this.items.find(itemTmp => itemTmp.id === id)
       if(!isNaN(this.message[item.id])) item.input = this.message[item.id]
-      else this.error = 'Il faut rentrer un nombre'
+      else this.error = 'Le champ est vide'
       this.message[item.id] = ""
     },
     launch(){
       console.log("envoi du programme suivant : ",this.listProg)
       this.$emit("launch",this.listProg)
+    },
+    macro(){
+      console.log("envoi du programme suivant : ",this.listProg)
+      this.$emit("macro",this.listProg)
+    },
+    suppr(item){
+      item.list = -1
+    },
+    up(selected){
+      let save = 0
+      let check = this.listProg[0].id === selected.id
+      console.log(check)
+      this.listProg.forEach((item,index) =>{
+        if(selected.id === item.id && !check){
+          save = this.listProg[index-1].position
+          this.listProg[index-1].position = selected.position
+          selected.position = save
+        }
+      })
+    },
+    down(selected){
+      let save = 0
+      let check = this.listProg[this.listProg.length-1].id === selected.id
+      this.listProg.forEach((item,index) =>{
+        if(selected.id === item.id && !check){
+          save = this.listProg[index+1].position
+          this.listProg[index+1].position = selected.position
+          selected.position = save
+        }
+      })
     }
   }
 }
@@ -232,6 +302,8 @@ export default {
     float: right;
     position: relative;
     border: 1px solid black;
+    margin-top: 3%;
+    right: 3%;
   }
   .gauche {
     float: left;
@@ -250,14 +322,25 @@ export default {
 }
 
 #error{
+  position: relative;
   color: red;
+  margin-top: 5%;
 }
 
 #cond{
   margin-top: 10px;
 }
 
+.logo{
+  float: right;
+}
+
+#creationMacro{
+  margin-top: 3%;
+}
+
 #launch{
-  margin-top: 5%;
+  float: right;
+  position: relative;
 }
 </style>

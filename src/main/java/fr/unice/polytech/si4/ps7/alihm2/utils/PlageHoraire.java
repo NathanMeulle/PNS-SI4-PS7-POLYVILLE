@@ -8,10 +8,13 @@ package fr.unice.polytech.si4.ps7.alihm2.utils;
 public class PlageHoraire {
     private int heureOuverture;
     private int heureFermeture;
+    private int affluence;
 
-    public PlageHoraire(int heureOuverture, int heureFermeture) {
+    public PlageHoraire(int heureOuverture, int heureFermeture, int affluence) {
         this.heureOuverture = heureOuverture;
         this.heureFermeture = heureFermeture;
+        this.affluence = affluence;
+
     }
 
     public int getHeureOuverture() {
@@ -22,4 +25,7 @@ public class PlageHoraire {
         return heureFermeture;
     }
 
+    public int getAffluence() {
+        return affluence;
+    }
 }

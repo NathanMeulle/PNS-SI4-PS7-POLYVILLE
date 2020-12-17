@@ -5,7 +5,7 @@
 <script>
 import Chart from 'chart.js';
 export default {
-  name: 'monthly-sales-chart',
+  name: 'line-chart',
   props: {
     // The canvas's width.
     width: {
@@ -42,7 +42,7 @@ export default {
   },
   mounted() {
     this.chart = new Chart(this.$refs.myChart, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: this.labels,
         datasets: this.datasets

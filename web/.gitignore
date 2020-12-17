@@ -25,3 +25,9 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+#Sonar 
+.scannerwork
+
+#Coverage Files
+coverage

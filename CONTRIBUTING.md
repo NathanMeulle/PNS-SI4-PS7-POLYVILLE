@@ -46,3 +46,5 @@ Each commit must be associated with a github issue. The submitted code must be c
   The submitted code must be clear, commented and tested for the pull request to be accepted.
   
   Then use the `merge` command to merge the branches.
+
+  The pull request is mandatory before performing a merge on Master.

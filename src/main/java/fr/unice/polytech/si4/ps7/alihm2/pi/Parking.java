@@ -1,10 +1,8 @@
 package fr.unice.polytech.si4.ps7.alihm2.pi;
 
-import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
+import fr.unice.polytech.si4.ps7.alihm2.utils.Semaine;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -15,9 +13,9 @@ public class Parking {
     private int id;
     private Position position;
     private int nbPlaces;
-    private LinkedHashMap<String, List<PlageHoraire>> horaires;
+    private List<Semaine> horaires;
 
-    public Parking(int id, int nbPlaces, Position position, LinkedHashMap<String, List<PlageHoraire>> horaires) {
+    public Parking(int id, int nbPlaces, Position position, List<Semaine> horaires) {
         this.id = id;
         this.nbPlaces = nbPlaces;
         this.position = position;
@@ -36,7 +34,7 @@ public class Parking {
         return nbPlaces;
     }
 
-    public HashMap<String, List<PlageHoraire>> getHoraires() {
+    public List<Semaine> getHoraires() {
         return horaires;
     }
 }

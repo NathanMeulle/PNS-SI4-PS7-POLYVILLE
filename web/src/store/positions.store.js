@@ -1,4 +1,34 @@
-import { PositionMock } from "@/mocks/Position.mock"
+import { PositionMock } from "../mocks/Position.mock"
+
+
+/**
+ *
+ * Test if a point is on a square of center (a,b)
+ *
+ * @param x -> coordinate x of the citizen / policeman
+ * @param y ->  coordinate y of the citizen / policeman
+ * @param a -> coordinate x of the center of the zone
+ * @param b -> coordinate y of the center of the zone
+ * @returns boolean
+ */
+
+
+export function isInSquare(x, y, a, b){
+    let bottomLeftX = (a-0.010);
+    let bottomLeftY = (b-0.010);
+    let topRightX = (a+0.010);
+    let topRightY = (b+0.010);
+
+    let inX = false;
+    let inY = false;
+    if (x > bottomLeftX && x <  topRightX )
+        inX = true;
+
+    if (y > bottomLeftY  && y < topRightY)
+        inY = true;
+
+    return (inX && inY);
+}
 export const positionModule = {
     namespace: false,
     state(){
@@ -8,121 +38,55 @@ export const positionModule = {
     },
     mutations:{
 
-        deplacerPoliciers(state, payload) {
-            console.log(payload.nbZone)
-            let agir = false
-            if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone)
-            if(agir){
-                for(var i = 0; i<payload.args.policiers;i++){
-                    state.positions[0].policiers[i].position.x = 43.6204
-                    state.positions[0].policiers[i].position.y = 7.0789
-                    console.log(state.positions[0].policiers[i])
-                }
-            }
-        }
-
     },
     getters:{
         numberOfCitizens: (state) => {
             var nbCitizens = 0;
+            // eslint-disable-next-line no-unused-vars
             state.positions[0].clients.forEach(id => {
                 nbCitizens += 1;
-                id;
             });
             return nbCitizens;
         },
         loadCitizens: (state) => {
                 return state.positions[0].clients;
         },
+        /**
+         * Retourne le nombre de citoyen présent dans une zone
+         * @param Zone
+         * @returns nbCitizens
+         */
 
-        citizenZoneA: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
+        getCitizen: (state, getters) => (myZone) => {
+        let nbCitizen = 0;
+          getters.getZones.forEach(zone => {
+              if (zone.id === myZone) {
+                  for (let i=0;i<state.positions[0].clients.length;i++) {
+                      if (isInSquare(state.positions[0].clients[i].position.x,state.positions[0].clients[i].position.y,zone.position.x,zone.position.y)){
+                          nbCitizen++;
+                      }
+                  }
+              }
+          })
+        return nbCitizen;
         },
-        citizenZoneB: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y < 7.0669  ){
-                    nbCitizens++;
+        getPoliciers: (state, getters) => (myZone) => {
+            let nbCitizen = 0;
+            getters.getZones.forEach(zone => {
+                if (zone.id === myZone) {
+                    console.log('ZONE', zone.id);
+                    for (let i=0;i<state.positions[0].policiers.length;i++) {
+                        if (isInSquare(state.positions[0].policiers[i].position.x,state.positions[0].policiers[i].position.y,zone.position.x,zone.position.y)){
+                            nbCitizen++;
+                        }
+                    }
                 }
-            }
-            return nbCitizens;
-        },
-        citizenZoneC: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x < 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        citizenZoneD: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].clients.length; i++) {
-                if (state.positions[0].clients[i].position.x > 43.6154 && state.positions[0].clients[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-
-        policierZoneA: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        policierZoneB: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x > 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        policierZoneC: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y > 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
-        },
-        policierZoneD: (state) => {
-            var nbCitizens = 0;
-            for (var i=0 ; i < state.positions[0].policiers.length; i++) {
-                if (state.positions[0].policiers[i].position.x < 43.6154 && state.positions[0].policiers[i].position.y < 7.0669  ){
-                    nbCitizens++;
-                }
-            }
-            return nbCitizens;
+            })
+            return nbCitizen;
         },
 
 
     },
     actions: {
-        async deplacerPoliciers(context,args){
-            console.log(args)
-            let nbZone = 0
-            if(args.zone1 === "Zone A") nbZone = context.getters.citizenZoneA
-            if(args.zone1 === "Zone B") nbZone = context.getters.citizenZoneB
-            try{
-                context.commit('deplacerPoliciers',{args : args, nbZone: nbZone});
-            }
-            catch(error){
-                console.log('error ', error);
-            }
-        }
     }
 }
