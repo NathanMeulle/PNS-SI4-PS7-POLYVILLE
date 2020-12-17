@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LControlLayers } from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer, LControlLayers } from "../../../node_modules_intern/@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import MyCircle from "../tools/MyCircle";
 import Marker from "./Marker";

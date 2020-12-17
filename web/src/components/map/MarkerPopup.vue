@@ -8,7 +8,7 @@
 <script>
 import {
         LPopup,
-} from "@vue-leaflet/vue-leaflet";
+} from "../../../node_modules_intern/@vue-leaflet/vue-leaflet";
     export default {
         name: "MarkerPopup",
         data() {
