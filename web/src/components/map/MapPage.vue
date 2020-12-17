@@ -6,17 +6,30 @@
     <div class="MapPage">
         <div class="navbar">
         <div class="checkbox">
-        <input type="checkbox" id="checkboxParking" value="Parking" v-model="loadCheckbox" v-on:input="doSelect('Parking')">
-        <label for="checkboxParking">Parking</label>
-
-        <input type="checkbox" id="checkboxCommerces" value="Commerces" v-model="loadCheckbox" v-on:input="doSelect('Commerces')">
-        <label for="checkboxCommerces">Commerces</label>
-
-        <input type="checkbox" id="checkboxAffluence" value="Affluence" v-model="loadCheckbox" v-on:input="doSelect('Affluence')">
-        <label for="checkboxAffluence">Affluence</label>
-
-        <input type="checkbox" id="checkboxPolice" value="Police" v-model="loadCheckbox" v-on:input="doSelect('Police')">
-        <label for="checkboxPolice">Présence Policière</label>
+        <label  class="container" for="checkboxParking">
+            <input type="checkbox" id="checkboxParking" value="Parking" v-model="loadCheckbox" v-on:input="doSelect('Parking')">
+            <span class="checkmark">
+                Parking
+            </span>
+        </label>
+        <label class="container" for="checkboxCommerces">
+            <input type="checkbox" id="checkboxCommerces" value="Commerces" v-model="loadCheckbox" v-on:input="doSelect('Commerces')">
+            <span class="checkmark">
+                Commerces
+            </span>
+        </label>
+        <label class="container" for="checkboxAffluence">
+            <input type="checkbox" id="checkboxAffluence" value="Affluence" v-model="loadCheckbox" v-on:input="doSelect('Affluence')">
+            <span class="checkmark">
+                Affluence
+            </span>
+        </label>
+        <label class="container" for="checkboxPolice">
+            <input type="checkbox" id="checkboxPolice" value="Police" v-model="loadCheckbox" v-on:input="doSelect('Police')">
+            <span class="checkmark">
+                Présence Policière
+            </span>
+        </label>
 
         </div>
             <div class="dropdown">
@@ -86,6 +99,7 @@
         color: black;
         padding: 14px 16px;
         background-color: inherit;
+        margin: 5px;
 
     }
     .map {
@@ -95,9 +109,9 @@
     .navbar {
         overflow: hidden;
         font-family: Arial;
-        border: 3px solid #0cb50b;
-        border-radius: 10px;
-        box-shadow: 4px 4px 2px 1px #266027;
+        border: 2px solid #cbcbcb;
+        border-radius: 3px;
+        background-color: #cbcbcb;
         height: 100%;
         width: 100%;
         margin: 4px;
@@ -121,7 +135,7 @@
         font-family: "Sofia", sans-serif;
         font-size: 16px;
         padding: 14px 50px;
-        background-color: inherit;
+        background-color: white ;
         border: 2px solid #0cb50b;
         border-radius: 25px;
         margin: 2px;
@@ -164,5 +178,67 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
+    /* The container */
+    .container {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .container:hover {
+
+    }
+
+    /* Hide the browser's default checkbox */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        padding: 14px 15px;
+        position: relative;
+        background-color: white ;
+        border: 2px solid #0cb50b;
+        box-shadow: 4px 4px 2px 1px #266027;
+        border-radius: 25px;
+        margin: 2px;
+        z-index: 2;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+        background-color: #cbcbcb;
+        border: 5px solid #0cb50b;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+        background-color: #0cb50b;
+        box-shadow: 4px 4px 2px 1px #266027;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
 
 </style>

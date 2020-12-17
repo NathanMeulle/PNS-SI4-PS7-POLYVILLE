@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper" style="height: 75vh; width: 100%">
-    <div class="map" style="height: 75vh; width: 59%;">
+  <div class="wrapper" style="height: 70vh; width: 100%">
+    <div class="map" style="height: 70vh; width: 59%;">
       <l-map
               v-model="zoom"
               v-model:zoom="zoom"
@@ -111,7 +111,7 @@
         </div>
       </l-map>
     </div>
-    <div class="displayer" style="height: 75vh; width: 38%">
+    <div class="displayer" style="height: 100%; width: 38%">
       <Displayer v-bind:hours="displayHours"/>
     </div>
   </div>

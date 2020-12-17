@@ -13,13 +13,11 @@
 
 <script>
 
-import Interpreteur from "@/components/DSL/Interpreteur";
+import Interpreteur from "../components/DSL/Interpreteur";
 
 export default {
-    name:"MyDsl",
-  components: {
-    Interpreteur
-  },
+  name: "MyDsl",
+  components: {Interpreteur},
 
   methods:{
   }

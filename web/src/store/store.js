@@ -33,7 +33,7 @@ export default createStore({
         return {
             infoCircle : "",
             idStore : 0,
-            checkedOptions: []
+            checkedOptions: ["Commerces"]
         }
     },
     mutations : {
