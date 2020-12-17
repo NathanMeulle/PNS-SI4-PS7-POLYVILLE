@@ -217,7 +217,7 @@ export default {
     onDrop (evt, list) {
       this.error = ''
       const itemID = evt.dataTransfer.getData('itemID')
-      const item = this.items.find(item => item.id === Number(itemID))
+      const item = this.items.find(itemTmp => itemTmp.id === Number(itemID))
       if(item.list === 2 || list!==2){
         item.list = item.type
       }
@@ -242,7 +242,7 @@ export default {
     },
     validation(id){
       this.error = ''
-      const item = this.items.find(item => item.id === id)
+      const item = this.items.find(itemTmp => itemTmp.id === id)
       if(!isNaN(this.message[item.id])) item.input = this.message[item.id]
       else this.error = 'Le champ est vide'
       this.message[item.id] = ""

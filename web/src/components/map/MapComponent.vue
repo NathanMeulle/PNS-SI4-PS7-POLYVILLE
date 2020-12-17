@@ -145,14 +145,14 @@ export default {
       return this.$store.getters.loadParkings;
     },
     storeToDisplay() {
-      let store = [];
+      let storeTmp = [];
       this.$store.getters.loadCommerces.forEach(theStore => {
         if (theStore.categorie === this.filterStore) {
-          store.push(theStore);
+          storeTmp.push(theStore);
         }
       })
-      console.log(store);
-      return store;
+      console.log(storeTmp);
+      return storeTmp;
     }
 
   },

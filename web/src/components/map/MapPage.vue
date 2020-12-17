@@ -35,7 +35,7 @@
             <div class="dropdown">
                 <button class="dropbtn">
                     {{storeToDisplay}}
-                    <i class="fa fa-caret-down"></i>
+                    <em class="fa fa-caret-down"></em>
                 </button>
                 <div class="dropdown-content">
                     <a href="#" @click="storeToDisplay = 'Bar',log('TEST : ' + storeToDisplay)">Bar</a>
@@ -108,7 +108,7 @@
     }
     .navbar {
         overflow: hidden;
-        font-family: Arial;
+        font-family: Arial, Verdana, Tahoma, sans-serif;
         border: 2px solid #cbcbcb;
         border-radius: 3px;
         background-color: #cbcbcb;
@@ -140,11 +140,7 @@
         border-radius: 25px;
         margin: 2px;
     }
-
-    /* Add a red background color to navbar links on hover */
-    .navbar a:hover .dropdown:hover .dropbtn {
-
-    }
+    
     .dropdown:hover .dropbtn {
         background-color : lightgrey;
     }
@@ -186,9 +182,6 @@
         -ms-user-select: none;
         user-select: none;
     }
-    .container:hover {
-
-    }
 
     /* Hide the browser's default checkbox */
     .container input {
@@ -201,7 +194,6 @@
 
     /* Create a custom checkbox */
     .checkmark {
-        position: absolute;
         top: 0;
         left: 0;
         height: 25px;

@@ -160,7 +160,6 @@
     .modal-default-button {
         float: right;
         width: 30%;
-        float: right;
         border-radius: 50px;
         margin: auto;
         text-align: center;

@@ -159,6 +159,7 @@ export default {
         i = 0;
         
         if (semaine.Lundi[1] !== undefined) {
+          // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
             // mise des valeur
             
@@ -166,16 +167,15 @@ export default {
               MorningData[i] += value[0].affluence;
               DayData[i] += AfternoonData[i] + MorningData[i];
             i++;
-            key;
           }
         } else {
           //si on a un parking par exemple
           i = 0;
+          // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
               MorningData[i] += value[0].affluence;
               DayData[i] += MorningData[i];
             i++;
-            key;
             }
           
           AfternoonData = [
