@@ -152,7 +152,7 @@ export const villeModule = {
         async setClosingHour(context, hour) {
             try {
                 context.commit('setClosingHour', hour);
-                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour})
+                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour, checked : false})
             }
             catch (error) {
                 console.log('error ', error);
