@@ -9,7 +9,7 @@
              @dragstart='startDrag($event, item)'>
           {{item.input}}
           <label>
-            <input v-model="this.message[item.id]">
+            <input v-model="message[item.id]">
             <button v-on:click="validation(item.id)">OK</button>
           </label>
         </div>
@@ -265,7 +265,7 @@ export default {
     },
     macro(){
       console.log("envoi du programme suivant : ",this.listProg)
-      this.$emit("check",this.listProg)
+      this.$emit("macro",this.listProg)
     },
     suppr(item){
       item.list = -1

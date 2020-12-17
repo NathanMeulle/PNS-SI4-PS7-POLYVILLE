@@ -7,7 +7,7 @@
     <span id="reussite">{{reussite}}</span>
   </div>
   <br/>
-  <DSL v-on:launch="getData($event,false)" v-on:check="getData($event,true)"/>
+  <DSL v-on:launch="getData($event,false)" v-on:macro="getData($event,true)"/>
 </template>
 
 <script>
@@ -27,15 +27,15 @@ export default {
       heure: -1,
       error: "",
       reussite: "",
-      check: false,
+      macro: false,
       showModal: false,
       type: ""
     }
   },
 
   methods:{
-    getData(listeCommandes,check){
-      this.check = check
+    getData(listeCommandes,macro){
+      this.macro = macro
       this.error = ""
       this.programme = listeCommandes
       if(this.programme.length===0) this.error="Programme vide"
@@ -75,10 +75,21 @@ export default {
           nbPoliciers = Number(this.programme[6].input)
           if (this.programme[8].title.substring(0, 4) === 'Zone') {
             this.zones[1] = this.programme[8].title
-            console.log(nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1])
+            console.log("ici : ",nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1])
             this.reussite ="Déplacement de policiers effectué"
-            this.$store.dispatch('deplacerPoliciers',{citoyens : nbCitoyens,
-              cond : this.infOrSup,zone1 : this.zones[0],policiers : nbPoliciers,zone2: this.zones[1]})
+            if(!this.macro) {
+              this.$store.dispatch('deplacerPoliciers', {
+                citoyens: nbCitoyens,
+                cond: this.infOrSup, zone1: this.zones[0], policiers: nbPoliciers, zone2: this.zones[1]
+              })
+            }
+            else{
+              this.programme[this.programme.length] = "déplacement de policiers "+this.zones[1]+" en fonction des citoyens "+
+                  this.zones[0]+" (entrer d'abord le nombre de citoyens puis le nombre de policiers)"
+              console.log(this.programme)
+              this.$store.commit('addMacro', this.programme)
+              this.reussite = "Raccourci créé"
+            }
           }
           else this.error = 'Programme inconnu'
         }
@@ -132,7 +143,7 @@ export default {
         if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture'
         else if (this.heure<0 || this.heure>24) this.error = "Le nombre donné n'est pas une heure"
         else{
-          if(!this.check){
+          if(!this.macro){
             this.reussite = "Changement d'heure de fermeture effectué"
             let regles = this.$store.getters.getRegles
             let existe = this.verifierExistence('Fermeture magasins',regles)
@@ -157,7 +168,7 @@ export default {
     },
     reinit(){
       if(this.programme.length===5 && (this.programme[3].title === "heures" && this.programme[4].title === "fermeture")){
-        if(!this.check) {
+        if(!this.macro) {
           this.$store.dispatch('setClosingHour', -1)
           this.reussite = "Horaires des magasins réinitialisées"
         }
