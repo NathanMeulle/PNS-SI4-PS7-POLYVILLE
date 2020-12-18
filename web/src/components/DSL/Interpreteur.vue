@@ -5,6 +5,7 @@
     <span id="error">{{error}}</span>
   </div>
   <div v-else>
+    <br/>
     <span id="reussite">{{reussite}}</span>
   </div>
   <br/>
@@ -38,11 +39,15 @@ export default {
     getData(listeCommandes,macro){
       this.macro = macro
       this.error = ""
+      this.reussite = ""
       this.programme = listeCommandes
       if(this.programme.length===0) this.error="Programme vide"
-      console.log("mon programme : ",this.programme)
-      this.Pour()
-      this.Si()
+      else{
+        this.Pour()
+        this.Si()
+      }
+      console.log("ici : ",this.reussite)
+      if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     },
     Si(){
       this.checkError()
