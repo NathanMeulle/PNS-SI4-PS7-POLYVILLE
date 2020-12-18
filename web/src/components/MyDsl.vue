@@ -4,6 +4,8 @@
       <div class="bouton" id="help">Aide</div>
     </router-link>
     <h1>Langage dédié</h1>
+    <span>Glissez et déposez les cases dans la partie nommée "Mon programme" ou cliquez sur la flèche</span>
+    <br/>
     <router-link active-class="active" to="/dsl/macro" id="macro">
       <button class="bouton">Accèder à mes raccourcis</button>
     </router-link>

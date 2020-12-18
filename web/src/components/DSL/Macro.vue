@@ -9,8 +9,8 @@
       <div v-for="item in macro" :key="item.title">
         <div v-if="item.title === 'Input'">
           <div>Entrer les données concernant ce programme :
+            {{item.input}}
             <label>
-              {{item.input}}
               <input v-model="message[item.id]">
               <button v-on:click="validation(item.id,macro)">OK</button>
             </label>

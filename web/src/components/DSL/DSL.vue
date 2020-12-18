@@ -2,7 +2,7 @@
   <span id="error">{{error}}</span>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
   <div class="wrapper" style="height: 75%; width: 100%">
-    <div class="gauche" style="height: 75%; width: 59%">
+    <div class="gauche" style="height: 75%; width: 29%">
       <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
         Données :
         <div v-for='item in listInput' :key='item.title' class='drag-el' draggable="true"
@@ -12,6 +12,9 @@
             <input v-model="message[item.id]">
             <button v-on:click="validation(item.id)">OK</button>
           </label>
+          <div class="logo">
+            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
+          </div>
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 1)' @dragover.prevent @dragenter.prevent id="cond">
@@ -19,6 +22,9 @@
         <div v-for='item in listCond' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
+          <div class="logo">
+            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
+          </div>
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 3)' @dragover.prevent @dragenter.prevent>
@@ -26,13 +32,21 @@
         <div v-for='item in listPers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
+          <div class="logo">
+            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="milieu" style="height: 75%; width: 29%">
       <div class='drop-zone' @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
         Zones géographiques :
         <div v-for='item in listGeo' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
+          <div class="logo">
+            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
+          </div>
         </div>
       </div>
       <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
@@ -40,6 +54,9 @@
         <div v-for='item in listDivers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
+          <div class="logo">
+            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
+          </div>
         </div>
       </div>
     </div>
@@ -258,7 +275,7 @@ export default {
         if (list === 2){
           item.position=this.listProg.length+1
         }
-    }
+      }
     },
 
     /** Duplique un item du DSL pour pouvoir utiliser plusieurs fois les mêmes cases dans le programme **/
@@ -324,6 +341,14 @@ export default {
           selected.position = save
         }
       })
+    },
+
+    /** Ajout d'une case à mon programme sans drag and drop **/
+    right(item){
+      this.duplication(item)
+      item.list = 2
+      console.log("ajout à la liste : ",item.list)
+      item.position=this.listProg.length+1
     }
   }
 }
@@ -334,10 +359,14 @@ export default {
     float: right;
     position: relative;
     border: 1px solid black;
-    margin-top: 3%;
+    margin-top: 1%;
     right: 3%;
   }
   .gauche {
+    float: left;
+  }
+
+  .milieu{
     float: left;
   }
 
@@ -368,8 +397,8 @@ export default {
 }
 
 #creationMacro{
-  margin-top: 3%;
-  margin-left: 1%;
+  margin-top: 2%;
+  margin-left: 60%;
 }
 
 #programme{
