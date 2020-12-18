@@ -18,7 +18,7 @@ export const villeModule = {
             /** Ville : récupération de la base de données JSON **/
             Ville: VilleMock,
             VilleCopie: clone(VilleMock),
-            freq: [],
+            freq: [], // mémorise le nombre de clics sur les points d'intérêts
             dslModule: dslModule
         }
     },
@@ -49,6 +49,7 @@ export const villeModule = {
                 })
             }
         },
+         /** Incrémente le nombre de clic sur un point d'intérêt **/
         addfreq: (state,payload) => {
             let isInit = false;
             state.freq.forEach(map => {
@@ -69,9 +70,11 @@ export const villeModule = {
         loadParkings: (state) => {
             return state.Ville[0].ville.parkings;
         },
+         /** Renvoie le nombre de semaines par point d'intérêt entrées dans la base de données **/
         getWeeksNumber: (state) =>{
             return state.Ville[0].ville.commerces[0].horaires.length;
         },
+         /** Renvoie les horaires correspondant à l'id en paramètre **/
         hoursTable: (state) => (id) => {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
@@ -79,9 +82,6 @@ export const villeModule = {
                     horaires = commerce.horaires;
                     return horaires;
                 }
-                /*else {
-                    return "{heureOuverture: 7, heureFermeture: 8}";
-                }*/
             });
 
               state.Ville[0].ville.parkings.forEach(parking => {
@@ -94,6 +94,7 @@ export const villeModule = {
 
             return horaires;
         },
+         /** Renvoie le nombre de clic sur un point d'intérêt selon l'id donnée en paramètre **/
         getfreq: (state) => (id) => {
             state.freq.forEach(map => {
                 var freq = 0;
@@ -110,6 +111,7 @@ export const villeModule = {
         getZones : (state) => {
             return state.Ville[0].ville.zones;
         },
+         /** Renvoie la position d'une zone selon l'id donné en paramètre **/
         getPositionZone : (state) => (id) =>{
             let pos = [];
             state.Ville[0].ville.zones.forEach( zone => {
@@ -121,6 +123,7 @@ export const villeModule = {
                 }
             })
         },
+         /** Renvoie le nom d'un commerce selon l'id donné en paramètre **/
         getNomCommerce : (state) => (id) => {
             let nom = [];
             state.Ville[0].ville.commerces.forEach( commerce => {
@@ -133,6 +136,7 @@ export const villeModule = {
             })
             return nom;
         },
+         /** Renvoie le type d'un commerce selon l'id donné en paramètre **/
         getTypeCommerce :   (state) => (id) => {
              let type = "";
              state.Ville[0].ville.commerces.forEach(commerce => {
@@ -143,6 +147,7 @@ export const villeModule = {
             })
             return type;
         },
+         /** Renvoie l'adresse d'un commerce selon l'id donné en paramètre **/
         getAdressCommerce : (state) => (id) => {
             let adress = "";
             state.Ville[0].ville.commerces.forEach(commerce => {
@@ -154,6 +159,10 @@ export const villeModule = {
         }
     },
     actions: {
+         /** Lance la mutation appliquant le couvre-feu 
+          * + Lance la mutation qui ajoute une règle
+         * @param hour : l'heure à imposer aux points d'intérêts
+         */
         async setClosingHour(context, hour) {
             try {
                 context.commit('setClosingHour', hour);

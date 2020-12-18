@@ -42,6 +42,8 @@ export default createStore({
         sendId: (state,payload) => state.idStore = payload.id,
         displayPolice: (state) => state.displaypolice = true,
         stopDisplayPolice: (state) => state.displaypolice = false,
+        
+        /** Mémorise quelles box sont sélectionnées **/
         setCheckbox(state, payload) {
             if (!state.checkedOptions.includes(payload.CheckedBox)) {
                 state.checkedOptions.push(payload.CheckedBox);
@@ -106,7 +108,9 @@ export default createStore({
         }
     },
     actions:{
-        /** Lance la mutation appliquant la règle de déplacement de policers **/
+        /** Lance la mutation appliquant la règle de déplacement de policers 
+         *  @param args : nbPoliciers/zone1/zone2/nbCitoyen/Condition
+         **/
         async deplacerPoliciers(context,args){
             console.log(args)
             let nbZone = 0
