@@ -1,6 +1,6 @@
 <template>
   <h1>Aide</h1>
-  <h2>Types de programmes disponible : </h2>
+  <h2>Types de programmes disponibles : </h2>
   <br/>
   <div>Changer l'horaire de fermeture des magasins de la ville :
     <br/>
@@ -9,7 +9,7 @@
   <br/>
   <div>Réinitialiser les horaires de fermeture des magasins :
     <br/>
-    Pours tous => magasins => réinitialiser => heurs => fermeture
+    Pours tous => magasins => réinitialiser => heures => fermeture
   </div>
   <br/>
   <div>Attribuer des policiers à une zone en fonction du nombre de citoyens s'y trouvant :
@@ -18,7 +18,7 @@
   </div>
   <br/>
   <router-link active-class="active" to="/dsl">
-    <button>Retour au langage dédié</button>
+    <div class="bouton">Retour au langage dédié</div>
   </router-link>
 </template>
 
@@ -29,5 +29,16 @@ name: "Help"
 </script>
 
 <style scoped>
+
+.bouton{
+  width: 15%;
+  border-radius: 50px;
+  text-align: center;
+  font-family: "Sofia", sans-serif;
+  font-size: 18px;
+  border: 3px solid #0cb50b;
+  cursor: pointer;
+  box-shadow: 4px 4px 2px 1px #266027;
+}
 
 </style>

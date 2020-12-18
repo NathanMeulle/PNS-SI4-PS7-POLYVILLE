@@ -5,7 +5,10 @@
 <script>
 import Chart from 'chart.js';
 export default {
-  name: 'monthly-sales-chart',
+  /**
+   * Composant du graphique en bars
+   */
+  name: 'bar-chart',
   props: {
     // The canvas's width.
     width: {

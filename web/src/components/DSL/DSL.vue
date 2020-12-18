@@ -28,19 +28,26 @@
           {{ item.title }}
         </div>
       </div>
+      <div class='drop-zone' @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
+        Zones géographiques :
+        <div v-for='item in listGeo' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{ item.title }}
+        </div>
+      </div>
       <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
         Divers :
-        <div v-for='item in listQuartiers' :key='item.title' class='drag-el' draggable="true"
+        <div v-for='item in listDivers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
         </div>
       </div>
     </div>
-    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%">Lancer mon programme</button>
+    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Lancer mon programme</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
       <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
-        <div class='drop-zone'>
+        <div class='drop-zone' @dragover.prevent @dragenter.prevent id="programme">
           Mon programme :
           <div v-for='item in listProg' :key='item.title' class="drag-el">
             <div v-if="item.type !== 5">
@@ -67,7 +74,7 @@
         </div>
       </div>
     </div>
-    <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%">Créer un raccourci pour ce programme</button>
+    <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%" class="bouton">Créer un raccourci pour ce programme</button>
   </div>
 </template>
 
@@ -78,7 +85,9 @@ export default {
   emits: ["launch", "macro"],//indique les éléments envoyés (nécessaire pour les tests)
   data () {
     return {
+      /** Error : message d'erreur **/
       error:'',
+      /** Items : liste des éléments pouvant former un programme avec notre DSL **/
       items: [
         {
           id: 0,
@@ -122,14 +131,14 @@ export default {
           title: 'Zone A',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 6,
           title: 'Zone B',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 7,
@@ -158,14 +167,14 @@ export default {
           title: 'Zone C',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 11,
           title: 'Zone D',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 12,
@@ -209,40 +218,51 @@ export default {
     listPers () {
       return this.sortItems(this.items.filter(item => item.list === 3))
     },
-    listQuartiers () {
+    listDivers () {
       return this.sortItems(this.items.filter(item => item.list === 4))
     },
     listInput () {
       return this.sortItems(this.items.filter(item => item.list === 5))
     },
+    listGeo () {
+      return this.sortItems(this.items.filter(item => item.list === 6))
+    },
   },
 
   methods:{
+    /** Renvoie une liste une liste triée en fonction de l'attribut position de ses éléments **/
     sortItems(liste){
       return liste.sort((a, b) => a.position - b.position)
     },
 
+    /** Déplacement des éléments du DSL (drag) **/
     startDrag: (evt, item) => {
       evt.dataTransfer.dropEffect = 'move'
       evt.dataTransfer.effectAllowed = 'move'
       evt.dataTransfer.setData('itemID', item.id)
     },
+
+    /** Gère le relachement des éléments du DSL (drop) **/
     onDrop (evt, list) {
       this.error = ''
       const itemID = evt.dataTransfer.getData('itemID')
-      const item = this.items.find(itemTmp => itemTmp.id === Number(itemID))
-      if(item.list === 2 || list!==2){
-        item.list = item.type
-      }
-      else{
-        this.duplication(item)
-        item.list = list
-      }
-      console.log("ajout à la liste : ",item.list)
-      if (list === 2){
-        item.position=this.listProg.length+1
-      }
+      if(itemID!==""){
+        const item = this.items.find(itemTmp => itemTmp.id === Number(itemID))
+        if(item.list === 2 || list!==2){
+          item.list = item.type
+        }
+        else{
+          this.duplication(item)
+          item.list = list
+        }
+        console.log("ajout à la liste : ",item.list)
+        if (list === 2){
+          item.position=this.listProg.length+1
+        }
+    }
     },
+
+    /** Duplique un item du DSL pour pouvoir utiliser plusieurs fois les mêmes cases dans le programme **/
     duplication(item){
       let len = this.items.length
       this.items[len] = {
@@ -253,6 +273,8 @@ export default {
         list: item.list
       }
     },
+
+    /** Vérifie que la valeur donnée en input est bien un nombre puis l'attribue **/
     validation(id){
       this.error = ''
       const item = this.items.find(itemTmp => itemTmp.id === id)
@@ -260,17 +282,25 @@ export default {
       else this.error = 'Le champ est vide'
       this.message[item.id] = ""
     },
+
+    /** Envoie le programme donné à l'interpréteur **/
     launch(){
       console.log("envoi du programme suivant : ",this.listProg)
       this.$emit("launch",this.listProg)
     },
+
+    /** Envoie le programme donné à la gestion des macros **/
     macro(){
       console.log("envoi du programme suivant : ",this.listProg)
       this.$emit("macro",this.listProg)
     },
+
+    /** Supprime une case du programme **/
     suppr(item){
       item.list = -1
     },
+
+    /** Déplace une case d'un cran vers le haut du programme **/
     up(selected){
       let save = 0
       let check = this.listProg[0].id === selected.id
@@ -283,6 +313,8 @@ export default {
         }
       })
     },
+
+    /** Déplace une case d'un cran vers le bas du programme **/
     down(selected){
       let save = 0
       let check = this.listProg[this.listProg.length-1].id === selected.id
@@ -338,10 +370,28 @@ export default {
 
 #creationMacro{
   margin-top: 3%;
+  margin-left: 1%;
+}
+
+#programme{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #launch{
   float: right;
   position: relative;
 }
+  .bouton{
+    border-radius: 50px;
+    text-align: center;
+    font-family: "Sofia", sans-serif;
+    font-size: 18px;
+    border: 3px solid #0cb50b;
+    cursor: pointer;
+    box-shadow: 4px 4px 2px 1px #266027;
+  }
 </style>

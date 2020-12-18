@@ -14,18 +14,22 @@
           <br/>
           <div class="modal-type">
             <slot name="header">
-              {{texte}}
+              {{probleme1}}
+              <br/>
+              {{probleme2}}
+              <br/>
+              {{solution}}
             </slot>
             <slot name="header" v-if="type==='Conflit concernant l\'heure de fermeture des magasins'">
               <br/>
-                <button class="choix" v-on:click="changerHeureFermeture(choix.apres),$emit('close')" v-if="choix.apres!==-1">{{choix.apres}}h</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.apres),$emit('close')" v-else>Réinitialiser les horaires</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.avant),$emit('close')">{{choix.avant}}h</button>
+                <button class="choix" v-on:click="changerHeureFermeture(choix.apres);$emit('close')" v-if="choix.apres!==-1">{{choix.apres}}h</button>
+              <button class="choix" v-on:click="changerHeureFermeture(choix.apres);$emit('close')" v-else>Réinitialiser les horaires</button>
+              <button class="choix" v-on:click="changerHeureFermeture(choix.avant);$emit('close')">{{choix.avant}}h</button>
             </slot>
             <slot name="header" v-if="type==='Conflit concernant le déplacement des policiers'">
               <br/>
-              <button class="choix" v-on:click="changerPoliciers(choix.avant),$emit('close')">{{choix.avant}}</button>
-              <button class="choix" v-on:click="changerPoliciers(choix.apres),$emit('close')">{{choix.apres}}</button>
+              <button class="choix" v-on:click="changerPoliciers(choix.avant);$emit('close')">{{choix.avant}}</button>
+              <button class="choix" v-on:click="changerPoliciers(choix.apres);$emit('close')">{{choix.apres}}</button>
             </slot>
           </div>
           <br/>
@@ -46,49 +50,65 @@ export default {
   data(){
     return{
       type:"",
+      /** Programme : programme qui créer le conflit de règles **/
       programme: Array,
-      texte: "",
+      probleme1: "",
+      probleme2: "",
+      solution: "",
       choix: {}
     }
   },
   props:{
     value : Object
   },
-  computed : {
-  },
   methods : {
+    /** Gère l'affichage des différents conflits possibles entre les règles **/
     afficherConflit(){
       if(this.type === "Conflit concernant l'heure de fermeture des magasins") this.conflitHeureFermeture()
       else if (this.type === "Conflit concernant le déplacement des policiers") this.conflitPoliciers()
     },
+
+    /** Gère l'affichage d'un conflit de règles concernant le déplacement de policiers **/
     conflitPoliciers(){
       let tab = this.$store.getters.getReglePoliciers
       console.log(tab)
-      this.texte = "Une règle (n°1) concernant le déplacement de policiers dans une zone est déjà en place : "+tab[2]+" policiers "+
-          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+"." +
-          "\nVous avez essayé d'appliquer la règle suivante (n°2) : "+this.programme[6].input+" policiers "+
-          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+"."+
-          "\nQuelle règle voulez vous appliquer ?"
+      this.probleme1 = "Une règle (n°1) concernant le déplacement de policiers dans une zone est déjà en place : "+tab[2]+" policiers "+
+          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+"."
+
+      this.probleme2 = "Vous avez essayé d'appliquer la règle suivante (n°2) : "+this.programme[6].input+" policiers "+
+          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+"."
+
+      this.solution =  "Quelle règle voulez vous appliquer ?"
       this.choix = {avant: "Règle n°1", apres: "Règle n°2"}
     },
+
+    /** Gère l'affichage d'un conflit de règles concernant le changement d'horaires des magasins **/
     conflitHeureFermeture(){
       let heure = this.$store.getters.getRegleHeureFermeture
       if(heure!== -1) {
-        this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h." +
-            "\nVous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h." +
-            "\nQuelle heure voulez vous choisir ?"
+        this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h."
+
+        this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h."
+
+        this.solution = "Quelle heure voulez vous choisir ?"
       }
         else{
-          this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires." +
-            "\nVous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h." +
-            "\nQuelle heure voulez vous choisir ?"
+          this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires."
+
+          this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h."
+
+          this.solution = "Quelle heure voulez vous choisir ?"
         }
         this.choix = {avant: Number(this.programme[3].input), apres: heure}
         console.log(this.choix)
     },
+
+    /** Envoie le choix de l'utilisateur au store pour le changement d'horaires des magasins **/
     changerHeureFermeture(heure){
       this.$store.dispatch('setClosingHour',heure)
     },
+
+    /** Envoie le choix de l'utilisateur au store pour le déplacement de policiers **/
     changerPoliciers(regle){
       if(regle === "Règle n°2"){
         if(this.programme[3].title === 'Plus grand que'){
@@ -100,12 +120,11 @@ export default {
     }
 
   },
+
+  /** Initialise les données provoquant le conflit de règles **/
   created() {
-    console.log("creation",this.value)
     this.type = this.value.titre
     this.programme = this.value.programme
-    console.log("type : ",this.type)
-    console.log("prog : ",this.programme)
     this.afficherConflit()
   }
 }
@@ -136,7 +155,7 @@ export default {
 .modal-container {
   width: 500px;
   height: 220px;
-  margin: 0px auto;
+  margin: 0 auto;
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 10px;
@@ -156,7 +175,6 @@ export default {
 .modal-default-button {
   float: right;
   width: 30%;
-  float: right;
   border-radius: 50px;
   margin: auto;
   text-align: center;
