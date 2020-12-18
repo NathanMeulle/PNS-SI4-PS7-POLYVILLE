@@ -87,13 +87,13 @@ const options = {
   },
 };
 export default {
+  /**
+   * Composant d'affichage du graphique des fréquentations et des Checkbox
+   */
   name: "Hours-chart",
   options,
   components: {
     LineChart,
-  },
-  props: {
-    id: Number,
   },
   data() {
     return {
@@ -110,8 +110,10 @@ export default {
     },
   },
   methods: {
+    /**
+     * Renvoie tous les blocks de données (datacollection) à afficher selon les checkbox activées
+     */
     checkSelectedTimeOfTheDay() {
-      //renvoie tous les datasets à afficher selon les checkbox activées
       var res = [];
       if (this.selectedTimeOfTheDay.includes("Afternoon") && !this.selectedTimeOfTheDay.includes("Morning")) {
         //box après-midi cochée
@@ -134,10 +136,16 @@ export default {
     getId() {
       return this.$store.getters.getId;
     },
+    /**
+     * Récupère les horaires selon l'id du composant (les affluences sont stockées dans les horaires)
+     */
     getSchedule() {
       let hours = this.$store.getters.hoursTable(this.getId());
       return hours;
     },
+    /**
+     * Créé les données du graphique
+     */
     fillData() {
       var colors = [
         "rgba(255, 99, 132, 0.4)",

@@ -48,11 +48,12 @@ export default {
       this.reussite = ""
       this.programme = listeCommandes
       if(this.programme.length===0) this.error="Programme vide"
-      else{
+      else {
+        //console.log("mon programme : ", this.programme)
         this.Pour()
         this.Si()
       }
-      console.log("ici : ",this.reussite)
+      //console.log("ici : ",this.reussite)
       if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     },
 
@@ -132,9 +133,9 @@ export default {
 
     /** Renvoie un entier correspondant au non respect des règles Si/Alors **/
     checkIfThen(){
-      let posIf = -1
-      let posThen = -1
-      let presence = false
+      let posIf = -1;
+      let posThen = -1;
+      let presence = false;
       this.programme.forEach((item,index)=>{
         if(item.title === "Si") {
           posIf = index
@@ -165,8 +166,8 @@ export default {
 
     /** Gestion d'un programme contenant une case Pour **/
     Pour(){
-      if(this.programme[0].title === 'Pour tous'){
-        if(this.programme[1].title==='magasins') this.forMagasin()
+      if(this.programme.length>0 &&this.programme[0].title === 'Pour tous'){
+        if(this.programme.length>1 && this.programme[1].title==='magasins') this.forMagasin()
         else this.error = 'Programme inconnu'
       }
     },
