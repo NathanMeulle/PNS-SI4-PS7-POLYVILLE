@@ -1,6 +1,7 @@
 <template>
   <PopUp v-if="showModal" v-on:close="showModal = false" :value="type" @input="type = $event"/>
   <div v-if="error!==''">
+    <br/>
     <span id="error">{{error}}</span>
   </div>
   <div v-else>

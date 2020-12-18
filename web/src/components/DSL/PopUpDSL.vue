@@ -14,7 +14,11 @@
           <br/>
           <div class="modal-type">
             <slot name="header">
-              {{texte}}
+              {{probleme1}}
+              <br/>
+              {{probleme2}}
+              <br/>
+              {{solution}}
             </slot>
             <slot name="header" v-if="type==='Conflit concernant l\'heure de fermeture des magasins'">
               <br/>
@@ -47,7 +51,9 @@ export default {
     return{
       type:"",
       programme: Array,
-      texte: "",
+      probleme1: "",
+      probleme2: "",
+      solution: "",
       choix: {}
     }
   },
@@ -64,24 +70,30 @@ export default {
     conflitPoliciers(){
       let tab = this.$store.getters.getReglePoliciers
       console.log(tab)
-      this.texte = "Une règle (n°1) concernant le déplacement de policiers dans une zone est déjà en place : "+tab[2]+" policiers "+
-          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+"." +
-          "\nVous avez essayé d'appliquer la règle suivante (n°2) : "+this.programme[6].input+" policiers "+
-          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+"."+
-          "\nQuelle règle voulez vous appliquer ?"
+      this.probleme1 = "Une règle (n°1) concernant le déplacement de policiers dans une zone est déjà en place : "+tab[2]+" policiers "+
+          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+"."
+
+      this.probleme2 = "Vous avez essayé d'appliquer la règle suivante (n°2) : "+this.programme[6].input+" policiers "+
+          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+"."
+
+      this.solution =  "Quelle règle voulez vous appliquer ?"
       this.choix = {avant: "Règle n°1", apres: "Règle n°2"}
     },
     conflitHeureFermeture(){
       let heure = this.$store.getters.getRegleHeureFermeture
       if(heure!== -1) {
-        this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h." +
-            "\nVous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h." +
-            "\nQuelle heure voulez vous choisir ?"
+        this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h."
+
+        this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h."
+
+        this.solution = "Quelle heure voulez vous choisir ?"
       }
         else{
-          this.texte = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires." +
-            "\nVous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h." +
-            "\nQuelle heure voulez vous choisir ?"
+          this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires."
+
+          this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h."
+
+          this.solution = "Quelle heure voulez vous choisir ?"
         }
         this.choix = {avant: Number(this.programme[3].input), apres: heure}
         console.log(this.choix)

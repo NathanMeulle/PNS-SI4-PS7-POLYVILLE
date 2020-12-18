@@ -23,7 +23,7 @@
   </div>
   <br/>
   <router-link active-class="active" to="/dsl">
-    <button>Retour au langage dédié</button>
+    <div class="bouton">Retour au langage dédié</div>
   </router-link>
 </template>
 
@@ -122,6 +122,17 @@ name: "Macro",
 
 #reussite{
   color: green;
+}
+
+.bouton{
+  width: 15%;
+  border-radius: 50px;
+  text-align: center;
+  font-family: "Sofia", sans-serif;
+  font-size: 18px;
+  border: 3px solid #0cb50b;
+  cursor: pointer;
+  box-shadow: 4px 4px 2px 1px #266027;
 }
 
 </style>

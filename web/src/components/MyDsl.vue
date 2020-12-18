@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-link active-class="active" to="/dsl/aide" id="help">
-      <button>Aide</button>
+    <router-link active-class="active" to="/dsl/aide">
+      <div class="bouton" id="help">Aide</div>
     </router-link>
     <h1>Langage dédié</h1>
     <router-link active-class="active" to="/dsl/macro" id="macro">
-      <button>Accèder à mes raccourcis</button>
+      <button class="bouton">Accèder à mes raccourcis</button>
     </router-link>
     <Interpreteur/>
   </div>
@@ -27,9 +27,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.bouton{
+  border-radius: 50px;
+  text-align: center;
+  font-family: "Sofia", sans-serif;
+  font-size: 18px;
+  border: 3px solid #0cb50b;
+  cursor: pointer;
+  box-shadow: 4px 4px 2px 1px #266027;
+}
 
   #help{
     float : right;
+    width: 10%;
   }
 
 

@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%">Lancer mon programme</button>
+    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Lancer mon programme</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
       <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%">Créer un raccourci pour ce programme</button>
+    <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%" class="bouton">Créer un raccourci pour ce programme</button>
   </div>
 </template>
 
@@ -337,10 +337,20 @@ export default {
 
 #creationMacro{
   margin-top: 3%;
+  margin-left: 1%;
 }
 
 #launch{
   float: right;
   position: relative;
 }
+  .bouton{
+    border-radius: 50px;
+    text-align: center;
+    font-family: "Sofia", sans-serif;
+    font-size: 18px;
+    border: 3px solid #0cb50b;
+    cursor: pointer;
+    box-shadow: 4px 4px 2px 1px #266027;
+  }
 </style>
