@@ -3,7 +3,7 @@ import { villeModule } from './ville.store.js';
 import { positionModule } from './positions.store.js';
 import { dslModule } from './dsl.store.js'
 
-
+/** Vérifie si un point (x,y) est dans une zone de coordonnées (a,b) **/
 function isInSquare(x,y,a,b){
 
     let bottomLeftX = (a-0.010);
@@ -50,7 +50,7 @@ export default createStore({
             }
         },
 
-
+        /** Applique la règle de déplacement de policiers sur la base de données **/
         deplacerPoliciers(state, payload) {
             console.log(payload.nbZone)
             console.log("policiers :",payload.nbPoliciers)
@@ -106,6 +106,7 @@ export default createStore({
         }
     },
     actions:{
+        /** Lance la mutation appliquant la règle de déplacement de policers **/
         async deplacerPoliciers(context,args){
             console.log(args)
             let nbZone = 0
