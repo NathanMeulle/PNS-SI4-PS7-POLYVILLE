@@ -70,19 +70,24 @@ export const positionModule = {
           })
         return nbCitizen;
         },
+        /**
+         * Retourne le nombre de policiers présent dans une zone
+         * @param Zone
+         * @returns nbPoliciers 
+         */
         getPoliciers: (state, getters) => (myZone) => {
-            let nbCitizen = 0;
+            let nbPoliciers = 0;
             getters.getZones.forEach(zone => {
                 if (zone.id === myZone) {
                     console.log('ZONE', zone.id);
                     for (let i=0;i<state.positions[0].policiers.length;i++) {
                         if (isInSquare(state.positions[0].policiers[i].position.x,state.positions[0].policiers[i].position.y,zone.position.x,zone.position.y)){
-                            nbCitizen++;
+                            nbPoliciers++;
                         }
                     }
                 }
             })
-            return nbCitizen;
+            return nbPoliciers;
         },
 
 

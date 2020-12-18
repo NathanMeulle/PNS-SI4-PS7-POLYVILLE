@@ -92,8 +92,8 @@ const options = {
     },
     onClick: function (e, legendItem) {
       
-      // permet de lier les après-midi aux matinées dans la légende
-      // afin d'avec 1 clic masque/afficher les horaires de la semaines
+      // permet de lier les après-midis aux matinées dans la légende
+      // afin d'avec 1 clic masquer/afficher les horaires de la semaines
       var index = legendItem.datasetIndex;
       var ci = this.chart;
       var alreadyHidden =
@@ -131,13 +131,13 @@ const options = {
   },
 };
 export default {
+  /**
+   * Composant d'affichage du graphique des horaires et des Checkbox
+   */
   name: "Hours-chart",
   options,
   components: {
     BarChart,
-  },
-  props: {
-    id: Number,
   },
   data() {
     return {
@@ -154,8 +154,10 @@ export default {
     },
   },
   methods: {
+    /**
+     * Renvoie tous les blocks de données (datacollection) à afficher selon les checkbox activées
+     */
     checkSelectedTimeOfTheDay() {
-      //renvoie tous les datasets à afficher selon les checkbox activées
       var res = [];
       if (this.selectedTimeOfTheDay.includes("Afternoon")) {
         for (let i = 0; i < this.getHours().length; i++) {
@@ -175,10 +177,16 @@ export default {
     getId() {
       return this.$store.getters.getId;
     },
+    /**
+     * Récupère les horaires selon l'id du composant
+     */
     getHours() {
       let hours = this.$store.getters.hoursTable(this.getId());
       return hours;
     },
+    /**
+     * Créé les données du graphique
+     */
     fillData() {
       var colors = [
         "rgba(255, 99, 132, 0.4)",
@@ -199,9 +207,9 @@ export default {
         if (semaine.Lundi[1] !== undefined) {
           // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
-            // mise des valeur de l'après midi
+            // mise des valeurs de l'après midi
             if (value[1].heureFermeture === 0) {
-              //cas où le commerce est fermée l'après-midi
+              //cas où le commerce est fermé l'après-midi
               AfternoonData[i] = [null, null];
             } else {
               AfternoonData[i] = [
@@ -229,7 +237,7 @@ export default {
           // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
             if (value[0].heureFermeture === 0) {
-              //cas où le parking est fermée ce jour
+              //cas où le parking est fermé ce jour
               MorningData[i] = [null, null];
             } else {
               MorningData[i] = [

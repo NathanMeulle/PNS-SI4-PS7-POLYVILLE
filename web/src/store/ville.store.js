@@ -15,38 +15,41 @@ export const villeModule = {
     namespace: false,
     state() {
         return {
+            /** Ville : récupération de la base de données JSON **/
             Ville: VilleMock,
             VilleCopie: clone(VilleMock),
-            freq: [],
+            freq: [], // mémorise le nombre de clics sur les points d'intérêts
             dslModule: dslModule
         }
     },
     mutations: {
-
+        /** Met à jour la base de données en appliquant une règle de changement d'horaires **/
         setClosingHour: (state, payload) => {
             state.Ville[0].ville.commerces = clone(state.VilleCopie[0].ville.commerces)
             if(payload !== -1) {
                 state.Ville[0].ville.commerces.forEach(commerce => {
-
-                    for (const [key, value] of Object.entries(commerce.horaires[0].semaine)) {
-                        //console.log(`${key}: ${value}`);
-                        key;
-                        if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
-                            value[0].heureOuverture = 0;
-                            value[0].heureFermeture = 0;
-                        } else if (value[0].heureFermeture > payload) {// si le magasin ferme le matin après l'heure de fermeture imposée
-                            value[0].heureFermeture = payload;
-                        }
-                        if (value[1].heureOuverture > payload) { // si le magasin ouvre l'après-midi après l'heure de fermeture imposée
-                            value[1].heureOuverture = 0;
-                            value[1].heureFermeture = 0;
-                        } else if (value[1].heureFermeture > payload) {// si le magasin ferme le l'après-midi après l'heure de fermeture imposée
-                            value[1].heureFermeture = payload;
+                    for(let i = 0 ; i< commerce.horaires.length; i++) {
+                        for (const [key, value] of Object.entries(commerce.horaires[i].semaine)) {
+                            //console.log(`${key}: ${value}`);
+                            key;
+                            if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
+                                value[0].heureOuverture = 0;
+                                value[0].heureFermeture = 0;
+                            } else if (value[0].heureFermeture > payload) {// si le magasin ferme le matin après l'heure de fermeture imposée
+                                value[0].heureFermeture = payload;
+                            }
+                            if (value[1].heureOuverture > payload) { // si le magasin ouvre l'après-midi après l'heure de fermeture imposée
+                                value[1].heureOuverture = 0;
+                                value[1].heureFermeture = 0;
+                            } else if (value[1].heureFermeture > payload) {// si le magasin ferme le l'après-midi après l'heure de fermeture imposée
+                                value[1].heureFermeture = payload;
+                            }
                         }
                     }
                 })
             }
         },
+         /** Incrémente le nombre de clic sur un point d'intérêt **/
         addfreq: (state,payload) => {
             let isInit = false;
             state.freq.forEach(map => {
@@ -67,9 +70,11 @@ export const villeModule = {
         loadParkings: (state) => {
             return state.Ville[0].ville.parkings;
         },
+         /** Renvoie le nombre de semaines par point d'intérêt entrées dans la base de données **/
         getWeeksNumber: (state) =>{
             return state.Ville[0].ville.commerces[0].horaires.length;
         },
+         /** Renvoie les horaires correspondant à l'id en paramètre **/
         hoursTable: (state) => (id) => {
             var horaires = null;
             state.Ville[0].ville.commerces.forEach(commerce => {
@@ -77,9 +82,6 @@ export const villeModule = {
                     horaires = commerce.horaires;
                     return horaires;
                 }
-                /*else {
-                    return "{heureOuverture: 7, heureFermeture: 8}";
-                }*/
             });
 
               state.Ville[0].ville.parkings.forEach(parking => {
@@ -92,6 +94,7 @@ export const villeModule = {
 
             return horaires;
         },
+         /** Renvoie le nombre de clic sur un point d'intérêt selon l'id donnée en paramètre **/
         getfreq: (state) => (id) => {
             state.freq.forEach(map => {
                 var freq = 0;
@@ -108,6 +111,7 @@ export const villeModule = {
         getZones : (state) => {
             return state.Ville[0].ville.zones;
         },
+         /** Renvoie la position d'une zone selon l'id donné en paramètre **/
         getPositionZone : (state) => (id) =>{
             let pos = [];
             state.Ville[0].ville.zones.forEach( zone => {
@@ -119,6 +123,7 @@ export const villeModule = {
                 }
             })
         },
+         /** Renvoie le nom d'un commerce selon l'id donné en paramètre **/
         getNomCommerce : (state) => (id) => {
             let nom = [];
             state.Ville[0].ville.commerces.forEach( commerce => {
@@ -131,6 +136,7 @@ export const villeModule = {
             })
             return nom;
         },
+         /** Renvoie le type d'un commerce selon l'id donné en paramètre **/
         getTypeCommerce :   (state) => (id) => {
              let type = "";
              state.Ville[0].ville.commerces.forEach(commerce => {
@@ -141,6 +147,7 @@ export const villeModule = {
             })
             return type;
         },
+         /** Renvoie l'adresse d'un commerce selon l'id donné en paramètre **/
         getAdressCommerce : (state) => (id) => {
             let adress = "";
             state.Ville[0].ville.commerces.forEach(commerce => {
@@ -152,6 +159,10 @@ export const villeModule = {
         }
     },
     actions: {
+         /** Lance la mutation appliquant le couvre-feu 
+          * + Lance la mutation qui ajoute une règle
+         * @param hour : l'heure à imposer aux points d'intérêts
+         */
         async setClosingHour(context, hour) {
             try {
                 context.commit('setClosingHour', hour);

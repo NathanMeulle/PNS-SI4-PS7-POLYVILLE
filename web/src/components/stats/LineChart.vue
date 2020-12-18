@@ -5,6 +5,9 @@
 <script>
 import Chart from 'chart.js';
 export default {
+  /**
+   * Composant du graphique en lignes
+   */
   name: 'line-chart',
   props: {
     // The canvas's width.
