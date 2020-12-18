@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="mydsl">
     <router-link active-class="active" to="/dsl/aide">
       <div class="bouton" id="help">Aide</div>
     </router-link>
@@ -44,9 +44,12 @@ export default {
     width: 10%;
   }
 
-
   h1 {
     font-size: 20px;
+  }
+
+  #mydsl{
+    margin-top: -1%;
   }
 
 
