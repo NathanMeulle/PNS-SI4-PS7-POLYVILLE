@@ -75,6 +75,7 @@
 
 export default {
   name: "DSL",
+  emits: ["launch", "macro"],//indique les éléments envoyés (nécessaire pour les tests)
   data () {
     return {
       error:'',
