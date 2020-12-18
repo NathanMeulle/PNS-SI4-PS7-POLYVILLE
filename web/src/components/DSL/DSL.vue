@@ -28,9 +28,16 @@
           {{ item.title }}
         </div>
       </div>
+      <div class='drop-zone' @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
+        Zones géographiques :
+        <div v-for='item in listGeo' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{ item.title }}
+        </div>
+      </div>
       <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
         Divers :
-        <div v-for='item in listQuartiers' :key='item.title' class='drag-el' draggable="true"
+        <div v-for='item in listDivers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
         </div>
@@ -40,7 +47,7 @@
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
       <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
-        <div class='drop-zone'>
+        <div class='drop-zone' @dragover.prevent @dragenter.prevent id="programme">
           Mon programme :
           <div v-for='item in listProg' :key='item.title' class="drag-el">
             <div v-if="item.type !== 5">
@@ -121,14 +128,14 @@ export default {
           title: 'Zone A',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 6,
           title: 'Zone B',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 7,
@@ -157,14 +164,14 @@ export default {
           title: 'Zone C',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 11,
           title: 'Zone D',
           position: -1,
           type:4,
-          list: 4
+          list: 6
         },
         {
           id: 12,
@@ -208,11 +215,14 @@ export default {
     listPers () {
       return this.sortItems(this.items.filter(item => item.list === 3))
     },
-    listQuartiers () {
+    listDivers () {
       return this.sortItems(this.items.filter(item => item.list === 4))
     },
     listInput () {
       return this.sortItems(this.items.filter(item => item.list === 5))
+    },
+    listGeo () {
+      return this.sortItems(this.items.filter(item => item.list === 6))
     },
   },
 
@@ -229,18 +239,20 @@ export default {
     onDrop (evt, list) {
       this.error = ''
       const itemID = evt.dataTransfer.getData('itemID')
-      const item = this.items.find(itemTmp => itemTmp.id === Number(itemID))
-      if(item.list === 2 || list!==2){
-        item.list = item.type
-      }
-      else{
-        this.duplication(item)
-        item.list = list
-      }
-      console.log("ajout à la liste : ",item.list)
-      if (list === 2){
-        item.position=this.listProg.length+1
-      }
+      if(itemID!==""){
+        const item = this.items.find(itemTmp => itemTmp.id === Number(itemID))
+        if(item.list === 2 || list!==2){
+          item.list = item.type
+        }
+        else{
+          this.duplication(item)
+          item.list = list
+        }
+        console.log("ajout à la liste : ",item.list)
+        if (list === 2){
+          item.position=this.listProg.length+1
+        }
+    }
     },
     duplication(item){
       let len = this.items.length
@@ -338,6 +350,14 @@ export default {
 #creationMacro{
   margin-top: 3%;
   margin-left: 1%;
+}
+
+#programme{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #launch{
