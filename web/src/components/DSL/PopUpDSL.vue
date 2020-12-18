@@ -50,6 +50,7 @@ export default {
   data(){
     return{
       type:"",
+      /** Programme : programme qui créer le conflit de règles **/
       programme: Array,
       probleme1: "",
       probleme2: "",
@@ -60,13 +61,14 @@ export default {
   props:{
     value : Object
   },
-  computed : {
-  },
   methods : {
+    /** Gère l'affichage des différents conflits possibles entre les règles **/
     afficherConflit(){
       if(this.type === "Conflit concernant l'heure de fermeture des magasins") this.conflitHeureFermeture()
       else if (this.type === "Conflit concernant le déplacement des policiers") this.conflitPoliciers()
     },
+
+    /** Gère l'affichage d'un conflit de règles concernant le déplacement de policiers **/
     conflitPoliciers(){
       let tab = this.$store.getters.getReglePoliciers
       console.log(tab)
@@ -79,6 +81,8 @@ export default {
       this.solution =  "Quelle règle voulez vous appliquer ?"
       this.choix = {avant: "Règle n°1", apres: "Règle n°2"}
     },
+
+    /** Gère l'affichage d'un conflit de règles concernant le changement d'horaires des magasins **/
     conflitHeureFermeture(){
       let heure = this.$store.getters.getRegleHeureFermeture
       if(heure!== -1) {
@@ -98,9 +102,13 @@ export default {
         this.choix = {avant: Number(this.programme[3].input), apres: heure}
         console.log(this.choix)
     },
+
+    /** Envoie le choix de l'utilisateur au store pour le changement d'horaires des magasins **/
     changerHeureFermeture(heure){
       this.$store.dispatch('setClosingHour',heure)
     },
+
+    /** Envoie le choix de l'utilisateur au store pour le déplacement de policiers **/
     changerPoliciers(regle){
       if(regle === "Règle n°2"){
         if(this.programme[3].title === 'Plus grand que'){
@@ -112,12 +120,11 @@ export default {
     }
 
   },
+
+  /** Initialise les données provoquant le conflit de règles **/
   created() {
-    console.log("creation",this.value)
     this.type = this.value.titre
     this.programme = this.value.programme
-    console.log("type : ",this.type)
-    console.log("prog : ",this.programme)
     this.afficherConflit()
   }
 }

@@ -23,19 +23,25 @@ export default {
 
   data(){
     return{
+      /** Programme : programme reçu par le DSL **/
       programme:{},
       zones: {},
       infOrSup: '',
       heure: -1,
+      /** Error : message d'erreur **/
       error: "",
+      /** Reussite : message notifiant de la réussite de l'application du programme **/
       reussite: "",
+      /** Macro : boolean signifiant si l'on veut créer une macro ou non **/
       macro: false,
+      /** ShowModal : gestion de l'apparition d'un pop up **/
       showModal: false,
       type: ""
     }
   },
 
   methods:{
+    /** Récupération du programme et lancement de la vérification des erreurs **/
     getData(listeCommandes,macro){
       this.macro = macro
       this.error = ""
@@ -49,6 +55,8 @@ export default {
       console.log("ici : ",this.reussite)
       if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     },
+
+    /** Méthode permettant d'analyser un programme comportant un Si **/
     Si(){
       this.checkError()
       if(this.programme[0].title === 'Si'){
@@ -56,6 +64,8 @@ export default {
         else this.error = 'Programme inconnu'
       }
     },
+
+    /** Méthode permettant d'analyser un programme comportant Si + citoyens **/
     SiCitoyens(){
       let nbCitoyens = 0;
       if(this.programme[2].title.substring(0,4) === 'Zone'){
@@ -74,6 +84,8 @@ export default {
         else this.error = 'Programme inconnu'
       }
     },
+
+    /** Méthode appellée par SiCitoyens pour gérer le Alors, envoie la requête au store**/
     alorsCitoyens(nbCitoyens){
       let nbPoliciers = 0
       if(this.programme[6].title === 'Input'){
@@ -110,11 +122,15 @@ export default {
       }
       else this.error = 'Programme inconnu'
     },
+
+    /** Affiche une erreur correspondant au respect ou non des règles Si/Alors **/
     checkError(){
       let valid = this.checkIfThen()
       if(valid === 1) this.error = 'Il est nécessaire de mettre une case "Alors" si vous avez utilisé une cas "Si" et inversement'
       if(valid === 2) this.error = 'Il est nécessaire de mettre la case "Si" avant la case "Alors"'
     },
+
+    /** Renvoie un entier correspondant au non respect des règles Si/Alors **/
     checkIfThen(){
       let posIf = -1
       let posThen = -1
@@ -134,6 +150,8 @@ export default {
       if (posIf > posThen) return 2
       return 0
     },
+
+    /** Renvoie l'heure donnée dans un programme **/
     getHeure(){
       this.programme.forEach((item,index)=>{
         if(item.title === "heures"){
@@ -144,12 +162,16 @@ export default {
         }
       })
     },
+
+    /** Gestion d'un programme contenant une case Pour **/
     Pour(){
       if(this.programme[0].title === 'Pour tous'){
         if(this.programme[1].title==='magasins') this.forMagasin()
         else this.error = 'Programme inconnu'
       }
     },
+
+    /** Gestion d'un programme qui parcoure tous les magasins, envoie la requête au store **/
     forMagasin(){
       if(this.programme[2].title === "fermeture"){
         this.getHeure()
@@ -180,6 +202,8 @@ export default {
       }
       else this.error = 'Programme inconnu'
     },
+
+    /** Envoie une requête de réinitialisation des horaires au store si le programme est correct **/
     reinit(){
       if(this.programme.length===5 && (this.programme[3].title === "heures" && this.programme[4].title === "fermeture")){
         if(!this.macro) {
@@ -195,6 +219,8 @@ export default {
       }
       else this.error = 'Si vous voulez réinitialiser les heures de fermetures, ajoutez les cases "heures" et "fermeture" dans cet ordre.'
     },
+
+    /** Vérifie si une règle existe déjà pour éviter les conflits **/
     verifierExistence(titre,regles){
       let existence = false
       regles.forEach((item)=>{
