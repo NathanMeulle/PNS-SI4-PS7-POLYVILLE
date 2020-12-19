@@ -22,14 +22,14 @@
             </slot>
             <slot name="header" v-if="type==='Conflit concernant l\'heure de fermeture des magasins'">
               <br/>
-                <button class="choix" v-on:click="changerHeureFermeture(choix.apres);$emit('close')" v-if="choix.apres!==-1">{{choix.apres}}h</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.apres);$emit('close')" v-else>Réinitialiser les horaires</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.avant);$emit('close')">{{choix.avant}}h</button>
+                <button class="choix" v-on:click="changerHeureFermeture(choix.apres), $emit('close')" v-if="choix.apres!==-1">{{choix.apres}}h</button>
+              <button class="choix" v-on:click="changerHeureFermeture(choix.apres), $emit('close')" v-else>Réinitialiser les horaires</button>
+              <button class="choix" v-on:click="changerHeureFermeture(choix.avant), $emit('close')">{{choix.avant}}h</button>
             </slot>
             <slot name="header" v-if="type==='Conflit concernant le déplacement des policiers'">
               <br/>
-              <button class="choix" v-on:click="changerPoliciers(choix.avant);$emit('close')">{{choix.avant}}</button>
-              <button class="choix" v-on:click="changerPoliciers(choix.apres);$emit('close')">{{choix.apres}}</button>
+              <button class="choix" v-on:click="changerPoliciers(choix.avant), $emit('close')">{{choix.avant}}</button>
+              <button class="choix" v-on:click="changerPoliciers(choix.apres), $emit('close')">{{choix.apres}}</button>
             </slot>
           </div>
           <br/>

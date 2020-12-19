@@ -61,7 +61,7 @@ export default {
     Si(){
       this.checkError()
       if(this.programme[0].title === 'Si'){
-        if(this.programme[1].title === 'citoyens') this.SiCitoyens()
+        if(this.programme.length >1 && this.programme[1].title === 'citoyens') this.SiCitoyens()
         else this.error = 'Programme inconnu'
       }
     },
