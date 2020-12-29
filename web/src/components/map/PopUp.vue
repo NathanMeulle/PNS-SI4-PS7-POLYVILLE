@@ -89,7 +89,7 @@
 
             },
             getNom() {
-                console.log('NOM : ', this.$store.getters.getNomCommerce(this.id))
+                console.log('NOM : ', this.$store.getters.getNomCommerce(this.id));
                 return this.$store.getters.getNomCommerce(this.id);
             },
             getType() {

@@ -12,7 +12,7 @@ const routes = [
     { path: '/dsl/aide', component: Help },
     {path: '/dsl/macro', component: Macro}
 
-]
+];
 
 const router = createRouter({
     history: createWebHistory(),

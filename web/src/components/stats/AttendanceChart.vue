@@ -158,9 +158,9 @@ export default {
       var i = 0;
       var semaine = null;
       var datacollection = {};
-      var AfternoonData = new Array(0,0,0,0,0,0,0);
-      var MorningData = new Array(0,0,0,0,0,0,0);
-      var DayData = new Array(0,0,0,0,0,0,0);
+      var AfternoonData = [0,0,0,0,0,0,0];
+      var MorningData = [0,0,0,0,0,0,0];
+      var DayData = [0,0,0,0,0,0,0];
       var weeksCount = this.getSchedule().length;
       for (let j = 0; j < weeksCount; j++) {
         semaine = this.getSchedule()[j].semaine;
@@ -178,7 +178,6 @@ export default {
           }
         } else {
           //si on a un parking par exemple
-          i = 0;
           // eslint-disable-next-line no-unused-vars
           for (const [key, value] of Object.entries(semaine)) {
               MorningData[i] += value[0].affluence;

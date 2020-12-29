@@ -134,7 +134,7 @@
                 store.commit( {
                     type : "sendId",
                     id : a,
-                })
+                });
                 store.commit( {
                     type: "addfreq",
                     id : a,

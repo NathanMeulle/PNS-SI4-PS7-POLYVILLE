@@ -2,7 +2,7 @@ import { VilleMock } from "@/mocks/Ville.mock"
 import { dslModule } from "@/store/dsl.store";
 
 function clone(obj){
-    let copy = null
+    let copy = null;
     try{
         copy = JSON.parse(JSON.stringify(obj));
     } catch(ex){
@@ -25,13 +25,13 @@ export const villeModule = {
     mutations: {
         /** Met à jour la base de données en appliquant une règle de changement d'horaires **/
         setClosingHour: (state, payload) => {
-            state.Ville[0].ville.commerces = clone(state.VilleCopie[0].ville.commerces)
+            state.Ville[0].ville.commerces = clone(state.VilleCopie[0].ville.commerces);
             if(payload !== -1) {
                 state.Ville[0].ville.commerces.forEach(commerce => {
                     for(let i = 0 ; i< commerce.horaires.length; i++) {
+                        // eslint-disable-next-line no-unused-vars
                         for (const [key, value] of Object.entries(commerce.horaires[i].semaine)) {
                             //console.log(`${key}: ${value}`);
-                            key;
                             if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
                                 value[0].heureOuverture = 0;
                                 value[0].heureFermeture = 0;
@@ -57,7 +57,7 @@ export const villeModule = {
                     map[1] += 1;
                     isInit=true;
                 }
-            })
+            });
             if (!isInit){
                 state.freq.push([payload.id,1])
             }
@@ -133,7 +133,7 @@ export const villeModule = {
                     nom.push(commerce.nom);
                     console.log('NOM COMMERCANT',nom )
                 }
-            })
+            });
             return nom;
         },
          /** Renvoie le type d'un commerce selon l'id donné en paramètre **/
@@ -144,7 +144,7 @@ export const villeModule = {
                     type = commerce.categorie;
                     console.log('TYPE COMMERCANT', type)
                  }
-            })
+            });
             return type;
         },
          /** Renvoie l'adresse d'un commerce selon l'id donné en paramètre **/
@@ -154,7 +154,7 @@ export const villeModule = {
                 if (commerce.id === id) {
                     adress = commerce.adresse;
                 }
-            })
+            });
             return adress;
         }
     },
@@ -173,4 +173,4 @@ export const villeModule = {
             }
         }
     }
-}
+};

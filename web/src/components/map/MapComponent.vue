@@ -153,7 +153,7 @@ export default {
         if (theStore.categorie === this.filterStore) {
           storeTmp.push(theStore);
         }
-      })
+      });
       console.log(storeTmp);
       return storeTmp;
     }

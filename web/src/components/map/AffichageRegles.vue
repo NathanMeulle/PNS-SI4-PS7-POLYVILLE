@@ -21,7 +21,7 @@ name: "AffichageRegles",
   methods:{
     action(regle){
       if(regle.titre === "Fermeture magasins"){
-        if(!regle.checked) this.$store.dispatch('setClosingHour',regle.valeur)
+        if(!regle.checked) this.$store.dispatch('setClosingHour',regle.valeur);
         else this.$store.dispatch('setClosingHour',-1)
       }
       if (regle.titre === "Presence policier"){

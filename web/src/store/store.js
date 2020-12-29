@@ -54,38 +54,38 @@ export default createStore({
 
         /** Applique la règle de déplacement de policiers sur la base de données **/
         deplacerPoliciers(state, payload) {
-            console.log(payload.nbZone)
-            console.log("policiers :",payload.nbPoliciers)
-            let agir = false
-            if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone)
-            else if(payload.args.cond === "inf") agir = (payload.args.citoyens >= payload.nbZone)
+            console.log(payload.nbZone);
+            console.log("policiers :",payload.nbPoliciers);
+            let agir = false;
+            if(payload.args.cond === "sup") agir = (payload.args.citoyens <= payload.nbZone);
+            else if(payload.args.cond === "inf") agir = (payload.args.citoyens >= payload.nbZone);
             if(agir){
-                let i = 0
-                i += payload.nbPoliciers
-                let j = 0
-                let a = -1
-                let b = -1
+                let i = 0;
+                i += payload.nbPoliciers;
+                let j = 0;
+                let a = -1;
+                let b = -1;
                 if(payload.args.zone2 === "Zone A"){
-                    a = this.state.villeModule.Ville[0].ville.zones[0].position.x
+                    a = this.state.villeModule.Ville[0].ville.zones[0].position.x;
                     b = this.state.villeModule.Ville[0].ville.zones[0].position.y
                 }
                 else if(payload.args.zone2 === "Zone B"){
-                    a = this.state.villeModule.Ville[0].ville.zones[1].position.x
+                    a = this.state.villeModule.Ville[0].ville.zones[1].position.x;
                     b = this.state.villeModule.Ville[0].ville.zones[1].position.y
                 }
                 else if(payload.args.zone2 === "Zone C"){
-                    a = this.state.villeModule.Ville[0].ville.zones[2].position.x
+                    a = this.state.villeModule.Ville[0].ville.zones[2].position.x;
                     b = this.state.villeModule.Ville[0].ville.zones[2].position.y
                 }
                 else if(payload.args.zone2 === "Zone D"){
-                    a = this.state.villeModule.Ville[0].ville.zones[3].position.x
+                    a = this.state.villeModule.Ville[0].ville.zones[3].position.x;
                     b = this.state.villeModule.Ville[0].ville.zones[3].position.y
                 }
-                let policiers = this.state.positionsModule.positions[0].policiers
+                let policiers = this.state.positionsModule.positions[0].policiers;
                 while(i<payload.args.policiers){
                     if (!isInSquare(policiers[j].position.x,policiers[j].position.y,a,b)){
-                        policiers[j].position.x = a
-                        policiers[j].position.y = b
+                        policiers[j].position.x = a;
+                        policiers[j].position.y = b;
                         i++
                     }
                     j++
@@ -112,11 +112,11 @@ export default createStore({
          *  @param args : nbPoliciers/zone1/zone2/nbCitoyen/Condition
          **/
         async deplacerPoliciers(context,args){
-            console.log(args)
-            let nbZone = 0
-            let nbPoliciers = 0
-            nbZone = context.getters.getCitizen(args.zone1)
-            nbPoliciers = context.getters.getPoliciers(args.zone2)
+            console.log(args);
+            let nbZone = 0;
+            let nbPoliciers = 0;
+            nbZone = context.getters.getCitizen(args.zone1);
+            nbPoliciers = context.getters.getPoliciers(args.zone2);
             try{
                 context.commit('deplacerPoliciers',{args : args, nbZone: nbZone, nbPoliciers: nbPoliciers});
                 context.commit('addRegle', {titre : 'Presence policier',valeur : [args.citoyens,args.zone1,

@@ -67,7 +67,7 @@ export const positionModule = {
                       }
                   }
               }
-          })
+          });
         return nbCitizen;
         },
         /**
@@ -86,7 +86,7 @@ export const positionModule = {
                         }
                     }
                 }
-            })
+            });
             return nbPoliciers;
         },
 
@@ -94,4 +94,4 @@ export const positionModule = {
     },
     actions: {
     }
-}
+};
