@@ -41,10 +41,10 @@
     <div class="milieu" style="height: 75%; width: 29%">
       <div class='drop-zone' @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
         Zones géographiques :
-        <div v-for='item in listGeo' :key='item.title' class='drag-el' draggable="true"
+        <div v-for='item in listGeo' :key='item.title' v-bind:class="{zoneSelectionnable: !isZoneSelectionnable}" class='drag-el' :draggable='isZoneSelectionnable'
              @dragstart='startDrag($event, item)'>
           {{ item.title }}
-          <div class="logo">
+          <div v-if="isZoneSelectionnable" class="logo">
             <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
           </div>
         </div>
@@ -246,6 +246,11 @@ export default {
     listGeo () {
       return this.sortItems(this.items.filter(item => item.list === 6))
     },
+    isZoneSelectionnable () {
+      //On peut mettre une zone par entité
+      return this.listProg.filter(prog => prog.type===3).length > this.listProg.filter(prog => prog.type===6).length;//s'il y a plus d'entités que de zones
+    }
+
   },
 
   methods:{
@@ -291,6 +296,10 @@ export default {
   margin-bottom: 10px;
   padding: 5px;
 }
+.zoneSelectionnable {
+  background-color: #dddddd;
+  color: #999999;
+}
 
 #error{
   position: relative;
@@ -332,4 +341,5 @@ export default {
     cursor: pointer;
     box-shadow: 4px 4px 2px 1px #266027;
   }
+
 </style>

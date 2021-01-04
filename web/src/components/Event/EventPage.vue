@@ -1,24 +1,29 @@
 <template>
   <div>
-    Nom du point d'intérêt où appliquer l'événement
-    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
-  </div>
-  <div>
-    Nom de l'événement
+    Nom de l'événement :
     <input v-model="NomEvenement" placeholder="Titre de l'événement" />
   </div>
+  <div>
+    Nom du point d'intérêt où appliquer l'événement :
+    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
+  </div>
   <br />
-  <span>Description</span>
+  <span>Description : </span>
   <textarea v-model="Description" placeholder="Description"></textarea>
   <div>
-    Logo
+    Logo :
     <input v-model="Logo" placeholder="logo par défaut" />
   </div>
   <br />
-  <div> Coordonnées
+  <div> Coordonnées :
         <p>Les coordonnées de l'évenements sont : {{coord}}</p>
   </div>
+
+  <div v-if="regle!==''">
+    Regle : {{regle}}
+  </div>
     <button v-on:click="validation">Validation</button>
+  <div>{{valid}}</div>
 
   <PrintEvent
     :NomPointInteret="NomPointInteret"
@@ -30,7 +35,7 @@
   <p style="white-space: pre-line;">{{ Description }}</p>
 
 
-  <InterpreteurEvent/>
+  <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
     <div class="map" style="height: 65vh; width: 59%;">
         <l-map
                 v-model="zoom"
@@ -43,7 +48,6 @@
         >
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
             <l-control-layers style="z-index: -5" />
-            <div v-if="onClick===true">
             <Marker
                     v-bind:position="
                              [
@@ -52,7 +56,6 @@
                              ]"
                     v-bind:msg="'Mon événement'"
             />
-            </div>
         </l-map>
     </div>
 
@@ -81,7 +84,8 @@ name: "EventPage",
   },
   data() {
     return {
-          NomPointInteret: "",
+      valid: "",
+      NomPointInteret: "",
       NomEvenement: "",
       Description: "",
       Logo:"",
@@ -94,19 +98,23 @@ name: "EventPage",
             [43.6404, 7.100],
         ],
         onClick : false,
-        regle : [],
-        };
-    },
+        regle:"",
+    };
+  },
     computed : {
         getPosition() {
             console.log("loading events...");
             console.log(this.$store.getters.getPosition);
             return this.$store.getters.getPosition;
-
         },
     },
     methods : {
         validation() {
+            console.log(this.coord[0])
+            if(this.NomEvenement === "") this.valid = "Veuillez rentrer un nom pour votre événement"
+            else if (this.coord[0] === undefined && this.NomPointInteret === "") this.valid = "Veuillez rentrer une position ou un" +
+                " point d'intérêt pour votre événement"
+            else this.valid = "Evénement enregistré"
             store.commit({
                 type: "addEvent",
                 name: this.NomEvenement,
@@ -124,6 +132,11 @@ name: "EventPage",
                 lng : event.latlng.lng,
             });
         },
+      ajoutRegle(regle){
+          if(regle[0] === "condition affichage"){
+            this.regle = "Affichage si le nombre de citoyen en " + regle[2] + " supérieur à " + regle[1]
+          }
+      }
     },
 }
 </script>
