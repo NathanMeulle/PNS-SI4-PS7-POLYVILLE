@@ -41,7 +41,7 @@
                                 </slot>
                             </div>
                             <div class="modal-default-button" @click="$emit('close')">
-                                fermer
+                                Fermer
                             </div>
 
                         </div>

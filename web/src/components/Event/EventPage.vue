@@ -1,12 +1,13 @@
 <template>
+    <div class="split NW">
   <div>
     Nom de l'événement :
-    <input v-model="NomEvenement" placeholder="Titre de l'événement" />
+    <input v-model="NomEvenement" placeholder="Titre de l'événement" maxlength="24"/>
   </div>
   <br />
   <div>
     Nom du point d'intérêt où appliquer l'événement :
-    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
+    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="24"/>
   </div>
   <br />
   <span>Description : </span>
@@ -15,16 +16,17 @@
  
   <div>
     Logo : 
-    <em id="icon0" class="fas fa-exclamation-circle" v-on:click="Logo = 'fas fa-exclamation-circle';checkColorIcons('icon0');">&emsp;</em>
-    <em id="icon1" class="fas fa-clock" v-on:click="Logo = 'fas fa-clock';checkColorIcons('icon1'); " >&emsp;</em>
-    <em id="icon2" class="fas fa-beer" v-on:click="Logo = 'fas fa-beer';checkColorIcons('icon2');">&emsp;</em>
-    <em id="icon3" class="fas fa-gift" v-on:click="Logo = 'fas fa-gift';checkColorIcons('icon3');">&emsp;</em>
-    <em id="icon4" class="fas fa-music" v-on:click="Logo = 'fas fa-music'; checkColorIcons('icon4');">&emsp;</em>
-    <em id="icon5" class="fas fa-ad" v-on:click="Logo = 'fas fa-ad';checkColorIcons('icon5');">&emsp;</em>
+    <em id="icon0" class="fas fa-exclamation-circle" v-on:click="[Logo = 'fas fa-exclamation-circle', checkColorIcons('icon0')]">&emsp;</em>
+    <em id="icon1" class="fas fa-clock" v-on:click="[Logo = 'fas fa-clock', checkColorIcons('icon1')]" >&emsp;</em>
+    <em id="icon2" class="fas fa-beer" v-on:click="[Logo = 'fas fa-beer', checkColorIcons('icon2')]">&emsp;</em>
+    <em id="icon3" class="fas fa-gift" v-on:click="[Logo = 'fas fa-gift', checkColorIcons('icon3')]">&emsp;</em>
+    <em id="icon4" class="fas fa-music" v-on:click="[Logo = 'fas fa-music', checkColorIcons('icon4')]">&emsp;</em>
+    <em id="icon5" class="fas fa-ad" v-on:click="[Logo = 'fas fa-ad', checkColorIcons('icon5')]">&emsp;</em>
   </div>
   <br />
   <div> Coordonnées :
-        <p>Les coordonnées de l'évenements sont : {{coord}}</p>
+      <button v-on:click="showMap">Afficher la carte</button>
+      <p>Les coordonnées de l'évenements sont : {{coord}}</p>
   </div>
 
   <div v-if="regle!==''">
@@ -32,7 +34,10 @@
   </div>
     <button v-on:click="validation">Validation</button>
   <div>{{valid}}</div>
+    </div>
+    <div class="split NE">
 
+    <h2>Aperçu de l'événement :</h2>
   <PrintEvent
     :NomPointInteret="NomPointInteret"
     :NomEvenement="NomEvenement"
@@ -40,11 +45,11 @@
     :Logo="Logo"
   ></PrintEvent>
 
-  <p style="white-space: pre-line;">{{ Description }}</p>
+    </div>
 
-
+    <div class="S">
   <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
-    <div class="map" style="height: 65vh; width: 59%;">
+    <div class="map" style="height: 50vh; width: 30%;">
         <l-map
                 v-model="zoom"
                 v-model:zoom="zoom"
@@ -56,16 +61,16 @@
         >
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
             <l-control-layers style="z-index: -5" />
-            <Marker
-                    v-bind:position="
-                             [
-                             getPosition[0],
-                             getPosition[1],
-                             ]"
-                    v-bind:msg="'Mon événement'"
-            />
+            <div v-if="markerCreated">
+                <Marker v-bind:position="getPosition"
+                        v-bind:msg="'Position Événement'"
+                />
+            </div>
         </l-map>
     </div>
+    </div>
+    <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
+
 
 </template>
 
@@ -79,10 +84,12 @@ import store from "../../store/store";
 import {LControlLayers, LMap, LTileLayer} from "../../../node_modules_intern/@vue-leaflet/vue-leaflet";
 import Marker from "../map/Marker";
 import PrintEvent from "./PrintEvent.vue";
+import PopUpMap from "./PopUpMap";
 
 export default {
 name: "EventPage",
   components: {
+    PopUpMap,
     InterpreteurEvent,
     LMap,
     LTileLayer,
@@ -92,6 +99,8 @@ name: "EventPage",
   },
   data() {
     return {
+      markerCreated: false,
+      displayPopUp: false,
       valid: "",
       NomPointInteret: "",
       NomEvenement: "",
@@ -112,7 +121,7 @@ name: "EventPage",
     computed : {
         getPosition() {
             console.log("loading events...");
-            console.log(this.$store.getters.getPosition);
+            console.log("getPos ", this.$store.getters.getPosition);
             return this.$store.getters.getPosition;
         },
     },
@@ -145,14 +154,22 @@ name: "EventPage",
                 regle: this.regle,
             })
         },
+        showMap(){
+            this.displayPopUp=true;
+        },
         sendLatLng(event){
-            console.log(event.latlng);
-            this.coord = [event.latlng.lat, event.latlng.lng]
-            store.commit({
-                type: "addPosition",
-                lat: event.latlng.lat,
-                lng : event.latlng.lng,
-            });
+            if(event.latlng != null) {
+                this.markerCreated = true
+
+                console.log("sent2 : ", event.latlng);
+                this.coord = [event.latlng.lat, event.latlng.lng]
+                store.commit({
+                    type: "addPosition",
+                    lat: event.latlng.lat,
+                    lng: event.latlng.lng,
+                });
+            }
+            else { this.markerCreated = false}
         },
       ajoutRegle(regle){
           if(regle[0] === "condition affichage"){
@@ -164,7 +181,33 @@ name: "EventPage",
 </script>
 
 <style scoped>
+    .split {
+        height: 30%;
+        width: 50%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        margin-left: 20px;
+        overflow-x: hidden;
+    }
+    .NW {
+        top: auto;
+        left: 0;
+    }
 
+    /* Control the right side */
+    .NE {
+        right: 0;
+        top: auto;
+
+    }
+    .S {
+        border-top: 3px solid #0cb50b;
+        position: fixed;
+        height: 50%;
+        width: 99%;
+        top:45%;
+    }
     .map {
         float: left;
         z-index: -1;
