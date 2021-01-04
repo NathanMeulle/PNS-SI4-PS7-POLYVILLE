@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper" style="height: 70vh; width: 100%">
-    <div class="map" style="height: 70vh; width: 59%;">
+  <div class="wrapper" style="height: 65vh; width: 100%">
+    <div class="map" style="height: 65vh; width: 59%;">
       <l-map
               v-model="zoom"
               v-model:zoom="zoom"
@@ -9,9 +9,10 @@
               v-model:minZoom="minZoom"
               v-model:maxBounds="maxBounds"
               @move="log('move'+zoom)"
+
       >
         <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
-        <l-control-layers style="z-index: -5"/>
+        <l-control-layers style="z-index: -5" />
         <div v-if="filterOption.includes('Commerces')" class="commerces">
           <div v-if="filterStore === 'Tout'">
             {{log(filterStore)}}
@@ -109,6 +110,7 @@
 
 
         </div>
+
       </l-map>
     </div>
     <div class="displayer" style="width: 38%">
@@ -125,6 +127,8 @@ import Marker from "./Marker";
 import Displayer from "./Displayer";
 import store from "../../store/store";
 
+
+
 export default {
   name: "mapComponent",
   components: {
@@ -140,6 +144,7 @@ export default {
       console.log("loading commerces...");
       return this.$store.getters.loadCommerces;
     },
+
     parkingStore() {
       console.log("loading parking...");
       return this.$store.getters.loadParkings;
@@ -236,6 +241,7 @@ export default {
       }
     },
 
+
   },
 
 };
@@ -244,14 +250,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .displayer {
-  min-height: 70vh;
+  min-height: 65vh;
   float: right;
   position: relative;
   margin-right: 10px;
   border-radius: 10px;
   border: 3px solid #0cb50b;
   background-color: rgba(237, 237, 237, 0.84);
-
 }
 .map {
   float: left;

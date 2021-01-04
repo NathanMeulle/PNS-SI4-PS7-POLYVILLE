@@ -77,7 +77,7 @@ describe('Tests DSL guidage', () => {
         expect(wrapper.html()).toContain("Il faut donner une heure de fermeture")
     });
 
-    it('display error message if "fermeture"  without "heure"', async () => {
+    it('display error message if "fermeture" incorrect', async () => {
         const wrapper = mount(Interpreteur);
         const wrapperDSL = wrapper.findComponent(DSL);
         await wrapperDSL.vm.$emit('launch', [

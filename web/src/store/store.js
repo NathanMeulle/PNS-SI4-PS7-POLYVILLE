@@ -2,6 +2,7 @@ import {createStore} from 'vuex'
 import { villeModule } from './ville.store.js';
 import { positionModule } from './positions.store.js';
 import { dslModule } from './dsl.store.js'
+import {eventModule} from "./event.store";
 
 /** Vérifie si un point (x,y) est dans une zone de coordonnées (a,b) **/
 function isInSquare(x,y,a,b){
@@ -28,6 +29,7 @@ export default createStore({
         villeModule: villeModule,
         positionsModule: positionModule,
         dslModule: dslModule,
+        eventModule: eventModule,
     },
     state() {
         return {
@@ -42,7 +44,7 @@ export default createStore({
         sendId: (state,payload) => state.idStore = payload.id,
         displayPolice: (state) => state.displaypolice = true,
         stopDisplayPolice: (state) => state.displaypolice = false,
-        
+
         /** Mémorise quelles box sont sélectionnées **/
         setCheckbox(state, payload) {
             if (!state.checkedOptions.includes(payload.CheckedBox)) {
@@ -108,7 +110,7 @@ export default createStore({
         }
     },
     actions:{
-        /** Lance la mutation appliquant la règle de déplacement de policers 
+        /** Lance la mutation appliquant la règle de déplacement de policers
          *  @param args : nbPoliciers/zone1/zone2/nbCitoyen/Condition
          **/
         async deplacerPoliciers(context,args){
@@ -120,7 +122,7 @@ export default createStore({
             try{
                 context.commit('deplacerPoliciers',{args : args, nbZone: nbZone, nbPoliciers: nbPoliciers});
                 context.commit('addRegle', {titre : 'Presence policier',valeur : [args.citoyens,args.zone1,
-                        args.policiers,args.zone2]})
+                        args.policiers,args.zone2],checked : true})
             }
             catch(error){
                 console.log('error ', error);

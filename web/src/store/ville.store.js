@@ -19,7 +19,7 @@ export const villeModule = {
             Ville: VilleMock,
             VilleCopie: clone(VilleMock),
             freq: [], // mémorise le nombre de clics sur les points d'intérêts
-            dslModule: dslModule
+            dslModule: dslModule,
         }
     },
     mutations: {
@@ -61,7 +61,8 @@ export const villeModule = {
             if (!isInit){
                 state.freq.push([payload.id,1])
             }
-        }
+        },
+
     },
     getters: {
         loadCommerces: (state) => {
@@ -123,6 +124,7 @@ export const villeModule = {
                 }
             })
         },
+
          /** Renvoie le nom d'un commerce selon l'id donné en paramètre **/
         getNomCommerce : (state) => (id) => {
             let nom = [];
@@ -159,14 +161,14 @@ export const villeModule = {
         }
     },
     actions: {
-         /** Lance la mutation appliquant le couvre-feu 
+         /** Lance la mutation appliquant le couvre-feu
           * + Lance la mutation qui ajoute une règle
          * @param hour : l'heure à imposer aux points d'intérêts
          */
         async setClosingHour(context, hour) {
             try {
                 context.commit('setClosingHour', hour);
-                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour, checked : false})
+                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour, checked : true})
             }
             catch (error) {
                 console.log('error ', error);
