@@ -18,7 +18,7 @@
   <div> Coordonnées
         <p>Les coordonnées de l'évenements sont : {{coord}}</p>
   </div>
-    <button v-on:click="validation()">Validation</button>
+    <button v-on:click="validation">Validation</button>
 
   <PrintEvent
     :NomPointInteret="NomPointInteret"
@@ -26,6 +26,8 @@
     :Description="Description"
     :Logo="Logo"
   ></PrintEvent>
+
+  <p style="white-space: pre-line;">{{ Description }}</p>
 
 
   <InterpreteurEvent/>
@@ -38,21 +40,22 @@
                 v-model:minZoom="minZoom"
                 v-model:maxBounds="maxBounds"
                 v-on:click="sendLatLng"
-
         >
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
             <l-control-layers style="z-index: -5" />
+            <div v-if="onClick===true">
             <Marker
                     v-bind:position="
                              [
-                             eventToDisplay[eventToDisplay.length-1][1],
-                             eventToDisplay[eventToDisplay.length-1][2],
+                             getPosition[0],
+                             getPosition[1],
                              ]"
                     v-bind:msg="'Mon événement'"
             />
+            </div>
         </l-map>
     </div>
-    
+
 </template>
 
 <script>
@@ -90,25 +93,37 @@ name: "EventPage",
             [43.5904, 7.0419],
             [43.6404, 7.100],
         ],
+        onClick : false,
+        regle : [],
         };
     },
     computed : {
-        eventToDisplay() {
+        getPosition() {
             console.log("loading events...");
-            return this.$store.getters.getEvents;
+            console.log(this.$store.getters.getPosition);
+            return this.$store.getters.getPosition;
+
         },
     },
     methods : {
-        validation() {},
+        validation() {
+            store.commit({
+                type: "addEvent",
+                name: this.NomEvenement,
+                description: this.Description,
+                coordonate: this.coord,
+                regle: this.regle,
+            })
+        },
         sendLatLng(event){
             console.log(event.latlng);
             this.coord = [event.latlng.lat, event.latlng.lng]
             store.commit({
-                type: "addEvent",
+                type: "addPosition",
                 lat: event.latlng.lat,
                 lng : event.latlng.lng,
             });
-        }
+        },
     },
 }
 </script>
