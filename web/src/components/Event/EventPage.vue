@@ -7,19 +7,27 @@
       <input v-model="NomEvenement" placeholder="modifiez-moi">
     <p>Le message est : {{ NomEvenement }}</p>
   </div>
-  
+
 <span>Le message multiligne est :</span>
 <textarea v-model="Description" placeholder="ajoutez plusieurs lignes"></textarea>
 <br>
 
   <p style="white-space: pre-line;">{{ Description }}</p>
 
+  <InterpreteurEvent/>
+
 </template>
 
 <script>
+
+
+
+import InterpreteurEvent from "@/components/Event/InterpreteurEvent";
+
 export default {
 name: "EventPage",
-data() {
+  components: {InterpreteurEvent},
+  data() {
     return {
         NomPointInteret: "",
         NomEvenement:"",
