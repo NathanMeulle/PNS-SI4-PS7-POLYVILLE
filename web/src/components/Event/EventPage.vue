@@ -15,12 +15,12 @@
  
   <div>
     Logo : 
-    <em class="fas fa-exclamation-circle" v-on:click="Logo = 'fas fa-exclamation-circle'">&emsp;</em>
-    <em class="fas fa-clock" v-on:click="Logo = 'fas fa-clock'">&emsp;</em>
-    <em class="fas fa-beer" v-on:click="Logo = 'fas fa-beer'">&emsp;</em>
-    <em class="fas fa-gift" v-on:click="Logo = 'fas fa-gift'">&emsp;</em>
-    <em class="fas fa-music" v-on:click="Logo = 'fas fa-music'">&emsp;</em>
-    <em class="fas fa-ad" v-on:click="Logo = 'fas fa-ad'">&emsp;</em>
+    <em id="icon0" class="fas fa-exclamation-circle" v-on:click="Logo = 'fas fa-exclamation-circle';checkColorIcons('icon0');">&emsp;</em>
+    <em id="icon1" class="fas fa-clock" v-on:click="Logo = 'fas fa-clock';checkColorIcons('icon1'); " >&emsp;</em>
+    <em id="icon2" class="fas fa-beer" v-on:click="Logo = 'fas fa-beer';checkColorIcons('icon2');">&emsp;</em>
+    <em id="icon3" class="fas fa-gift" v-on:click="Logo = 'fas fa-gift';checkColorIcons('icon3');">&emsp;</em>
+    <em id="icon4" class="fas fa-music" v-on:click="Logo = 'fas fa-music'; checkColorIcons('icon4');">&emsp;</em>
+    <em id="icon5" class="fas fa-ad" v-on:click="Logo = 'fas fa-ad';checkColorIcons('icon5');">&emsp;</em>
   </div>
   <br />
   <div> Coordonnées :
@@ -117,6 +117,20 @@ name: "EventPage",
         },
     },
     methods : {
+        checkColorIcons(id){
+            let i = 0;
+            while(i <= 5){
+                let a = "icon"+i;
+                if(a === id){
+                    document.getElementById(id).style.color='blue';
+                }
+                else{
+                    document.getElementById(a).style.color='black';
+                }
+                i++;
+            }
+            
+        },
         validation() {
             console.log(this.coord[0])
             if(this.NomEvenement === "") this.valid = "Veuillez rentrer un nom pour votre événement"
