@@ -1,5 +1,6 @@
 package fr.unice.polytech.si4.ps7.alihm2.serializer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.unice.polytech.si4.ps7.alihm2.*;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
@@ -201,6 +202,13 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     public List<Policier> getPoliciers() {
         return policiers;
     }
+    @JsonIgnore
+    public static int getNbCommerants() {
+        return NB_COMMERANTS;
+    }
 
-
+    @JsonIgnore
+    public static int getNbParking() {
+        return NB_PARKING;
+    }
 }

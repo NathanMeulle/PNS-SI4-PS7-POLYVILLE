@@ -22,7 +22,7 @@
 
 
 
-import InterpreteurEvent from "@/components/Event/InterpreteurEvent";
+import InterpreteurEvent from "./InterpreteurEvent";
 
 export default {
 name: "EventPage",

@@ -6,7 +6,7 @@
 
 
 
-import DSLEvent from "@/components/Event/DSLEvent";
+import DSLEvent from "./DSLEvent";
 
 export default {
   name: "InterpreteurEvent",
