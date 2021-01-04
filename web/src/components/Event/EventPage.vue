@@ -3,16 +3,24 @@
     Nom du point d'intérêt où appliquer l'événement
     <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
   </div>
+  <br />
   <div>
     Nom de l'événement
     <input v-model="NomEvenement" placeholder="Titre de l'événement" />
   </div>
   <br />
   <span>Description</span>
-  <textarea v-model="Description" placeholder="Description"></textarea>
+  <textarea v-model="Description" placeholder="Description"></textarea><br />
+  <br />
+ 
   <div>
     Logo
-    <input v-model="Logo" placeholder="logo par défaut" />
+    <em class="fas fa-exclamation-circle" v-on:click="Logo = 'fas fa-exclamation-circle'">&emsp;</em>
+    <em class="fas fa-clock" v-on:click="Logo = 'fas fa-clock'">&emsp;</em>
+    <em class="fas fa-beer" v-on:click="Logo = 'fas fa-beer'">&emsp;</em>
+    <em class="fas fa-gift" v-on:click="Logo = 'fas fa-gift'">&emsp;</em>
+    <em class="fas fa-music" v-on:click="Logo = 'fas fa-music'">&emsp;</em>
+    <em class="fas fa-ad" v-on:click="Logo = 'fas fa-ad'">&emsp;</em>
   </div>
   <br />
   <div> Coordonnées
@@ -81,7 +89,7 @@ name: "EventPage",
           NomPointInteret: "",
       NomEvenement: "",
       Description: "",
-      Logo:"",
+      Logo:"fas fa-exclamation-circle",
         coord : [],
         zoom: 14,
         maxZoom: 18,
