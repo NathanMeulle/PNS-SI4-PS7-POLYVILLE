@@ -36,7 +36,7 @@ export default createStore({
             infoCircle : "",
             idStore : 0,
             checkedOptions: ["Commerces"],
-            displaypolice : false,
+            displaypolice : true,
         }
     },
     mutations : {

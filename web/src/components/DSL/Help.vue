@@ -9,7 +9,7 @@
   <br/>
   <div>Réinitialiser les horaires de fermeture des magasins :
     <br/>
-    Pours tous => magasins => réinitialiser => heures => fermeture
+    Pour tous => magasins => réinitialiser => heures => fermeture
   </div>
   <br/>
   <div>Attribuer des policiers à une zone en fonction du nombre de citoyens s'y trouvant :

@@ -3,7 +3,7 @@
   <div v-for="regle in regles" :key="regle.titre">
     <label class="container" v-bind:for="regle.titre">
     <div v-if="regle.valeur !== -1">
-      <input type="checkbox" v-bind:id="regle.titre"  v-model="regle.checked" v-on:click="action(regle)">
+      <input type="checkbox" :checked="true" v-bind:id="regle.titre"  v-model="regle.checked" v-on:click="action(regle)">
         <span class="checkmark">
          {{regle.titre}}
         </span>
