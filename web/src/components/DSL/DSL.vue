@@ -229,22 +229,22 @@ export default {
   },
   computed: {
     listCond () {
-      return this.sortItems(this.items.filter(item => item.list === 1).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 1))
     },
     listProg () {
-      return this.sortItems(this.items.filter(item => item.list === 2).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 2))
     },
     listPers () {
-      return this.sortItems(this.items.filter(item => item.list === 3).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 3))
     },
     listDivers () {
-      return this.sortItems(this.items.filter(item => item.list === 4).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 4))
     },
     listInput () {
-      return this.sortItems(this.items.filter(item => item.list === 5).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 5))
     },
     listGeo () {
-      return this.sortItems(this.items.filter(item => item.list === 6).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 6))
     },
   },
 
@@ -253,6 +253,12 @@ export default {
     macro() {
       console.log("envoi du programme suivant : ", this.listProg);
       this.$emit("macro", this.listProg)
+    },
+
+    /** Envoie le programme donné à l'interpréteur **/
+    launch() {
+      console.log("envoi du programme suivant : ", this.listProg);
+      this.$emit("launch", this.listProg)
     },
   }
 }

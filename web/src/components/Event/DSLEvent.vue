@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Lancer mon programme</button>
+    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Ajouter ce programme à mon événement</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
       <div style="height: 60vh; width: 100%" @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
@@ -193,19 +193,19 @@ extends: DragDropMethods,
       return this.sortItems(this.items.filter(item => item.list === 1))
     },
     listCond () {
-      return this.sortItems(this.items.filter(item => item.list === 2).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 2))
     },
     listPers () {
-      return this.sortItems(this.items.filter(item => item.list === 3).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 3))
     },
     listDivers () {
-      return this.sortItems(this.items.filter(item => item.list === 4).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 4))
     },
     listGeo () {
-      return this.sortItems(this.items.filter(item => item.list === 5).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 5))
     },
     listProg () {
-      return this.sortItems(this.items.filter(item => item.list === 6).sort((a,b) => a.position<b.position))
+      return this.sortItems(this.items.filter(item => item.list === 6))
     },
   },
   methods:{
@@ -227,6 +227,12 @@ extends: DragDropMethods,
           item.position=this.listProg.length+1
         }
       }
+    },
+
+    /** Envoie le programme donné à l'interpréteur **/
+    launch() {
+      console.log("envoi du programme suivant : ", this.listProg);
+      this.$emit("launchEvent", this.listProg)
     },
 
     /** Ajout d'une case à mon programme sans drag and drop **/
