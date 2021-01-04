@@ -79,6 +79,8 @@ export default {
                 console.log(nbCitoyens)
                 this.reussite = "Condition d'affichage de l'événement appliquée"
                 this.error = ""
+                let regle = ["condition affichage",nbCitoyens,this.zones[0]]
+                this.$emit("ajoutRegleEvenement", regle)
             }
             else this.error = "Avez vous ajouté une case en trop ? Programme presque correct concernant l'affichage d'un événement"
         },

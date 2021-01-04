@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <h2>
     <p>Evénement à <font class = "majorText">{{ NomPointInteret }}</font></p>
     <p>Titre de l'événement:</p>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
- 
+
 export default {
 name: "PrintEvent",
 props: {
@@ -44,8 +44,5 @@ h2 {
 .descriptionText {
   font-weight: 200;
   font-size: 80%;
-}
-.logo{
-  float: right;
 }
 </style>

@@ -1,24 +1,28 @@
 <template>
   <div>
-    Nom du point d'intérêt où appliquer l'événement
-    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
-  </div>
-  <div>
-    Nom de l'événement
+    Nom de l'événement :
     <input v-model="NomEvenement" placeholder="Titre de l'événement" />
   </div>
+  <div>
+    Nom du point d'intérêt où appliquer l'événement :
+    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
+  </div>
   <br />
-  <span>Description</span>
+  <span>Description : </span>
   <textarea v-model="Description" placeholder="Description"></textarea>
   <div>
-    Logo
+    Logo :
     <input v-model="Logo" placeholder="logo par défaut" />
   </div>
   <br />
-  <div> Coordonnées
+  <div> Coordonnées :
         <p>Les coordonnées de l'évenements sont : {{coord}}</p>
   </div>
+  <div v-if="regle!==''">
+    Regle : {{regle}}
+  </div>
     <button v-on:click="validation()">Validation</button>
+  <div>{{valid}}</div>
 
   <PrintEvent
     :NomPointInteret="NomPointInteret"
@@ -28,7 +32,7 @@
   ></PrintEvent>
 
 
-  <InterpreteurEvent/>
+  <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
     <div class="map" style="height: 65vh; width: 59%;">
         <l-map
                 v-model="zoom"
@@ -52,7 +56,7 @@
             />
         </l-map>
     </div>
-    
+
 </template>
 
 <script>
@@ -78,20 +82,22 @@ name: "EventPage",
   },
   data() {
     return {
-          NomPointInteret: "",
+      valid: "",
+      NomPointInteret: "",
       NomEvenement: "",
       Description: "",
       Logo:"",
-        coord : [],
-        zoom: 14,
-        maxZoom: 18,
-        minZoom: 13,
-        maxBounds: [
-            [43.5904, 7.0419],
-            [43.6404, 7.100],
-        ],
-        };
-    },
+      coord : [],
+      zoom: 14,
+      maxZoom: 18,
+      minZoom: 13,
+      maxBounds: [
+        [43.5904, 7.0419],
+        [43.6404, 7.100],
+      ],
+      regle:"",
+    };
+  },
     computed : {
         eventToDisplay() {
             console.log("loading events...");
@@ -99,7 +105,13 @@ name: "EventPage",
         },
     },
     methods : {
-        validation() {},
+        validation() {
+          console.log(this.coord[0])
+          if(this.NomEvenement === "") this.valid = "Veuillez rentrer un nom pour votre événement"
+          else if (this.coord[0] === undefined && this.NomPointInteret === "") this.valid = "Veuillez rentrer une position ou un" +
+              " point d'intérêt pour votre événement"
+          else this.valid = "Evénement enregistré"
+        },
         sendLatLng(event){
             console.log(event.latlng);
             this.coord = [event.latlng.lat, event.latlng.lng]
@@ -108,7 +120,12 @@ name: "EventPage",
                 lat: event.latlng.lat,
                 lng : event.latlng.lng,
             });
-        }
+        },
+      ajoutRegle(regle){
+          if(regle[0] === "condition affichage"){
+            this.regle = "Affichage si le nombre de citoyen en " + regle[2] + " supérieur à " + regle[1]
+          }
+      }
     },
 }
 </script>
