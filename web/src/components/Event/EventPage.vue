@@ -1,20 +1,20 @@
 <template>
   <div>
-    Nom du point d'intérêt où appliquer l'événement
-    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
-  </div>
-  <br />
-  <div>
-    Nom de l'événement
+    Nom de l'événement :
     <input v-model="NomEvenement" placeholder="Titre de l'événement" />
   </div>
   <br />
-  <span>Description</span>
+  <div>
+    Nom du point d'intérêt où appliquer l'événement :
+    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
+  </div>
+  <br />
+  <span>Description : </span>
   <textarea v-model="Description" placeholder="Description"></textarea><br />
   <br />
  
   <div>
-    Logo
+    Logo : 
     <em class="fas fa-exclamation-circle" v-on:click="Logo = 'fas fa-exclamation-circle'">&emsp;</em>
     <em class="fas fa-clock" v-on:click="Logo = 'fas fa-clock'">&emsp;</em>
     <em class="fas fa-beer" v-on:click="Logo = 'fas fa-beer'">&emsp;</em>
@@ -23,10 +23,15 @@
     <em class="fas fa-ad" v-on:click="Logo = 'fas fa-ad'">&emsp;</em>
   </div>
   <br />
-  <div> Coordonnées
+  <div> Coordonnées :
         <p>Les coordonnées de l'évenements sont : {{coord}}</p>
   </div>
-    <button v-on:click="validation()">Validation</button>
+
+  <div v-if="regle!==''">
+    Regle : {{regle}}
+  </div>
+    <button v-on:click="validation">Validation</button>
+  <div>{{valid}}</div>
 
   <PrintEvent
     :NomPointInteret="NomPointInteret"
@@ -35,8 +40,10 @@
     :Logo="Logo"
   ></PrintEvent>
 
+  <p style="white-space: pre-line;">{{ Description }}</p>
 
-  <InterpreteurEvent/>
+
+  <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
     <div class="map" style="height: 65vh; width: 59%;">
         <l-map
                 v-model="zoom"
@@ -46,21 +53,20 @@
                 v-model:minZoom="minZoom"
                 v-model:maxBounds="maxBounds"
                 v-on:click="sendLatLng"
-
         >
             <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
             <l-control-layers style="z-index: -5" />
             <Marker
                     v-bind:position="
                              [
-                             eventToDisplay[eventToDisplay.length-1][1],
-                             eventToDisplay[eventToDisplay.length-1][2],
+                             getPosition[0],
+                             getPosition[1],
                              ]"
                     v-bind:msg="'Mon événement'"
             />
         </l-map>
     </div>
-    
+
 </template>
 
 <script>
@@ -86,7 +92,8 @@ name: "EventPage",
   },
   data() {
     return {
-          NomPointInteret: "",
+      valid: "",
+      NomPointInteret: "",
       NomEvenement: "",
       Description: "",
       Logo:"fas fa-exclamation-circle",
@@ -98,25 +105,46 @@ name: "EventPage",
             [43.5904, 7.0419],
             [43.6404, 7.100],
         ],
-        };
-    },
+        onClick : false,
+        regle:"",
+    };
+  },
     computed : {
-        eventToDisplay() {
+        getPosition() {
             console.log("loading events...");
-            return this.$store.getters.getEvents;
+            console.log(this.$store.getters.getPosition);
+            return this.$store.getters.getPosition;
         },
     },
     methods : {
-        validation() {},
+        validation() {
+            console.log(this.coord[0])
+            if(this.NomEvenement === "") this.valid = "Veuillez rentrer un nom pour votre événement"
+            else if (this.coord[0] === undefined && this.NomPointInteret === "") this.valid = "Veuillez rentrer une position ou un" +
+                " point d'intérêt pour votre événement"
+            else this.valid = "Evénement enregistré"
+            store.commit({
+                type: "addEvent",
+                name: this.NomEvenement,
+                description: this.Description,
+                coordonate: this.coord,
+                regle: this.regle,
+            })
+        },
         sendLatLng(event){
             console.log(event.latlng);
             this.coord = [event.latlng.lat, event.latlng.lng]
             store.commit({
-                type: "addEvent",
+                type: "addPosition",
                 lat: event.latlng.lat,
                 lng : event.latlng.lng,
             });
-        }
+        },
+      ajoutRegle(regle){
+          if(regle[0] === "condition affichage"){
+            this.regle = "Affichage si le nombre de citoyen en " + regle[2] + " supérieur à " + regle[1]
+          }
+      }
     },
 }
 </script>

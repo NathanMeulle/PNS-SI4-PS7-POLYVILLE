@@ -45,7 +45,4 @@ h2 {
   font-weight: 200;
   font-size: 80%;
 }
-.logo {
-  float: right;
-}
 </style>

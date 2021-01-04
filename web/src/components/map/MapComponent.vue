@@ -110,6 +110,17 @@
 
 
         </div>
+        <Marker
+                v-for="events in getEvents"
+                :key="events[0]"
+                v-bind:position="
+                             [
+                             events[2][0],
+                             events[2][1],
+                             ]"
+                v-bind:msg="events[0]"
+        />
+
 
       </l-map>
     </div>
@@ -143,6 +154,9 @@ export default {
     commerceStore() {
       console.log("loading commerces...");
       return this.$store.getters.loadCommerces;
+    },
+    getEvents() {
+      return this.$store.getters.getEvents;
     },
 
     parkingStore() {
