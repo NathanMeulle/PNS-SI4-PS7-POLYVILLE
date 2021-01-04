@@ -53,12 +53,6 @@ export default {
             this.message[item.id] = ""
         },
 
-        /** Envoie le programme donné à l'interpréteur **/
-        launch() {
-            console.log("envoi du programme suivant : ", this.listProg);
-            this.$emit("launch", this.listProg)
-        },
-
         /** Supprime une case du programme **/
         suppr(item) {
             item.list = -1
