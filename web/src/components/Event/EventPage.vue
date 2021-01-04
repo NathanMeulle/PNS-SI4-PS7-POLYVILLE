@@ -1,34 +1,51 @@
 <template>
-  <div> Nom du point d'intérêt où appliquer l'événement
-      <input v-model="NomPointInteret" placeholder="modifiez-moi">
-    <p>Le message est : {{ NomPointInteret }}</p>
+  <div>
+    Nom du point d'intérêt où appliquer l'événement
+    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" />
   </div>
-  <div> Nom de l'événement
-      <input v-model="NomEvenement" placeholder="modifiez-moi">
-    <p>Le message est : {{ NomEvenement }}</p>
+  <div>
+    Nom de l'événement
+    <input v-model="NomEvenement" placeholder="Titre de l'événement" />
   </div>
-  
-<span>Le message multiligne est :</span>
-<textarea v-model="Description" placeholder="ajoutez plusieurs lignes"></textarea>
-<br>
+  <br />
+  <span>Description</span>
+  <textarea v-model="Description" placeholder="Description"></textarea>
+  <div>
+    Logo
+    <input v-model="Logo" placeholder="logo par défaut" />
+  </div>
+  <br />
 
-  <p style="white-space: pre-line;">{{ Description }}</p>
 
+  <PrintEvent
+    :NomPointInteret="NomPointInteret"
+    :NomEvenement="NomEvenement"
+    :Description="Description"
+    :Logo="Logo"
+  ></PrintEvent>
+  <button v-on:click="validation()">Validation</button>
 </template>
 
 <script>
+import PrintEvent from "./PrintEvent.vue";
 export default {
-name: "EventPage",
-data() {
+  components: { PrintEvent },
+  name: "EventPage",
+  data() {
     return {
-        NomPointInteret: "",
-        NomEvenement:"",
-        Description:"",
+      NomPointInteret: "",
+      NomEvenement: "",
+      Description: "",
+      Logo:"",
     };
-}
-}
+  },
+  methods: {
+    validation() {
+
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 </style>
