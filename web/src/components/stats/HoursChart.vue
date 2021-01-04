@@ -67,7 +67,7 @@ const options = {
         },
         scaleLabel: {
           display: true,
-          labelString: "Hour",
+          labelString: "Heure",
         },
         stacked: false,
         afterTickToLabelConversion: function (q) {

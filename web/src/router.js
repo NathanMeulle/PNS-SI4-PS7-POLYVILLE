@@ -1,8 +1,9 @@
 import {createWebHistory, createRouter } from "vue-router";
 import MyMap from "./components/map/MapPage";
 import MyDsl from "./components/MyDsl.vue";
-import Help from "@/components/DSL/Help";
-import Macro from "@/components/DSL/Macro";
+import Help from "./components/DSL/Help";
+import Macro from "./components/DSL/Macro";
+import EventPage from "./components/Event/EventPage.vue";
 
 
 const routes = [
@@ -10,7 +11,8 @@ const routes = [
     { path: '/map', component: MyMap },
     { path: '/dsl', component: MyDsl },
     { path: '/dsl/aide', component: Help },
-    {path: '/dsl/macro', component: Macro}
+    { path: '/dsl/macro', component: Macro},
+    { path: '/eventPage', component: EventPage}
 
 ];
 
