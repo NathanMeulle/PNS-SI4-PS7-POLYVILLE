@@ -141,10 +141,11 @@ name: "EventPage",
 </script>
 
 <style scoped>
+
     .split {
         height: 45%;
         width: 50%;
-        position: fixed;
+        position: absolute;
         z-index: 1;
         top: 0;
         margin-left: 20px;
@@ -163,10 +164,10 @@ name: "EventPage",
     }
     .S {
         border-top: 3px solid #0cb50b;
-        position: fixed;
+        position: absolute;
         height: 50%;
         width: 99%;
-        top:55%;
+        top:45%;
     }
 
     textarea {
