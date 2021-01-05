@@ -7,9 +7,26 @@
                 <div class="modal-container">
 
                     <div class="modal-header">
-                        <slot name="header">
-                            This is a Map <br>
-                        </slot>
+                            <div class="map" style="height: 500px; width: 100%;">
+                                <l-map
+                                        v-model="zoom"
+                                        v-model:zoom="zoom"
+                                        :center="[43.6154, 7.0719]"
+                                        v-model:maxZoom="maxZoom"
+                                        v-model:minZoom="minZoom"
+                                        v-model:maxBounds="maxBounds"
+                                        v-on:click="sendLatLng"
+                                >
+                                    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" style="z-index: -5"/>
+                                    <l-control-layers style="z-index: -5" />
+                                    <div v-if="markerCreated">
+                                        <Marker v-bind:position="getPosition"
+                                                v-bind:msg="'Position Événement'"
+                                        />
+
+                                    </div>
+                                </l-map>
+                            </div>
                     </div>
 
                     <div class="modal-default-button" @click="$emit('close')">
@@ -23,8 +40,54 @@
 </template>
 
 <script>
+    import {LControlLayers, LMap, LTileLayer} from "../../../node_modules_intern/@vue-leaflet/vue-leaflet";
+    import Marker from "../map/Marker";
+    import store from "../../store/store";
+
     export default {
         name: "PopUpMap",
+        components : {
+            LMap,
+            LTileLayer,
+            LControlLayers,
+            Marker,
+        },
+        data() {
+            return {
+                markerCreated: false,
+                coord: [],
+                zoom: 14,
+                maxZoom: 18,
+                minZoom: 13,
+                maxBounds: [
+                    [43.5904, 7.0419],
+                    [43.6404, 7.100],
+                ],
+            }
+        },
+        methods : {
+            sendLatLng(event){
+                if(event.latlng != null) {
+                    this.markerCreated = true
+
+                    console.log("sent2 : ", event.latlng);
+                    this.coord = [event.latlng.lat, event.latlng.lng]
+                    store.commit({
+                        type: "addPosition",
+                        lat: event.latlng.lat,
+                        lng: event.latlng.lng,
+                    });
+                }
+                else { this.markerCreated = false}
+            },
+        },
+        computed : {
+            getPosition() {
+                console.log("loading events...");
+                console.log("getPos ", this.$store.getters.getPosition);
+                return this.$store.getters.getPosition;
+            },
+        }
     }
 </script>
 
@@ -90,7 +153,7 @@
         float: right;
         width: 30%;
         border-radius: 50px;
-        margin: auto;
+        margin: 50px;
         text-align: center;
         color: #0cb50b;
         font-family: "Sofia", sans-serif;
@@ -108,6 +171,10 @@
     .modal-leave-active .modal-container {
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
+    }
+    .map {
+        float: left;
+        z-index: -1;
     }
 
 </style>
