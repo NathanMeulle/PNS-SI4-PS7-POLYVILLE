@@ -53,7 +53,7 @@ export default {
         this.Pour();
         this.Si()
       }
-      if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
+      if(this.error === "" && this.reussite === "") this.error = "Programme inconnu1"
     }
   }
 

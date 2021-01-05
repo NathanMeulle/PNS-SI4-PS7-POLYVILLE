@@ -113,54 +113,108 @@ export default {
             return 0
         },
 
-        /** Renvoie l'heure donnée dans un programme. "pos" est la postition de la case "heures" **/
+        /** Renvoie l'heure donnée dans un programme **/
         getHeure(pos){
-            if(this.programme[pos].title === "heures"){
-                if(pos < 1 || this.programme[pos-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure";
+            if(this.programme[pos] !== undefined && this.programme[pos].title === "heures"){
+                if(pos < 1 || this.programme[pos-1].title!== 'Input'){
+                    this.error = "Il est nécessaire d'écrire une heure";
+                } 
                 else{
+                    console.log(this.heure);
                     this.heure = Number(this.programme[pos-1].input)
+                    console.log(this.heure);
+                    if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture';
+                    else if (this.heure<0 || this.heure>24) this.error = "Le nombre donné n'est pas une heure";
+                    else{
+                        if(!this.macro){
+                            this.reussite = "Changement d'heure de fermeture effectué";
+                            let regles = this.$store.getters.getRegles;
+                            let existe = this.verifierExistence('Fermeture magasins',regles);
+                            if(!existe){
+                                this.$store.dispatch('setClosingHour',this.heure);
+                            } 
+                            else {
+                                this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"};
+                                this.showModal=true
+                            }
+                        }
+                        else {
+                            this.programme[this.programme.length] = "changement d'heure de fermeture des magasins";
+                            console.log(this.programme);
+                            this.$store.commit('addMacro', this.programme);
+                            this.reussite = "Raccourci créé"
+                        }
+                    }
                 }
             }
         },
 
         /** Gestion d'un programme contenant une case Pour **/
         Pour(){
-            if(this.programme.length>0 &&this.programme[0].title === 'Pour tous'){
-                if(this.programme.length>1 && this.programme[1].title==='magasins') this.forMagasin();
-                else this.error = 'Programme inconnu'
+            
+            if(this.programme.length>0){
+                this.programme.forEach((item,index)=>{
+                    if(item.title === "Pour tous"){
+                        this.checkEntity(index+1);
+                    }
+                })
+            }
+        },
+        /** Véréfie qu'on a bien une Entité */
+        checkEntity(pos){
+            if( !(this.programme[pos] !== undefined && this.programme[pos].type===3) ){
+                this.error = "Une condition 'Pour tout' doit être accompagnée d'une Entité";
+            }
+            else if(this.programme[pos].title === 'magasins'){
+                if(this.programme[pos+1]!==undefined){
+                    if(this.programme[pos+1].type === 6){
+                        this.zoneToApply = this.programme[pos+1].title;
+                        this.checkDiverse(pos+2);
+                    }
+                    else{
+                        this.zoneToApply = "";
+                        this.checkDiverse(pos+1);
+                    }   
+                }
+                else if (this.programme[pos-2] !== undefined && this.programme.length <=5){
+                    // cas où la case diverse est avant le 'Pour tous'
+                    this.checkDiverse(pos-2);
+                }
+                else{
+                    this.error = "Il manque une case 'divers'";
+                }
+            }
+            else if (this.programme[pos].title === 'policiers') {
+                this.error = 'Programme inconnu';
+                console.log('1')
+            }
+            else if (this.programme[pos].title === 'citoyens'){
+                this.error = 'Programme inconnu';
+                console.log('2')
             }
         },
 
-        /** Gestion d'un programme qui parcourt tous les magasins, envoie la requête au store **/
-        forMagasin(){
-            if(this.programme[2].title === "fermeture"){
-                this.getHeure(4);
-                console.log(this.heure);
-                if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture';
-                else if (this.heure<0 || this.heure>24) this.error = "Le nombre donné n'est pas une heure";
-                else{
-                    if(!this.macro){
-                        this.reussite = "Changement d'heure de fermeture effectué";
-                        let regles = this.$store.getters.getRegles;
-                        let existe = this.verifierExistence('Fermeture magasins',regles);
-                        if(!existe) this.$store.dispatch('setClosingHour',this.heure);
-                        else {
-                            this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"};
-                            this.showModal=true
-                        }
-                    }
-                    else {
-                        this.programme[this.programme.length] = "changement d'heure de fermeture des magasins";
-                        console.log(this.programme);
-                        this.$store.commit('addMacro', this.programme);
-                        this.reussite = "Raccourci créé"
-                    }
-                }
+        /** traite les cases de 'Données' et les cases 'Divers' */
+        checkDiverse(pos){
+            if( this.programme[pos] === undefined){
+                this.error = 'Programme inconnu';
+                console.log('3')
             }
-            else if(this.programme[2].title === "réinitialiser"){
-                this.reinit()
+            else if (this.programme[pos].title === 'heures') {
+                this.getHeure(pos);
             }
-            else this.error = 'Programme inconnu'
+            else if (this.programme[pos].title === 'fermeture'){
+                 if (this.programme[pos+2] !== undefined){
+                    this.getHeure(pos+2);
+                 }
+            }
+            else if (this.programme[pos].title === 'réinitialiser') {
+                this.reinit(); // pas fini
+            }
+            else{
+                this.error = 'Programme inconnu';
+                console.log('4')
+            }
         },
 
         /** Envoie une requête de réinitialisation des horaires au store si le programme est correct **/
