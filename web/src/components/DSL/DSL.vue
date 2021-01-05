@@ -104,6 +104,7 @@ export default {
   emits: ["launch", "macro"],//indique les éléments envoyés (nécessaire pour les tests)
   data () {
     return {
+      modal: false,
       /** Error : message d'erreur **/
       error:'',
       /** Items : liste des éléments pouvant former un programme avec notre DSL **/
