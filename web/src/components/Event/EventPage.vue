@@ -7,7 +7,7 @@
   <br />
   <div>
     Nom du point d'intérêt où appliquer l'événement :
-    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="24"/>
+    <input id="Nom" v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="18"/>
   </div>
   <br />
   <span>Description : </span>
@@ -137,7 +137,7 @@ name: "EventPage",
 
 <style scoped>
     .split {
-        height: 30%;
+        height: 45%;
         width: 50%;
         position: fixed;
         z-index: 1;
@@ -161,7 +161,21 @@ name: "EventPage",
         position: fixed;
         height: 50%;
         width: 99%;
-        top:45%;
+        top:55%;
     }
+
+    textarea {
+      width:90%;
+      max-width:90%;
+      min-width: 90%;
+      max-height:30%;
+      min-height:10%;
+
+    }
+    #Nom {
+      width: 200px;
+    }
+
+
 
 </style>

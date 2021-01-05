@@ -8,7 +8,7 @@
       <div>Raccourci : {{macro[macro.length-1]}}</div>
       <div v-for="item in macro" :key="item.title">
         <div v-if="item.title === 'Input'">
-          <div>Entrer les données concernant ce programme :
+          <div>Entrez les données concernant ce programme :
             {{item.input}}
             <label>
               <input v-model="message[item.id]">
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <button v-on:click="use(macro,macro[macro.length-1])">Cliquer ici pour utiliser ce raccourci</button>
+      <button v-on:click="use(macro,macro[macro.length-1])">Cliquez ici pour utiliser ce raccourci</button>
       <br/>
     </div>
   </div>
