@@ -163,7 +163,7 @@ export default {
           id: 7,
           title: 'Input',
           input: '',
-          position: -1,
+          position: 0,
           type:5,
           list: 5
         },

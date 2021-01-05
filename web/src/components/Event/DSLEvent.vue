@@ -268,7 +268,7 @@ extends: DragDropMethods,
         }
         console.log("ajout à la liste : ",item.list);
         if (list === 6){
-          item.position=this.listProg.length+1
+          item.position=this.listProg.length - 1
         }
       }
     },
@@ -284,7 +284,7 @@ extends: DragDropMethods,
       this.duplication(item);
       item.list = 6;
       console.log("ajout à la liste : ",item.list);
-      item.position=this.listProg.length+1
+      item.position=this.listProg.length - 1
     }
   }
 }
