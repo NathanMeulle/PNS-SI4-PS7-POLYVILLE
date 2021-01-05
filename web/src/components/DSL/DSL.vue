@@ -97,7 +97,7 @@
 
 <script>
 
-import DragDropMethods from "./DragDropMethods";
+import DragDropMethods from "@/functions/DragDropMethods";
 export default {
   name: "DSL",
   extends: DragDropMethods,
@@ -163,7 +163,7 @@ export default {
           id: 7,
           title: 'Input',
           input: '',
-          position: -1,
+          position: 0,
           type:5,
           list: 5
         },

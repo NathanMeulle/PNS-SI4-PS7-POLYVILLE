@@ -49,6 +49,16 @@
           </div>
         </div>
       </div>
+      <div class='drop-zone' @drop='onDrop($event, 7)' @dragover.prevent @dragenter.prevent>
+        Magasins :
+        <div v-for='item in listMagasins' :key='item.title' class='drag-el' draggable="true"
+             @dragstart='startDrag($event, item)'>
+          {{ item.title }}
+          <div class="logo">
+            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
+          </div>
+        </div>
+      </div>
       <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
         Divers :
         <div v-for='item in listDivers' :key='item.title' class='drag-el' draggable="true"
@@ -98,7 +108,7 @@
 </template>
 
 <script>
-import DragDropMethods from "../DSL/DragDropMethods";
+import DragDropMethods from "@/functions/DragDropMethods";
 export default {
 name: "DSLEvent",
 extends: DragDropMethods,
@@ -133,7 +143,7 @@ extends: DragDropMethods,
         },
         {
           id: 4,
-          title: 'Alors',
+          title: 'alors',
           position: 2,
           type: 2,
           list: 2
@@ -187,6 +197,34 @@ extends: DragDropMethods,
           type: 4,
           list: 4
         },
+        {
+          id: 12,
+          title: 'Pour tous',
+          position: 3,
+          type: 2,
+          list: 2
+        },
+        {
+          id: 13,
+          title: 'Boulangerie',
+          position: 0,
+          type: 7,
+          list: 7
+        },
+        {
+          id: 14,
+          title: 'Bar',
+          position: 1,
+          type: 7,
+          list: 7
+        },
+        {
+          id: 15,
+          title: 'Zone du magasin',
+          position: 4,
+          type: 5,
+          list: 5
+        },
       ],
       message : {}
     }
@@ -210,6 +248,9 @@ extends: DragDropMethods,
     listProg () {
       return this.sortItems(this.items.filter(item => item.list === 6))
     },
+    listMagasins () {
+      return this.sortItems(this.items.filter(item => item.list === 7))
+    },
   },
   methods:{
     /** Gère le relachement des éléments du DSL (drop) **/
@@ -227,7 +268,7 @@ extends: DragDropMethods,
         }
         console.log("ajout à la liste : ",item.list);
         if (list === 6){
-          item.position=this.listProg.length+1
+          item.position=this.listProg.length - 1
         }
       }
     },
@@ -243,7 +284,7 @@ extends: DragDropMethods,
       this.duplication(item);
       item.list = 6;
       console.log("ajout à la liste : ",item.list);
-      item.position=this.listProg.length+1
+      item.position=this.listProg.length - 1
     }
   }
 }
@@ -267,13 +308,13 @@ extends: DragDropMethods,
 
 .drop-zone {
   background-color: #eee;
-  margin-bottom: 10px;
+  margin-bottom: 1%;
   padding: 10px;
 }
 
 .drag-el {
   background-color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 1%;
   padding: 5px;
 }
 

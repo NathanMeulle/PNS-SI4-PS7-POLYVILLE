@@ -27,7 +27,7 @@ export default {
                 }
                 console.log("ajout à la liste : ", item.list);
                 if (list === 2) {
-                    item.position = this.listProg.length + 1
+                    item.position = this.listProg.length - 1
                 }
             }
         },
@@ -60,6 +60,7 @@ export default {
 
         /** Déplace une case d'un cran vers le haut du programme **/
         up(selected) {
+            console.log(selected)
             let save = 0;
             let check = this.listProg[0].id === selected.id;
             console.log(check);

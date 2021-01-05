@@ -130,10 +130,48 @@ export default {
         Pour(){
             if(this.programme.length>0 &&this.programme[0].title === 'Pour tous'){
                 if(this.programme.length>1 && this.programme[1].title==='magasins') this.forMagasin();
+                else if(this.programme.length>1 && (this.programme[1].title==='Boulangerie'||this.programme[1].title==='Bar')) this.forMagasinEvent();
                 else this.error = 'Programme inconnu'
             }
         },
 
+        /** Gestion d'un programme qui parcoure un type de magasin pour la gestion d'événement **/
+        forMagasinEvent(){
+            if(this.programme.length === 10) {
+                if (this.programme[2].title === 'Si' && this.programme[3].title === 'citoyens') {
+                    if(this.programme[4].title === 'Zone du magasin'){
+                        this.forMagasinEventZone()
+                    }
+                    else this.error = 'Ajoutez la case "Zone du magasin"'
+                }
+            }
+            else this.error = 'Programme inconnu'
+        },
+
+        forMagasinEventZone(){
+            let nbCitoyens = -1;
+            if(this.programme[5].title.substring(0,4) === 'Plus'){
+                if(this.programme[5].title === 'Plus grand que') this.infOrSup = 'sup';
+                else this.infOrSup = 'inf';
+                if(this.programme[6].title === 'Input') {
+                    nbCitoyens = Number(this.programme[6].input)
+                    if (this.programme[7].title === 'alors') {
+                        if (this.programme[8].title === 'afficher' && this.programme[9].title === 'événement') {
+                            let regle = ["condition affichage pour type de magasins",nbCitoyens]
+                            this.$emit("ajoutRegleEvenement", regle)
+                            this.error =''
+                            this.reussite = "Programme validé"
+                        }
+                        else this.error = "Programme inconnu"
+                    }
+                    else this.error = "Veuillez donner une instruction à appliquer"
+                }
+                else this.error = "Veuillez donner le nombre de citoyens limite"
+            }
+            else this.error = "Ajouter une condition 'Plus grand que' ou 'Plus petit que'"
+        },
+
+        /** Gestion d'un programme qui parcourt tous les magasins, envoie la requête au store **/
         /** Gestion d'un programme qui parcourt tous les magasins, envoie la requête au store **/
         forMagasin(){
             if(this.programme[2].title === "fermeture"){
