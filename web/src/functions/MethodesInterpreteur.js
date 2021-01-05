@@ -116,7 +116,8 @@ export default {
         /** Renvoie l'heure donnée dans un programme. "pos" est la postition de la case "heures" **/
         getHeure(pos){
             if(this.programme[pos] !== undefined && this.programme[pos].title === "heures"){
-                if(pos < 1 || this.programme[pos-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure";
+                console.log(this.programme[pos-1])
+                if(pos < 1 || this.programme[pos-1].title!== 'Input' || this.programme[pos-1].input === "") this.error = "Il est nécessaire d'écrire une heure";
                 else{
                     this.heure = Number(this.programme[pos-1].input)
                 }
