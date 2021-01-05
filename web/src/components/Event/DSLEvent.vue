@@ -60,6 +60,9 @@
         </div>
       </div>
     </div>
+    <router-link active-class="active" to="/eventPage/aide">
+      <div class="bouton" id="help">Aide</div>
+    </router-link>
     <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Ajouter ce programme à mon événement</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
@@ -297,9 +300,18 @@ extends: DragDropMethods,
 }
 
 #launch{
+  margin-top: 1%;
   float: right;
   position: relative;
 }
+
+#help{
+  color: black;
+  float : right;
+  margin-right: 15%;
+  width: 10%;
+}
+
 .bouton{
   border-radius: 50px;
   text-align: center;
