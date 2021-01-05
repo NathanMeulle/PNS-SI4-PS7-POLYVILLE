@@ -113,16 +113,14 @@ export default {
             return 0
         },
 
-        /** Renvoie l'heure donnée dans un programme **/
-        getHeure(){
-            this.programme.forEach((item,index)=>{
-                if(item.title === "heures"){
-                    if(index === 0 || this.programme[index-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure";
-                    else{
-                        this.heure = Number(this.programme[index-1].input)
-                    }
+        /** Renvoie l'heure donnée dans un programme. "pos" est la postition de la case "heures" **/
+        getHeure(pos){
+            if(this.programme[pos].title === "heures"){
+                if(pos < 1 || this.programme[pos-1].title!== 'Input') this.error = "Il est nécessaire d'écrire une heure";
+                else{
+                    this.heure = Number(this.programme[pos-1].input)
                 }
-            })
+            }
         },
 
         /** Gestion d'un programme contenant une case Pour **/
@@ -133,10 +131,10 @@ export default {
             }
         },
 
-        /** Gestion d'un programme qui parcoure tous les magasins, envoie la requête au store **/
+        /** Gestion d'un programme qui parcourt tous les magasins, envoie la requête au store **/
         forMagasin(){
             if(this.programme[2].title === "fermeture"){
-                this.getHeure();
+                this.getHeure(4);
                 console.log(this.heure);
                 if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture';
                 else if (this.heure<0 || this.heure>24) this.error = "Le nombre donné n'est pas une heure";
