@@ -38,6 +38,7 @@ export default {
       else {
         console.log("mon programme : ", this.programme)
         this.Si()
+        this.Pour()
       }
       if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     }
