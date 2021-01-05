@@ -6,10 +6,10 @@
     </div>
     <div v-if="hours===true">
         <HoursChart></HoursChart>
-        <div class="freq" @click="(showModal = true)">
+        <button id="Freq" class="freq" @click="(showModal2 = true)">
                 + d'infos ?
-        </div>
-        <PopUp v-if="showModal" @close="showModal = false"/>
+        </button>
+        <PopUp v-if="showModal2" @close="showModal2 = false"/>
     </div>
     <div v-else-if="myEvent===true">
         <PrintEvent v-bind:NomEvenement="getInfoEvent[1]" v-bind:Description="getInfoEvent[2]" v-bind:Logo="getInfoEvent[5]" v-bind:NomPointInteret="getInfoEvent[1]"/>
@@ -31,7 +31,7 @@
           return {
               circleInfo :"test",
               nbrfreq:0,
-              showModal: false,
+              showModal2: false,
               eventID : 0,
           }
         },
