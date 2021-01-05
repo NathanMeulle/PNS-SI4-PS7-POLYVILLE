@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import DragDropMethods from "../DSL/DragDropMethods";
+import DragDropMethods from "@/functions/DragDropMethods";
 export default {
 name: "DSLEvent",
 extends: DragDropMethods,

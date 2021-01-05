@@ -16,7 +16,7 @@
 
 import DSL from "@/components/DSL/DSL";
 import PopUp from "@/components/DSL/PopUpDSL.vue"
-import MethodesInterpreteur from "@/components/MethodesInterpreteur";
+import MethodesInterpreteur from "@/functions/MethodesInterpreteur";
 
 export default {
   name: "Interpreteur",

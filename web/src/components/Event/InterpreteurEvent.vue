@@ -15,7 +15,7 @@
 
 
 import DSLEvent from "./DSLEvent";
-import MethodesInterpreteur from "@/components/MethodesInterpreteur";
+import MethodesInterpreteur from "@/functions/MethodesInterpreteur";
 
 export default {
   name: "InterpreteurEvent",

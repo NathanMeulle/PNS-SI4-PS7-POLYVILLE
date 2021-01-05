@@ -97,7 +97,7 @@
 
 <script>
 
-import DragDropMethods from "./DragDropMethods";
+import DragDropMethods from "@/functions/DragDropMethods";
 export default {
   name: "DSL",
   extends: DragDropMethods,
