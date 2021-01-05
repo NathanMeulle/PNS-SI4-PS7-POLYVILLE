@@ -11,8 +11,12 @@
         </button>
         <PopUp v-if="showModal2" @close="showModal2 = false"/>
     </div>
-    <div v-else-if="myEvent===true">
-        <PrintEvent v-bind:NomEvenement="getInfoEvent[1]" v-bind:Description="getInfoEvent[2]" v-bind:Logo="getInfoEvent[5]" v-bind:NomPointInteret="getInfoEvent[1]"/>
+    <div v-if="myEvent===true">
+        <PrintEvent
+                v-bind:NomEvenement="getInfoEvent.name"
+                v-bind:Description="getInfoEvent.description"
+                v-bind:Logo="getInfoEvent.logo"
+                v-bind:NomPointInteret="getInfoEvent.location"/>
     </div>
     <div v-else>
         Sélectionnez un commerce pour afficher ses informations
@@ -64,7 +68,6 @@
                 return this.$store.getters.getEvent;
             },
         }
-
     }
 </script>
 

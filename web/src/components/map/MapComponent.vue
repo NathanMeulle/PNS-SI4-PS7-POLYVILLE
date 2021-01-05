@@ -28,7 +28,7 @@
             v-bind:name="currentMarker.nom"
             v-bind:id="currentMarker.id"
             v-bind:iconType="currentMarker.categorie"
-            @displayhours="displayHours=true"
+            @displayhours="displayHours=true,displayEvent=false"
             @click="toDisplay('Bienvenue ' + id)"
             />
           </div>
@@ -46,7 +46,7 @@
                     v-bind:name="currentMarker.nom"
                     v-bind:id="currentMarker.id"
                     v-bind:iconType="currentMarker.categorie"
-                    @displayhours="displayHours=true"
+                    @displayhours="displayHours=true,displayEvent=false"
                     @click="toDisplay('Bienvenue' + id)"
             />
           </div>
@@ -66,7 +66,8 @@
                 v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
                 v-bind:iconType="'Parking'"
                 v-bind:id="currentParking.id"
-                @displayhours="displayHours=true"
+                @displayhours="displayHours=true,displayEvent=false"
+
         />
         </div>
 
@@ -112,16 +113,16 @@
         </div>
         <Marker
                 v-for="events in getEvents"
-                :key="events[0]"
-                v-bind:id="events[0]"
-                v-bind:position="
-                             [
-                             events[3][0],
-                             events[3][1],
-                             ]"
+                :key="events.id"
+                v-bind:id="events.id"
+                v-bind:position="[
+                        events.position.x,
+                        events.position.y
+                                ]"
                 v-bind:iconType="'Events'"
-                v-bind:msg="events[1]"
-                @displayevent="displayEvent=true"
+                v-bind:msg="events.description"
+                @displayevent="displayEvent=true,displayHours=false"
+                @click="displayEvent=true"
         />
 
 
@@ -197,12 +198,12 @@ export default {
       iconWidth: 25,
       iconHeight: 40,
       displayHours : false,
-      displayEvent : false,
       zoneA : [43.6254,7.0839],
       zoneB :[43.6254,7.0569],
       zoneC :[ 43.6054,7.0839],
       zoneD : [ 43.6054,7.0569],
       filter : "",
+      displayEvent : false,
 
     };
   },

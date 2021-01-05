@@ -15,7 +15,23 @@ export const eventModule = {
         },
         addEvent: (state, payload) => {
             let lenghtList = state.events.length;
+            let x = payload.coordonate[0];
+            let y = payload.coordonate[1];
+            state.events.push( {
+                "id" : lenghtList,
+                "name" : payload.name,
+                "location" : payload.location,
+                "description" : payload.description,
+                "regle" : payload.regle,
+                "logo" : payload.logo,
+                "position" : {
+                    "x" : x,
+                    "y" : y,
+                },
+            })
+            /*
             state.events.push([lenghtList,payload.name, payload.description, payload.coordonate, payload.regle,payload.logo])
+            */
             console.log(state.events);
         },
         sendEventId: (state, payload) => {
@@ -36,7 +52,7 @@ export const eventModule = {
         getEvent :   (state) => {
             let myEvent = [];
             state.events.forEach(event => {
-                if (event[0] === state.currentID) {
+                if (event.id === state.currentID) {
                     myEvent = event;
                 }
             });
