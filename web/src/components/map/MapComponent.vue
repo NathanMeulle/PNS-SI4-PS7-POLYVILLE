@@ -113,19 +113,22 @@
         <Marker
                 v-for="events in getEvents"
                 :key="events[0]"
+                v-bind:id="events[0]"
                 v-bind:position="
                              [
-                             events[2][0],
-                             events[2][1],
+                             events[3][0],
+                             events[3][1],
                              ]"
-                v-bind:msg="events[0]"
+                v-bind:iconType="'Events'"
+                v-bind:msg="events[1]"
+                @displayevent="displayEvent=true"
         />
 
 
       </l-map>
     </div>
     <div class="displayer" style="width: 38%">
-      <Displayer v-bind:hours="displayHours"/>
+      <Displayer v-bind:hours="displayHours" v-bind:myEvent="displayEvent"/>
     </div>
   </div>
 </template>
@@ -156,7 +159,8 @@ export default {
       return this.$store.getters.loadCommerces;
     },
     getEvents() {
-      return this.$store.getters.getEvents;
+      console.log(this.$store.getters.getListEvent);
+      return this.$store.getters.getListEvent;
     },
 
     parkingStore() {
@@ -193,6 +197,7 @@ export default {
       iconWidth: 25,
       iconHeight: 40,
       displayHours : false,
+      displayEvent : false,
       zoneA : [43.6254,7.0839],
       zoneB :[43.6254,7.0569],
       zoneC :[ 43.6054,7.0839],

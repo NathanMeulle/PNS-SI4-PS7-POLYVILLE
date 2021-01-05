@@ -11,6 +11,9 @@
         </div>
         <PopUp v-if="showModal" @close="showModal = false"/>
     </div>
+    <div v-else-if="myEvent===true">
+        <PrintEvent v-bind:NomEvenement="getInfoEvent[1]" v-bind:Description="getInfoEvent[2]" v-bind:Logo="getInfoEvent[5]" v-bind:NomPointInteret="getInfoEvent[1]"/>
+    </div>
     <div v-else>
         Sélectionnez un commerce pour afficher ses informations
     </div>
@@ -21,6 +24,7 @@
 <script>
     import HoursChart from "../stats/HoursChart";
     import PopUp from "./PopUp";
+    import PrintEvent from "../Event/PrintEvent";
     export default {
         name: "Displayer",
         data() {
@@ -28,15 +32,18 @@
               circleInfo :"test",
               nbrfreq:0,
               showModal: false,
+              eventID : 0,
           }
         },
         components: {
+            PrintEvent,
           HoursChart,
           PopUp,
         },
         props : {
             data : String,
             hours : Boolean,
+            myEvent : Boolean,
         },
         methods : {
             display() {
@@ -47,6 +54,15 @@
                 return this.$store.getters.getId;
             },
 
+
+        },
+        computed : {
+            getEventId() {
+                return this.$store.getters.getEventId;
+            },
+            getInfoEvent() {
+                return this.$store.getters.getEvent;
+            },
         }
 
     }

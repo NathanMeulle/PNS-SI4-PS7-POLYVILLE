@@ -87,13 +87,16 @@ name: "EventPage",
     };
   },
     computed : {
-        getPosition() {
-            console.log("loading events...");
-            console.log("getPos ", this.$store.getters.getPosition);
-            return this.$store.getters.getPosition;
-        },
+      getPosition() {
+        console.log("loading events...");
+        console.log("getPos ", this.$store.getters.getPosition);
+        return this.$store.getters.getPosition;
+      },
+
     },
     methods : {
+
+
         checkColorIcons(id){
             let i = 0;
             while(i <= 5){
@@ -114,11 +117,13 @@ name: "EventPage",
             else if (this.getPosition[0] === undefined && this.NomPointInteret === "") this.valid = "Veuillez rentrer une position ou un" +
                 " point d'intérêt pour votre événement"
             else this.valid = "Evénement enregistré"
+            let pos = [this.getPosition[0],this.getPosition[1]]
             store.commit({
                 type: "addEvent",
                 name: this.NomEvenement,
+                logo : this.logo,
                 description: this.Description,
-                coordonate: this.getPosition,
+                coordonate: pos,
                 regle: this.regle,
             })
         },

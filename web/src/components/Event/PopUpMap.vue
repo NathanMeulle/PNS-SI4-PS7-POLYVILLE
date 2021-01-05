@@ -55,7 +55,6 @@
         data() {
             return {
                 markerCreated: false,
-                coord: [],
                 zoom: 14,
                 maxZoom: 18,
                 minZoom: 13,
