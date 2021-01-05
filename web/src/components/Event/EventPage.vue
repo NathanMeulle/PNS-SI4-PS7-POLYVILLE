@@ -168,7 +168,7 @@ name: "EventPage",
         position: absolute;
         height: 50%;
         width: 99%;
-        top:45%;
+        top: 55%
     }
 
     textarea {

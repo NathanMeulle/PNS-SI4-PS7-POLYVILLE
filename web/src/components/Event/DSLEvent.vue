@@ -70,9 +70,8 @@
         </div>
       </div>
     </div>
-    <router-link active-class="active" to="/eventPage/aide">
-      <div class="bouton" id="help">Aide</div>
-    </router-link>
+    <HelpEvent v-if="modalHelp" v-on:close="modalHelp = false"/>
+    <div class="bouton" id="help" v-on:click="modalHelp = true">Aide</div>
     <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Ajouter ce programme à mon événement</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
@@ -109,11 +108,14 @@
 
 <script>
 import DragDropMethods from "@/functions/DragDropMethods";
+import HelpEvent from "@/components/Event/HelpEvent";
 export default {
 name: "DSLEvent",
 extends: DragDropMethods,
+  components:{HelpEvent},
   data () {
     return {
+      modalHelp: false,
       /** Error : message d'erreur **/
       error:'',
       /** Items : liste des éléments pouvant former un programme avec notre DSL **/
@@ -143,7 +145,7 @@ extends: DragDropMethods,
         },
         {
           id: 4,
-          title: 'alors',
+          title: 'Alors',
           position: 2,
           type: 2,
           list: 2

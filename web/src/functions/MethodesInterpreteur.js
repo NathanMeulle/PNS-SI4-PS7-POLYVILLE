@@ -18,6 +18,7 @@ export default {
                     this.infOrSup = 'sup';
                     if(this.programme[4].title === 'Input'){
                         nbCitoyens = Number(this.programme[4].input);
+                        console.log(nbCitoyens)
                         if(this.programme[5].title === 'Alors'){
                             this.alorsCitoyens(nbCitoyens)
                         }
@@ -48,12 +49,10 @@ export default {
             nbPoliciers = Number(this.programme[6].input);
             if (this.programme[8].title.substring(0, 4) === 'Zone') {
                 this.zones[1] = this.programme[8].title;
-                console.log("ici : ",nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1]);
                 this.reussite ="Déplacement de policiers effectué";
                 if(!this.macro) {
                     let regles = this.$store.getters.getRegles;
                     let existe = this.verifierExistence('Presence policier',regles);
-                    console.log("existe :",existe);
                     if (!existe) this.$store.dispatch('deplacerPoliciers', {
                         citoyens: nbCitoyens,
                         cond: this.infOrSup, zone1: this.zones[0], policiers: nbPoliciers, zone2: this.zones[1]

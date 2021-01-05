@@ -25,16 +25,19 @@
             <div v-if="changerFermeture">
               <div>Changer l'horaire de fermeture des magasins de la ville :
                 <br/>
+                <br/>
                 Pour tous => magasins => fermeture => "entrer une heure" => heures
               </div>
             </div>
             <div v-if="reinitFermeture">
               Réinitialiser les horaires de fermeture des magasins :
               <br/>
+              <br/>
               Pour tous => magasins => réinitialiser => heures => fermeture
             </div>
             <div v-if="deplacerPoliciers">
               Attribuer des policiers à une zone en fonction du nombre de citoyens s'y trouvant :
+              <br/>
               <br/>
               Si => citoyens => Zone X => Plus grand que ou Plus petit que => "entrer un nombre" => Alors => "entrer un nombre" => policiers => Zone X
             </div>
