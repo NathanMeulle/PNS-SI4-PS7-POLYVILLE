@@ -209,7 +209,10 @@ export default {
             }
             else if(this.programme.length === 4){
                 if(this.programme[2].title === "afficher" && this.programme[3].title === "événement"){
-                    let regle = {name:"affichage pour un type de magasins",magasin:this.programme[1].title}
+                    let regle = {
+                        "name" : "affichage pour type de magasins",
+                        "magasin" : this.programme[1].title
+                    }
                     this.$emit("ajoutRegleEvenement", regle)
                     this.error =''
                     this.reussite = "Programme validé"
@@ -227,7 +230,11 @@ export default {
                     nbCitoyens = Number(this.programme[6].input)
                     if (this.programme[7].title === 'Alors') {
                         if (this.programme[8].title === 'afficher' && this.programme[9].title === 'événement') {
-                            let regle = {name:"condition affichage pour type de magasins",citoyen:nbCitoyens,magasin:this.programme[1].title}
+                            let regle = {
+                                "name" :"condition affichage pour type de magasins",
+                                "citoyen": nbCitoyens,
+                                "magasin" :this.programme[1].title
+                            }
                             this.$emit("ajoutRegleEvenement", regle)
                             this.error =''
                             this.reussite = "Programme validé"

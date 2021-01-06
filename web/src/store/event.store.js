@@ -69,11 +69,61 @@ export const eventModule = {
          * @returns Liste des événements que l'on doit afficher en fonction des règles détérminées
          */
         getListEvent : (state,getters) => {
+            let n = state.events.length;
             let eventsToDisplay = [];
             state.events.forEach(event => {
+                if (event.regle === "") {
+                    eventsToDisplay.push(event);
+                }
                 if (event.regle.name === "condition affichage") {
                     if (event.regle.nbCitize <= getters.getCitizen(event.regle.zone)) {
                         eventsToDisplay.push(event);
+                    }
+                }
+                if (event.regle.name === "condition affichage pour type de magasins") {
+                    console.log('EVENTS REGLE : Je suis rentré dans la règle', event);
+                    for (let i = 0; i<getters.loadCommerces.length;i++) {
+                        let commerce = getters.loadCommerces[i];
+                        let zoneCommerce = getters.getZoneCommerce(commerce);
+                        if (    (commerce.categorie === event.regle.magasin)    ) {
+                            if  ( event.regle.citoyen <= getters.getCitizen(zoneCommerce.id) ) {
+
+                            let m = eventsToDisplay.length;
+                            eventsToDisplay.push( {
+                                "id" : n+m,
+                                "name" : event.name,
+                                "location" : "",
+                                "description" : event.description,
+                                "regle" : "",
+                                "logo" : event.logo,
+                                "position" : {
+                                    "x" : commerce.position.x,
+                                    "y" : commerce.position.y,
+                                },
+                            })
+                        }
+                        }
+                    }
+
+                }
+                if (event.regle.name === "affichage pour type de magasins"){
+                    for (let i = 0; i<getters.loadCommerces.length;i++) {
+
+                        if (getters.loadCommerces[i].categorie === event.regle.magasin) {
+                            let m = eventsToDisplay.length;
+                            eventsToDisplay.push( {
+                                "id" : n+m,
+                                "name" : event.name,
+                                "location" : "",
+                                "description" : event.description,
+                                "regle" : "",
+                                "logo" : event.logo,
+                                "position" : {
+                                    "x" : getters.loadCommerces[i].position.x,
+                                    "y" : getters.loadCommerces[i].position.y,
+                                },
+                            })
+                        }
                     }
                 }
             });
@@ -89,9 +139,9 @@ export const eventModule = {
          * @param state
          * @returns On retourne l'événement dont l'ID correspond à l'evnmt qui a été cliqué
          */
-        getEvent :   (state) => {
+        getEvent :   (state,getters) => {
             let myEvent = [];
-            state.events.forEach(event => {
+            getters.getListEvent.forEach(event => {
                 if (event.id === state.currentID) {
                     myEvent = event;
                 }
