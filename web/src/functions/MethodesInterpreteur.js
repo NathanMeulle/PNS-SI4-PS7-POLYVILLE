@@ -129,9 +129,9 @@ export default {
                         if(!this.macro){
                             this.reussite = "Changement d'heure de fermeture effectué";
                             let regles = this.$store.getters.getRegles;
-                            let existe = this.verifierExistence('Fermeture magasins',regles);
+                            let existe = this.verifierExistence('Fermeture magasins'+this.zoneToApply,regles);
                             if(!existe){
-                                this.$store.dispatch('setClosingHour',this.heure);
+                                this.$store.dispatch('setClosingHour', {hour : this.heure, zone : this.zoneToApply});
                             } 
                             else {
                                 this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"};
@@ -163,7 +163,7 @@ export default {
                 })
             }
         },
-        /** Véréfie qu'on a bien une Entité */
+        /** Vérifie qu'on a bien une Entité */
         checkEntity(pos){
             
             if( !(this.programme[pos] !== undefined && this.programme[pos].type===3) ){

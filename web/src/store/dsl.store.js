@@ -45,7 +45,7 @@ export const dslModule = {
         getRegleHeureFermeture: state =>{
             let heure = -1;
             state.regles.forEach((regle) =>{
-                if(regle.titre === 'Fermeture magasins') heure = regle.valeur
+                if(regle.titre.contains('Fermeture magasins')) heure = regle.valeur
             });
             return heure
         },

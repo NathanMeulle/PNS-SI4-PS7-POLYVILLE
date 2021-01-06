@@ -1,5 +1,6 @@
 import { VilleMock } from "@/mocks/Ville.mock"
 import { dslModule } from "@/store/dsl.store";
+import {isInSquare} from "./positions.store";
 
 function clone(obj){
     let copy = null;
@@ -20,29 +21,51 @@ export const villeModule = {
             VilleCopie: clone(VilleMock),
             freq: [], // mémorise le nombre de clics sur les points d'intérêts
             dslModule: dslModule,
+            once : true
         }
     },
     mutations: {
         /** Met à jour la base de données en appliquant une règle de changement d'horaires **/
         setClosingHour: (state, payload) => {
-            state.Ville[0].ville.commerces = clone(state.VilleCopie[0].ville.commerces);
+            if (state.once) {
+                state.Ville[0].ville.commerces = clone(state.VilleCopie[0].ville.commerces);
+                state.once = false
+            }
             if(payload !== -1) {
+                let a = -1;
+                let b = -1;
+
+                if (payload.args.zone === "Zone A") {
+                    a = state.Ville[0].ville.zones[0].position.x;
+                    b = state.Ville[0].ville.zones[0].position.y
+                } else if (payload.args.zone === "Zone B") {
+                    a = state.Ville[0].ville.zones[1].position.x;
+                    b = state.Ville[0].ville.zones[1].position.y
+                } else if (payload.args.zone === "Zone C") {
+                    a = state.Ville[0].ville.zones[2].position.x;
+                    b = state.Ville[0].ville.zones[2].position.y
+                } else if (payload.args.zone === "Zone D") {
+                    a = state.Ville[0].ville.zones[3].position.x;
+                    b = state.Ville[0].ville.zones[3].position.y
+                }
                 state.Ville[0].ville.commerces.forEach(commerce => {
-                    for(let i = 0 ; i< commerce.horaires.length; i++) {
-                        // eslint-disable-next-line no-unused-vars
-                        for (const [key, value] of Object.entries(commerce.horaires[i].semaine)) {
-                            //console.log(`${key}: ${value}`);
-                            if (value[0].heureOuverture > payload) { // si le magasin ouvre le matin après l'heure de fermeture imposée
-                                value[0].heureOuverture = 0;
-                                value[0].heureFermeture = 0;
-                            } else if (value[0].heureFermeture > payload) {// si le magasin ferme le matin après l'heure de fermeture imposée
-                                value[0].heureFermeture = payload;
-                            }
-                            if (value[1].heureOuverture > payload) { // si le magasin ouvre l'après-midi après l'heure de fermeture imposée
-                                value[1].heureOuverture = 0;
-                                value[1].heureFermeture = 0;
-                            } else if (value[1].heureFermeture > payload) {// si le magasin ferme le l'après-midi après l'heure de fermeture imposée
-                                value[1].heureFermeture = payload;
+                    if (isInSquare(commerce.position.x, commerce.position.y, a, b)) {
+                        for (let i = 0; i < commerce.horaires.length; i++) {
+                            // eslint-disable-next-line no-unused-vars
+                            for (const [key, value] of Object.entries(commerce.horaires[i].semaine)) {
+                                //console.log(`${key}: ${value}`);
+                                if (value[0].heureOuverture > payload.args.hour) { // si le magasin ouvre le matin après l'heure de fermeture imposée
+                                    value[0].heureOuverture = 0;
+                                    value[0].heureFermeture = 0;
+                                } else if (value[0].heureFermeture > payload.args.hour) {// si le magasin ferme le matin après l'heure de fermeture imposée
+                                    value[0].heureFermeture = payload.args.hour;
+                                }
+                                if (value[1].heureOuverture > payload.args.hour) { // si le magasin ouvre l'après-midi après l'heure de fermeture imposée
+                                    value[1].heureOuverture = 0;
+                                    value[1].heureFermeture = 0;
+                                } else if (value[1].heureFermeture > payload.args.hour) {// si le magasin ferme le l'après-midi après l'heure de fermeture imposée
+                                    value[1].heureFermeture = payload.args.hour;
+                                }
                             }
                         }
                     }
@@ -164,11 +187,12 @@ export const villeModule = {
          /** Lance la mutation appliquant le couvre-feu
           * + Lance la mutation qui ajoute une règle
          * @param hour : l'heure à imposer aux points d'intérêts
+          * @param zone : zone d'application
          */
-        async setClosingHour(context, hour) {
+        async setClosingHour(context, args) {
             try {
-                context.commit('setClosingHour', hour);
-                context.commit('addRegle', {titre : 'Fermeture magasins',valeur : hour, checked : true})
+                context.commit('setClosingHour', {args : args});
+                context.commit('addRegle', {titre : 'Fermeture magasins '+args.zone, valeur : args.hour, checked : true})
             }
             catch (error) {
                 console.log('error ', error);

@@ -26,7 +26,7 @@ name: "AffichageRegles",
   },
   methods:{
     action(regle){
-      if(regle.titre === "Fermeture magasins"){
+      if(regle.titre.contains("Fermeture magasins")){
 
         if(!regle.checked) {
           regle.checked = true;
