@@ -163,7 +163,7 @@ export default {
                 })
             }
         },
-        /** Véréfie qu'on a bien une Entité */
+        /** Vérifie qu'on a bien une Entité */
         checkEntity(pos){
 
             if( !(this.programme[pos] !== undefined && this.programme[pos].type===3) ){

@@ -1,57 +1,59 @@
 <template>
-    <div class="split NW">
-  <div>
-    Nom de l'événement :
-    <input v-model="NomEvenement" placeholder="Titre de l'événement" maxlength="24"/>
-  </div>
-  <br />
-  <div>
-    Nom du point d'intérêt où appliquer l'événement :
-    <input id="Nom" v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="18"/>
-  </div>
-  <br />
-  <span>Description : </span>
-  <textarea v-model="Description" placeholder="Description"></textarea><br />
-  <br />
+  <div class="split NW">
+    <div>
+      Nom de l'événement :
+      <input v-model="NomEvenement" placeholder="Titre de l'événement" maxlength="24"/>
+    </div>
+    <br/>
+    <div>
+      Nom du point d'intérêt où appliquer l'événement :
+      <input id="Nom" v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="18"/>
+    </div>
+    <br/>
+    <span>Description : </span>
+    <textarea v-model="Description" placeholder="Description"></textarea><br/>
+    <br/>
 
-  <div>
-    Logo :
-    <em id="icon0" class="fas fa-exclamation-circle" v-on:click="[Logo = 'fas fa-exclamation-circle', checkColorIcons('icon0')]">&emsp;</em>
-    <em id="icon1" class="fas fa-clock" v-on:click="[Logo = 'fas fa-clock', checkColorIcons('icon1')]" >&emsp;</em>
-    <em id="icon2" class="fas fa-beer" v-on:click="[Logo = 'fas fa-beer', checkColorIcons('icon2')]">&emsp;</em>
-    <em id="icon3" class="fas fa-gift" v-on:click="[Logo = 'fas fa-gift', checkColorIcons('icon3')]">&emsp;</em>
-    <em id="icon4" class="fas fa-music" v-on:click="[Logo = 'fas fa-music', checkColorIcons('icon4')]">&emsp;</em>
-    <em id="icon5" class="fas fa-ad" v-on:click="[Logo = 'fas fa-ad', checkColorIcons('icon5')]">&emsp;</em>
-  </div>
-  <br />
-  <div> Coordonnées :
+    <div>
+      Logo :
+      <em id="icon0" class="fas fa-exclamation-circle"
+          v-on:click="[Logo = 'fas fa-exclamation-circle', checkColorIcons('icon0')]">&emsp;</em>
+      <em id="icon1" class="fas fa-clock" v-on:click="[Logo = 'fas fa-clock', checkColorIcons('icon1')]">&emsp;</em>
+      <em id="icon2" class="fas fa-beer" v-on:click="[Logo = 'fas fa-beer', checkColorIcons('icon2')]">&emsp;</em>
+      <em id="icon3" class="fas fa-gift" v-on:click="[Logo = 'fas fa-gift', checkColorIcons('icon3')]">&emsp;</em>
+      <em id="icon4" class="fas fa-music" v-on:click="[Logo = 'fas fa-music', checkColorIcons('icon4')]">&emsp;</em>
+      <em id="icon5" class="fas fa-ad" v-on:click="[Logo = 'fas fa-ad', checkColorIcons('icon5')]">&emsp;</em>
+    </div>
+    <br/>
+    <div> Coordonnées :
       <button v-on:click="showMap">Afficher la carte</button>
       <p>Les coordonnées de l'évenements sont : {{getPosition}}</p>
-  </div>
-
-  <div v-if="regle!==''">
-    Regle : {{regle}}
-  </div>
-    <button v-on:click="validation">Validation</button>
-  <div>{{valid}}</div>
     </div>
-    <div class="split NE">
+
+    <div v-if="regle!==''">
+      Regle : {{regle}}
+    </div>
+    <button v-on:click="validation">Validation</button>
+    <div id="reussite" v-if="valid!==''">{{valid}}</div>
+    <div id="error" v-else>{{error}}</div>
+  </div>
+  <div class="split NE">
 
     <h2>Aperçu de l'événement :</h2>
-  <PrintEvent
-    :NomPointInteret="NomPointInteret"
-    :NomEvenement="NomEvenement"
-    :Description="Description"
-    :Logo="Logo"
-  ></PrintEvent>
+    <PrintEvent
+            :NomPointInteret="NomPointInteret"
+            :NomEvenement="NomEvenement"
+            :Description="Description"
+            :Logo="Logo"
+    ></PrintEvent>
 
-    </div>
+  </div>
 
-    <div class="S">
-  <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
+  <div class="S">
+    <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
 
-    </div>
-    <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
+  </div>
+  <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
 
 
 </template>
@@ -78,6 +80,7 @@ name: "EventPage",
       markerCreated: false,
       displayPopUp: false,
       valid: "",
+      error: "",
       NomPointInteret: "",
       NomEvenement: "",
       Description: "",
@@ -113,8 +116,8 @@ name: "EventPage",
         },
         validation() {
             console.log(this.getPosition[0])
-            if(this.NomEvenement === "") this.valid = "Veuillez rentrer un nom pour votre événement"
-            else if (this.getPosition[0] === undefined && this.NomPointInteret === "") this.valid = "Veuillez rentrer une position ou un" +
+            if(this.NomEvenement === "") this.error = "Veuillez rentrer un nom pour votre événement"
+            else if (this.getPosition[0] === undefined && this.NomPointInteret === "") this.error = "Veuillez rentrer une position ou un" +
                 " point d'intérêt pour votre événement"
             else this.valid = "Evénement enregistré"
             let pos = [this.getPosition[0],this.getPosition[1]]
@@ -179,6 +182,13 @@ name: "EventPage",
     }
     #Nom {
       width: 200px;
+    }
+
+    #error{
+      color: red;
+    }
+    #reussite{
+      color: green;
     }
 
 
