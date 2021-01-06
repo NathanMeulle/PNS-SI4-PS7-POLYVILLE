@@ -180,7 +180,8 @@ export default {
       });
       console.log(storeTmp);
       return storeTmp;
-    }
+    },
+
 
   },
   data() {

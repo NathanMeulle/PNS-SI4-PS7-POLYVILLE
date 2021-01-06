@@ -33,7 +33,7 @@ export const eventModule = {
                 store.getters.loadCommerces.forEach(commerce => {
                     if (commerce.nom === payload.location) {
                         x = commerce.position.x ;
-                        y = commerce.position.y + 0.0010;
+                        y = commerce.position.y + 0.0005;
                     }
                 })
             }
@@ -59,12 +59,36 @@ export const eventModule = {
             console.log("getter store : ", state.position);
             return state.position;
         },
-        getListEvent : (state) => {
-            return state.events;
+        /**
+         *
+         * On retourne une liste d'evnmts que l'on doit effectivement afficher
+         * en fonction de la règle énoncée
+         *
+         * @param state
+         * @param getters
+         * @returns Liste des événements que l'on doit afficher en fonction des règles détérminées
+         */
+        getListEvent : (state,getters) => {
+            let eventsToDisplay = [];
+            state.events.forEach(event => {
+                if (event.regle.name === "condition affichage") {
+                    if (event.regle.nbCitize <= getters.getCitizen(event.regle.zone)) {
+                        eventsToDisplay.push(event);
+                    }
+                }
+            });
+            return eventsToDisplay;
         },
         getEventId : (state) => {
             return state.currentID;
         },
+        /**
+         * Lorsqu'on clique sur un événement présent sur la carte, l'ID de celui-ci est stocké
+         * dans le store. Cette méthode permet de retourner l'événement associé à cette ID
+         * On l'utlise dans le Displayer
+         * @param state
+         * @returns On retourne l'événement dont l'ID correspond à l'evnmt qui a été cliqué
+         */
         getEvent :   (state) => {
             let myEvent = [];
             state.events.forEach(event => {
