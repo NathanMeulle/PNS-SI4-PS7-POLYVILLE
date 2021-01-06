@@ -162,6 +162,7 @@ export default {
         },
         /** Véréfie qu'on a bien une Entité */
         checkEntity(pos){
+            
             if( !(this.programme[pos] !== undefined && this.programme[pos].type===3) ){
                 this.error = "Une condition 'Pour tout' doit être accompagnée d'une Entité";
             }
@@ -204,12 +205,15 @@ export default {
                 this.getHeure(pos);
             }
             else if (this.programme[pos].title === 'fermeture'){
-                 if (this.programme[pos+2] !== undefined){
+                 if (this.checkReinitialiser(pos-1)){ // cas réinitialiser avant le 'magasins' 
+                 
+                 }
+                 else if (this.programme[pos+2] !== undefined){
                     this.getHeure(pos+2);
                  }
             }
             else if (this.programme[pos].title === 'réinitialiser') {
-                this.reinit(); // pas fini
+                this.checkDiverse(pos+2);// cas réinitialiser après le 'magasins' 
             }
             else{
                 this.error = 'Programme inconnu';
@@ -217,9 +221,18 @@ export default {
             }
         },
 
+        checkReinitialiser(pos){
+            if( this.programme[pos-1] !== undefined && this.programme[pos-1].title  === 'réinitialiser'){
+                this.reinit(pos-1);
+                return true;
+            }
+            return false;
+        },
+
+
         /** Envoie une requête de réinitialisation des horaires au store si le programme est correct **/
-        reinit(){
-            if(this.programme.length===5 && (this.programme[3].title === "heures" && this.programme[4].title === "fermeture")){
+        reinit(pos){
+            if(this.programme.length===5 && (this.programme[pos+1].title === "heures" && this.programme[pos+2].title === "fermeture")){
                 if(!this.macro) {
                     this.$store.dispatch('setClosingHour', -1);
                     this.reussite = "Horaires des magasins réinitialisées"
