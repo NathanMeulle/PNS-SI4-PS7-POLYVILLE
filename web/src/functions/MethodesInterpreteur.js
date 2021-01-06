@@ -191,7 +191,7 @@ export default {
             else if (this.programme[pos].title === 'citoyens'){
                 this.SiCitoyens();
             }
-            else if(this.programme[pos].title==='Boulangerie'||this.programme[pos].title==='Bar') this.forMagasinEvent(pos);
+            else if(this.programme[pos].title==='Boulangerie'||this.programme[pos].title==='Bar') this.checkDiverse(pos+1); //this.forMagasinEvent(pos);
         },
 
         /** Gestion d'un programme qui parcoure un type de magasin pour la gestion d'événement **/
@@ -258,6 +258,14 @@ export default {
             }
             else if (this.programme[pos].title === 'réinitialiser') {
                 this.checkDiverse(pos+2);// cas réinitialiser après le 'magasins'
+            }
+            else if (this.programme[pos].title === 'afficher'){
+                if(this.programme[pos+1] !== undefined && this.programme[pos+1] === 'événement'){
+                    // impossible
+                }
+                else{
+                    this.error = "Que voulez -vous afficher ?";
+                }
             }
             else{
                 this.error = 'Programme inconnu';
