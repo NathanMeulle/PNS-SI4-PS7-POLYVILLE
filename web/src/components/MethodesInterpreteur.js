@@ -120,9 +120,7 @@ export default {
                     this.error = "Il est nécessaire d'écrire une heure";
                 } 
                 else{
-                    console.log(this.heure);
                     this.heure = Number(this.programme[pos-1].input)
-                    console.log(this.heure);
                     if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture';
                     else if (this.heure<0 || this.heure>24) this.error = "Le nombre donné n'est pas une heure";
                     else{
@@ -187,11 +185,9 @@ export default {
             }
             else if (this.programme[pos].title === 'policiers') {
                 this.error = 'Programme inconnu';
-                console.log('1')
             }
             else if (this.programme[pos].title === 'citoyens'){
                 this.error = 'Programme inconnu';
-                console.log('2')
             }
         },
 
@@ -199,7 +195,6 @@ export default {
         checkDiverse(pos){
             if( this.programme[pos] === undefined){
                 this.error = 'Programme inconnu';
-                console.log('3')
             }
             else if (this.programme[pos].title === 'heures') {
                 this.getHeure(pos);
@@ -217,10 +212,10 @@ export default {
             }
             else{
                 this.error = 'Programme inconnu';
-                console.log('4')
             }
         },
 
+        // traitement d'un programme avec 'réinitialiser' dedans
         checkReinitialiser(pos){
             if( this.programme[pos-1] !== undefined && this.programme[pos-1].title  === 'réinitialiser'){
                 this.reinit(pos-1);
