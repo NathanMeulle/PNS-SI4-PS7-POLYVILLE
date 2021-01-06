@@ -85,23 +85,37 @@ export default {
 
     /** Gère l'affichage d'un conflit de règles concernant le changement d'horaires des magasins **/
     conflitHeureFermeture(){
-      let heure = this.$store.getters.getRegleHeureFermeture;
-      if(heure!== -1) {
-        this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h.";
+      let heureRegleActuelle = this.getHourProg();
+      let heureReglePrec = this.$store.getters.getRegleHeureFermeture;
+      if(heureReglePrec!== -1) {
+        this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heureReglePrec + "h.";
 
-        this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h.";
+        this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + heureRegleActuelle + "h.";
 
         this.solution = "Quelle heure voulez vous choisir ?"
       }
         else{
           this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires.";
 
-          this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h.";
+          this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + heureRegleActuelle + "h.";
 
           this.solution = "Quelle heure voulez vous choisir ?"
         }
-        this.choix = {avant: Number(this.programme[3].input), apres: heure};
+        this.choix = {avant: Number(heureRegleActuelle), apres: heureReglePrec};
         console.log(this.choix)
+    },
+
+    getHourProg(){
+      let res = -1;
+      this.programme.forEach((item,index)=>{
+        if(item.title === 'Input'){
+          index;
+          res = item.input;
+        }
+      })
+      
+      console.log(res);
+      return res;
     },
 
     /** Envoie le choix de l'utilisateur au store pour le changement d'horaires des magasins **/

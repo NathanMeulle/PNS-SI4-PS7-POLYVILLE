@@ -3,7 +3,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
   <div class="wrapper" style="height: 75%; width: 100%">
     <div class="gauche" style="height: 75%; width: 29%">
-      <div class='drop-zone' @drop='onDrop($event, 1)' @dragover.prevent @dragenter.prevent id="data">
+      <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent id="data">
         Données :
         <div v-for='item in listInput' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class='drop-zone' @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent id="cond">
+      <div class='drop-zone' @drop='onDrop($event, 1)' @dragover.prevent @dragenter.prevent id="cond">
         Conditions :
         <div v-for='item in listCond' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="milieu" style="height: 75%; width: 29%">
-      <div class='drop-zone' @drop='onDrop($event, 5)' @dragover.prevent @dragenter.prevent>
+      <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
         Zones géographiques :
         <div v-for='item in listGeo' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
@@ -49,17 +49,7 @@
           </div>
         </div>
       </div>
-      <div class='drop-zone' @drop='onDrop($event, 7)' @dragover.prevent @dragenter.prevent>
-        Magasins :
-        <div v-for='item in listMagasins' :key='item.title' class='drag-el' draggable="true"
-             @dragstart='startDrag($event, item)'>
-          {{ item.title }}
-          <div class="logo">
-            <em class="fas fa-arrow-right" v-on:click="right(item)">&emsp;&emsp;</em>
-          </div>
-        </div>
-      </div>
-      <div class='drop-zone' @drop='onDrop($event, 4)' @dragover.prevent @dragenter.prevent>
+      <div class='drop-zone' @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
         Divers :
         <div v-for='item in listDivers' :key='item.title' class='drag-el' draggable="true"
              @dragstart='startDrag($event, item)'>
@@ -75,11 +65,11 @@
     <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Ajouter ce programme à mon événement</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
-      <div style="height: 60vh; width: 100%" @drop='onDrop($event, 6)' @dragover.prevent @dragenter.prevent>
+      <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
         <div class='drop-zone' @dragover.prevent @dragenter.prevent id="programme">
           Mon programme :
           <div v-for='item in listProg' :key='item.title' class="drag-el">
-            <div v-if="item.type !== 1">
+            <div v-if="item.type !== 5">
               {{ item.title }}
               <div class="logo">
                 <em class="fas fa-times" v-on:click="suppr(item)">&emsp;&emsp;</em>
@@ -125,30 +115,30 @@ extends: DragDropMethods,
           title: 'Input',
           input: '',
           position: 0,
-          type: 1,
-          list: 1
+          type: 5,
+          list: 5
         },
         {
           id: 2,
           title: 'Plus grand que',
           position: 0,
-          type: 2,
-          list: 2
+          type: 1,
+          list: 1
         },
         {
           id: 3,
           title: 'Si',
           input: '',
           position: 1,
-          type: 2,
-          list: 2
+          type: 1,
+          list: 1
         },
         {
           id: 4,
           title: 'Alors',
           position: 2,
-          type: 2,
-          list: 2
+          type: 1,
+          list: 1
         },
         {
           id: 5,
@@ -161,71 +151,71 @@ extends: DragDropMethods,
           id: 6,
           title: 'afficher',
           position: 0,
-          type: 4,
-          list: 4
+          type: 6,
+          list: 6
         },
         {
           id: 7,
           title: 'Zone A',
           position: 0,
-          type: 5,
-          list: 5
+          type: 4,
+          list: 4
         },
         {
           id: 8,
           title: 'Zone B',
           position: 1,
-          type: 5,
-          list: 5
+          type: 4,
+          list: 4
         },
         {
           id: 9,
           title: 'Zone C',
           position: 2,
-          type: 5,
-          list: 5
+          type: 4,
+          list: 4
         },
         {
           id: 10,
           title: 'Zone D',
           position: 3,
-          type: 5,
-          list: 5
+          type: 4,
+          list: 4
         },
         {
           id: 11,
           title: 'événement',
           position: 1,
-          type: 4,
-          list: 4
+          type: 6,
+          list: 6
         },
         {
           id: 12,
           title: 'Pour tous',
           position: 3,
-          type: 2,
-          list: 2
+          type: 1,
+          list: 1
         },
         {
           id: 13,
           title: 'Boulangerie',
-          position: 0,
-          type: 7,
-          list: 7
+          position: 1,
+          type: 3,
+          list: 3
         },
         {
           id: 14,
           title: 'Bar',
-          position: 1,
-          type: 7,
-          list: 7
+          position: 2,
+          type: 3,
+          list: 3
         },
         {
           id: 15,
           title: 'Zone du magasin',
           position: 4,
-          type: 5,
-          list: 5
+          type: 4,
+          list: 4
         },
       ],
       message : {}
@@ -233,25 +223,22 @@ extends: DragDropMethods,
   },
   computed: {
     listInput () {
-      return this.sortItems(this.items.filter(item => item.list === 1))
+      return this.sortItems(this.items.filter(item => item.list === 5))
     },
     listCond () {
-      return this.sortItems(this.items.filter(item => item.list === 2))
+      return this.sortItems(this.items.filter(item => item.list === 1))
     },
     listPers () {
       return this.sortItems(this.items.filter(item => item.list === 3))
     },
     listDivers () {
-      return this.sortItems(this.items.filter(item => item.list === 4))
-    },
-    listGeo () {
-      return this.sortItems(this.items.filter(item => item.list === 5))
-    },
-    listProg () {
       return this.sortItems(this.items.filter(item => item.list === 6))
     },
-    listMagasins () {
-      return this.sortItems(this.items.filter(item => item.list === 7))
+    listGeo () {
+      return this.sortItems(this.items.filter(item => item.list === 4))
+    },
+    listProg () {
+      return this.sortItems(this.items.filter(item => item.list === 2))
     },
   },
   methods:{
@@ -261,7 +248,7 @@ extends: DragDropMethods,
       const itemID = evt.dataTransfer.getData('itemID');
       if(itemID!==""){
         const item = this.items.find(itemTmp => itemTmp.id === Number(itemID));
-        if(item.list === 6 || list!== 6){
+        if(item.list === 2 || list!== 2){
           item.list = item.type
         }
         else{
@@ -269,7 +256,7 @@ extends: DragDropMethods,
           item.list = list
         }
         console.log("ajout à la liste : ",item.list);
-        if (list === 6){
+        if (list === 2){
           item.position=this.listProg.length - 1
         }
       }
@@ -284,7 +271,7 @@ extends: DragDropMethods,
     /** Ajout d'une case à mon programme sans drag and drop **/
     right(item){
       this.duplication(item);
-      item.list = 6;
+      item.list = 2;
       console.log("ajout à la liste : ",item.list);
       item.position=this.listProg.length - 1
     }
