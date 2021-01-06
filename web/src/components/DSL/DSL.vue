@@ -94,16 +94,15 @@
     <button v-on:click="macro()" id="creationMacro" style="height: 3vh; width: 40%" class="bouton">Créer un raccourci pour ce programme</button>
   </div>
 </template>
-
 <script>
-
-import DragDropMethods from "./DragDropMethods";
+import DragDropMethods from "@/functions/DragDropMethods";
 export default {
   name: "DSL",
   extends: DragDropMethods,
   emits: ["launch", "macro"],//indique les éléments envoyés (nécessaire pour les tests)
   data () {
     return {
+      modal: false,
       /** Error : message d'erreur **/
       error:'',
       /** Items : liste des éléments pouvant former un programme avec notre DSL **/
@@ -163,7 +162,7 @@ export default {
           id: 7,
           title: 'Input',
           input: '',
-          position: -1,
+          position: 0,
           type:5,
           list: 5
         },
@@ -250,16 +249,13 @@ export default {
       //On peut mettre une zone par entité
       return this.listProg.filter(prog => prog.type===3).length > this.listProg.filter(prog => prog.type===6).length;//s'il y a plus d'entités que de zones
     }
-
   },
-
   methods:{
     /** Envoie le programme donné à la gestion des macros **/
     macro() {
       console.log("envoi du programme suivant : ", this.listProg);
       this.$emit("macro", this.listProg)
     },
-
     /** Envoie le programme donné à l'interpréteur **/
     launch() {
       console.log("envoi du programme suivant : ", this.listProg);
@@ -268,7 +264,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
   .droite {
     float: right;
@@ -280,17 +275,14 @@ export default {
   .gauche {
     float: left;
   }
-
   .milieu{
     float: left;
   }
-
 .drop-zone {
   background-color: #eee;
   margin-bottom: 10px;
   padding: 10px;
 }
-
 .drag-el {
   background-color: #fff;
   margin-bottom: 10px;
@@ -300,26 +292,21 @@ export default {
   background-color: #dddddd;
   color: #999999;
 }
-
 #error{
   position: relative;
   color: red;
   margin-top: 5%;
 }
-
 #cond{
   margin-top: 10px;
 }
-
 .logo{
   float: right;
 }
-
 #creationMacro{
   margin-top: 2%;
   margin-left: 60%;
 }
-
 #programme{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -327,7 +314,6 @@ export default {
     -ms-user-select: none;
     user-select: none;
 }
-
 #launch{
   float: right;
   position: relative;
@@ -341,5 +327,4 @@ export default {
     cursor: pointer;
     box-shadow: 4px 4px 2px 1px #266027;
   }
-
 </style>

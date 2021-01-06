@@ -28,7 +28,7 @@
             v-bind:name="currentMarker.nom"
             v-bind:id="currentMarker.id"
             v-bind:iconType="currentMarker.categorie"
-            @displayhours="displayHours=true"
+            @displayhours="displayHours=true,displayEvent=false"
             @click="toDisplay('Bienvenue ' + id)"
             />
           </div>
@@ -46,7 +46,7 @@
                     v-bind:name="currentMarker.nom"
                     v-bind:id="currentMarker.id"
                     v-bind:iconType="currentMarker.categorie"
-                    @displayhours="displayHours=true"
+                    @displayhours="displayHours=true,displayEvent=false"
                     @click="toDisplay('Bienvenue' + id)"
             />
           </div>
@@ -66,7 +66,8 @@
                 v-bind:msg="'Parking : ' + currentParking.nbPlaces + ' places'"
                 v-bind:iconType="'Parking'"
                 v-bind:id="currentParking.id"
-                @displayhours="displayHours=true"
+                @displayhours="displayHours=true,displayEvent=false"
+
         />
         </div>
 
@@ -85,7 +86,7 @@
             :fill="true"
             :fillOpacity="0.5"
             :fillColor="createColor(currentCircle.id)"
-            @click="toDisplay(  currentCircle.id + ':  Nombre de citoyen présent : ' + nbrCitizenZone(currentCircle.id)+ ' Nombre de policier présent : ' + nbrPolicierZone(currentCircle.id))"
+            @click="toDisplay(  '<b>' + currentCircle.id +'</b>' + ' : Nombre de citoyens présents : ' + nbrCitizenZone(currentCircle.id) +'<br> Nombre de policiers présents : ' + nbrPolicierZone(currentCircle.id))"
 
           />
 
@@ -112,20 +113,23 @@
         </div>
         <Marker
                 v-for="events in getEvents"
-                :key="events[0]"
-                v-bind:position="
-                             [
-                             events[2][0],
-                             events[2][1],
-                             ]"
-                v-bind:msg="events[0]"
+                :key="events.id"
+                v-bind:id="events.id"
+                v-bind:position="[
+                        events.position.x,
+                        events.position.y
+                                ]"
+                v-bind:iconType="'Events'"
+                v-bind:msg="events.description"
+                @displayevent="displayEvent=true,displayHours=false"
+                @click="displayEvent=true"
         />
 
 
       </l-map>
     </div>
     <div class="displayer" style="width: 38%">
-      <Displayer v-bind:hours="displayHours"/>
+      <Displayer v-bind:hours="displayHours" v-bind:myEvent="displayEvent"/>
     </div>
   </div>
 </template>
@@ -156,7 +160,8 @@ export default {
       return this.$store.getters.loadCommerces;
     },
     getEvents() {
-      return this.$store.getters.getEvents;
+      console.log(this.$store.getters.getListEvent);
+      return this.$store.getters.getListEvent;
     },
 
     parkingStore() {
@@ -198,6 +203,7 @@ export default {
       zoneC :[ 43.6054,7.0839],
       zoneD : [ 43.6054,7.0569],
       filter : "",
+      displayEvent : false,
 
     };
   },

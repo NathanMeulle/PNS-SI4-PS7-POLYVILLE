@@ -7,7 +7,7 @@
   <br />
   <div>
     Nom du point d'intérêt où appliquer l'événement :
-    <input v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="24"/>
+    <input id="Nom" v-model="NomPointInteret" placeholder="Nom de votre établissement" maxlength="18"/>
   </div>
   <br />
   <span>Description : </span>
@@ -87,13 +87,16 @@ name: "EventPage",
     };
   },
     computed : {
-        getPosition() {
-            console.log("loading events...");
-            console.log("getPos ", this.$store.getters.getPosition);
-            return this.$store.getters.getPosition;
-        },
+      getPosition() {
+        console.log("loading events...");
+        console.log("getPos ", this.$store.getters.getPosition);
+        return this.$store.getters.getPosition;
+      },
+
     },
     methods : {
+
+
         checkColorIcons(id){
             let i = 0;
             while(i <= 5){
@@ -114,11 +117,14 @@ name: "EventPage",
             else if (this.getPosition[0] === undefined && this.NomPointInteret === "") this.valid = "Veuillez rentrer une position ou un" +
                 " point d'intérêt pour votre événement"
             else this.valid = "Evénement enregistré"
+            let pos = [this.getPosition[0],this.getPosition[1]]
             store.commit({
                 type: "addEvent",
                 name: this.NomEvenement,
+                logo : this.Logo,
+                location : this.NomPointInteret,
                 description: this.Description,
-                coordonate: this.getPosition,
+                coordonate: pos,
                 regle: this.regle,
             })
         },
@@ -136,10 +142,11 @@ name: "EventPage",
 </script>
 
 <style scoped>
+
     .split {
-        height: 30%;
+        height: 45%;
         width: 50%;
-        position: fixed;
+        position: absolute;
         z-index: 1;
         top: 0;
         margin-left: 20px;
@@ -158,10 +165,24 @@ name: "EventPage",
     }
     .S {
         border-top: 3px solid #0cb50b;
-        position: fixed;
+        position: absolute;
         height: 50%;
         width: 99%;
-        top:45%;
+        top: 55%
     }
+
+    textarea {
+      width:90%;
+      max-width:90%;
+      min-width: 90%;
+      max-height:30%;
+      min-height:10%;
+
+    }
+    #Nom {
+      width: 200px;
+    }
+
+
 
 </style>

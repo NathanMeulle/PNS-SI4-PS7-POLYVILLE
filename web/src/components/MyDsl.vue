@@ -1,8 +1,7 @@
 <template>
   <div id="mydsl">
-    <router-link active-class="active" to="/dsl/aide">
-      <div class="bouton" id="help">Aide</div>
-    </router-link>
+    <Help v-if="modal" v-on:close="modal = false"/>
+    <div class="bouton" id="help" v-on:click="modal = true">Aide</div>
     <h1>Langage dédié</h1>
     <span>Glissez et déposez les cases dans la partie nommée "Mon programme" ou cliquez sur la flèche</span>
     <br/>
@@ -16,10 +15,16 @@
 <script>
 
 import Interpreteur from "../components/DSL/Interpreteur";
+import Help from "@/components/DSL/Help";
 
 export default {
   name: "MyDsl",
-  components: {Interpreteur},
+  components: {Interpreteur,Help},
+  data(){
+    return{
+      modal:false,
+    }
+  },
 
   methods:{
   }

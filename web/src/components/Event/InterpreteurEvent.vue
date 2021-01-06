@@ -15,7 +15,7 @@
 
 
 import DSLEvent from "./DSLEvent";
-import MethodesInterpreteur from "@/components/MethodesInterpreteur";
+import MethodesInterpreteur from "@/functions/MethodesInterpreteur";
 
 export default {
   name: "InterpreteurEvent",
@@ -38,6 +38,7 @@ export default {
       else {
         console.log("mon programme : ", this.programme)
         this.Si()
+        this.Pour()
       }
       if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     }

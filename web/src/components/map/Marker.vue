@@ -45,6 +45,11 @@
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
+        <div v-else-if="iconType==='Events'" >
+            <l-marker :lat-lng="position" :icon="Events" @moveend="log('moveend')" @click="sendEventId(id), toDisplay('Bienvenue ' + name)">
+                <MarkerPopup v-bind:msg="msg"/>
+            </l-marker>
+        </div>
         <div v-else>
             <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
@@ -108,6 +113,11 @@
                     iconSize: [37, 37],
                     iconAnchor: [16, 37]
                 }),
+                Events: icon({
+                    iconUrl: require("../../assets/eventmarker.png"),
+                    iconSize: [37, 37],
+                    iconAnchor: [16, 37]
+                }),
             }
         },
         props:{
@@ -140,6 +150,13 @@
                     id : a,
                 })
             },
+            sendEventId(a) {
+                this.$emit('displayevent',true);
+                store.commit( {
+                    type : "sendEventId",
+                    id : a,
+                });
+            }
         }
     }
 

@@ -2,7 +2,7 @@
   <PopUp v-if="showModal" v-on:close="showModal = false" :value="type" @input="type = $event"/>
   <div v-if="error!==''">
     <br/>
-    <span id="error">{{error}}</span>
+      <p class="shake" id="error">{{error}}</p>
   </div>
   <div v-else>
     <br/>
@@ -16,7 +16,7 @@
 
 import DSL from "@/components/DSL/DSL";
 import PopUp from "@/components/DSL/PopUpDSL.vue"
-import MethodesInterpreteur from "@/components/MethodesInterpreteur";
+import MethodesInterpreteur from "@/functions/MethodesInterpreteur";
 
 export default {
   name: "Interpreteur",
@@ -53,7 +53,7 @@ export default {
         this.Pour();
         this.Si()
       }
-      if(this.error === "" && this.reussite === "") this.error = "Programme inconnu1"
+      if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     }
   }
 
@@ -64,10 +64,30 @@ export default {
 #error{
   color: red;
 }
+.shake {
+  animation: .8s shake ease alternate;
+  animation-name: shake;
+}
+
 
 #reussite{
   color: green;
 }
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
 
 
 </style>

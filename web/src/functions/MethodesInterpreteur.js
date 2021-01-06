@@ -18,6 +18,7 @@ export default {
                     this.infOrSup = 'sup';
                     if(this.programme[4].title === 'Input'){
                         nbCitoyens = Number(this.programme[4].input);
+                        console.log(nbCitoyens)
                         if(this.programme[5].title === 'Alors'){
                             this.alorsCitoyens(nbCitoyens)
                         }
@@ -48,12 +49,10 @@ export default {
             nbPoliciers = Number(this.programme[6].input);
             if (this.programme[8].title.substring(0, 4) === 'Zone') {
                 this.zones[1] = this.programme[8].title;
-                console.log("ici : ",nbCitoyens,this.infOrSup,this.zones[0],nbPoliciers,this.zones[1]);
                 this.reussite ="Déplacement de policiers effectué";
                 if(!this.macro) {
                     let regles = this.$store.getters.getRegles;
                     let existe = this.verifierExistence('Presence policier',regles);
-                    console.log("existe :",existe);
                     if (!existe) this.$store.dispatch('deplacerPoliciers', {
                         citoyens: nbCitoyens,
                         cond: this.infOrSup, zone1: this.zones[0], policiers: nbPoliciers, zone2: this.zones[1]
@@ -116,9 +115,8 @@ export default {
         /** Renvoie l'heure donnée dans un programme **/
         getHeure(pos){
             if(this.programme[pos] !== undefined && this.programme[pos].title === "heures"){
-                if(pos < 1 || this.programme[pos-1].title!== 'Input'){
-                    this.error = "Il est nécessaire d'écrire une heure";
-                } 
+               
+                if(pos < 1 || this.programme[pos-1].title!== 'Input' || this.programme[pos-1].input === "") this.error = "Il est nécessaire d'écrire une heure";
                 else{
                     this.heure = Number(this.programme[pos-1].input)
                     if(this.heure === -1) this.error = 'Il faut donner une heure de fermeture';
@@ -144,6 +142,9 @@ export default {
                         }
                     }
                 }
+            }
+            else{
+                this.heure = -1;
             }
         },
 
@@ -189,7 +190,44 @@ export default {
             else if (this.programme[pos].title === 'citoyens'){
                 this.error = 'Programme inconnu';
             }
+            else if(this.programme[1].title==='Boulangerie'||this.programme[1].title==='Bar') this.forMagasinEvent();
         },
+
+        /** Gestion d'un programme qui parcoure un type de magasin pour la gestion d'événement **/
+        forMagasinEvent(){
+            if(this.programme.length === 10) {
+                if (this.programme[2].title === 'Si' && this.programme[3].title === 'citoyens') {
+                    if(this.programme[4].title === 'Zone du magasin'){
+                        this.forMagasinEventZone()
+                    }
+                    else this.error = 'Ajoutez la case "Zone du magasin"'
+                }
+            }
+            else this.error = 'Programme inconnu'
+        },
+
+        forMagasinEventZone(){
+            let nbCitoyens = -1;
+            if(this.programme[5].title.substring(0,4) === 'Plus'){
+                if(this.programme[5].title === 'Plus grand que') this.infOrSup = 'sup';
+                else this.infOrSup = 'inf';
+                if(this.programme[6].title === 'Input') {
+                    nbCitoyens = Number(this.programme[6].input)
+                    if (this.programme[7].title === 'Alors') {
+                        if (this.programme[8].title === 'afficher' && this.programme[9].title === 'événement') {
+                            let regle = ["condition affichage pour type de magasins",nbCitoyens]
+                            this.$emit("ajoutRegleEvenement", regle)
+                            this.error =''
+                            this.reussite = "Programme validé"
+                        }
+                        else this.error = "Programme inconnu"
+                    }
+                    else this.error = "Veuillez donner une instruction à appliquer"
+                }
+                else this.error = "Veuillez donner le nombre de citoyens limite"
+            }
+            else this.error = "Ajouter une condition 'Plus grand que' ou 'Plus petit que'"
+        },          
 
         /** traite les cases de 'Données' et les cases 'Divers' */
         checkDiverse(pos){
@@ -205,6 +243,9 @@ export default {
                  }
                  else if (this.programme[pos+2] !== undefined){
                     this.getHeure(pos+2);
+                 }
+                 else{
+                    this.error = "Il faut donner une heure de fermeture";
                  }
             }
             else if (this.programme[pos].title === 'réinitialiser') {
