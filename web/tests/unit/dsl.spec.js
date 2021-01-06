@@ -85,10 +85,48 @@ describe('Tests DSL guidage', () => {
             {id: 14, title: "fermeture", position: 4, type: 4, list: 2},
             {id: 7, title: "Input", input: "30", position: 5, type: 5, list: 2},
             {id: 12, title: "heures", position: 6, type: 4, list: 2}
-    ]);
+        ]);
 
         expect(wrapper.html()).toContain("Le nombre donné n'est pas une heure")
     });
+    it('display error message if just "reinitialiser"', async () => {
+        const wrapper = mount(Interpreteur)
+        const wrapperDSL = wrapper.findComponent(DSL);
+        await wrapperDSL.vm.$emit('launch', [
+            {id: 15, title: "réinitialiser", position: 3, type: 4, list: 2},
+        ]);
+
+        expect(wrapper.html()).toContain("Programme inconnu")
+    });
+
+    it('display error message if "pour tous" without entity', async () => {
+        const wrapper = mount(Interpreteur)
+        const wrapperDSL = wrapper.findComponent(DSL);
+        await wrapperDSL.vm.$emit('launch', [
+            {id: 15, title: "réinitialiser", position: 3, type: 4, list: 2},
+            {id: 12, title: "heures", position: 4, type: 4, list: 2},
+            {id: 14, title: "fermeture", position: 5, type: 4, list: 2},
+            {id: 0, title: "Pour tous", input: "", position: 6, type: 1},
+        ]);
+
+        expect(wrapper.html()).toContain("Une condition 'Pour tout' doit être accompagnée d'une Entité")
+    });
+
+    it('display error message if "fermeture" without hour 2', async () => {
+        const wrapper = mount(Interpreteur)
+        const wrapperDSL = wrapper.findComponent(DSL);
+        await wrapperDSL.vm.$emit('launch', [
+            {id: 14, title: "fermeture", position: 2, type: 4, list: 2},
+            {id: 12, title: "heures", position: 3, type: 4, list: 2},
+            {id: 0, title: "Pour tous", input: "", position: 4, type: 1},
+            {id: 13, title: "magasins", position: 5, type: 3, list: 2}
+        ]);
+
+        expect(wrapper.html()).toContain("Il est nécessaire d'écrire une heure")
+    });
+
+
+
 
 });
 
