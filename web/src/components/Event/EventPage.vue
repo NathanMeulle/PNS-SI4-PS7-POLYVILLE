@@ -133,9 +133,7 @@ name: "EventPage",
         },
 
       ajoutRegle(regle){
-          if(regle[0] === "condition affichage"){
-            this.regle = "Affichage si le nombre de citoyen en " + regle[2] + " supérieur à " + regle[1]
-          }
+          this.regle = regle
       }
     },
 }
