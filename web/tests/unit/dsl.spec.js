@@ -8,7 +8,6 @@ describe('Tests DSL guidage', () => {
         const wrapperInterpreteur = mount(Interpreteur)
         const text = wrapperInterpreteur.find('span')
         expect(text.text()).toContain('')
-
     });
 
     it('send data to Interpreteur', async () => {

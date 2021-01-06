@@ -49,6 +49,7 @@
             </div>
         </div>
         <MapComponent class="map" v-bind:filterOption="loadCheckbox" v-bind:filterStore="storeToDisplay" ></MapComponent>
+        <button id="MoveButton" v-on:click="moveCitizens">Simuler Déplacement Citoyens</button>
       <AffichageRegles/>
 
     </div>
@@ -68,7 +69,8 @@
         data() {
             return {
                 checkedOptions: ["Commerces"],
-                storeToDisplay : "Tout"
+                storeToDisplay : "Tout",
+                moveCounter : 0
             }
         },
         computed: {
@@ -87,6 +89,13 @@
             log(a) {
                 console.log(a);
             },
+            moveCitizens(){
+                this.moveCounter +=1;
+                this.$store.dispatch('deplacerCitoyens', {
+                    count: this.moveCounter
+                });
+                console.log("move Citizens", this.moveCounter % 4)
+            }
         },
 
     };

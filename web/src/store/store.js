@@ -93,6 +93,14 @@ export default createStore({
                     j++
                 }
             }
+        },
+
+        moveCitizens(state, payload) {
+            for (let i = 0; i < this.state.positionsModule.positions[0].clients.length; i++) {
+                this.state.positionsModule.positions[0].clients[i].position.x = this.state.villeModule.Ville[0].ville.zones[payload.args.count % 4].position.x;
+                this.state.positionsModule.positions[0].clients[i].position.y = this.state.villeModule.Ville[0].ville.zones[payload.args.count % 4].position.y;
+            }
+
         }
     },
     getters:{
@@ -128,6 +136,18 @@ export default createStore({
                 console.log('error ', error);
             }
         },
+        /** Lance la mutation appliquant la règle de déplacement de citoyens
+         *  @param args : counter
+         **/
+        async deplacerCitoyens(context,args){
+            try{
+                context.commit('moveCitizens',{args : args})
+            }
+            catch(error){
+                console.log('error ', error);
+            }
+        },
+
     }
 
 })

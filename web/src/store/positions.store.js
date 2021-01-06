@@ -36,9 +36,6 @@ export const positionModule = {
             positions: PositionMock,
         }
     },
-    mutations:{
-
-    },
     getters:{
         numberOfCitizens: (state) => {
             var nbCitizens = 0;
