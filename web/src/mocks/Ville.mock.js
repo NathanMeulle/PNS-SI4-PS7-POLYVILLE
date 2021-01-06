@@ -292,7 +292,7 @@ export const VilleMock = [
         "nom" : "Vincent",
         "prenom" : "Romane"
       },
-      "categorie" : "Magasin De Bricolage",
+      "categorie" : "Boulangerie",
       "horaires" : [ {
         "semaine" : {
           "Lundi" : [ {
@@ -6130,7 +6130,7 @@ export const VilleMock = [
         "nom" : "Poupard",
         "prenom" : "Cedric"
       },
-      "categorie" : "Bureautique",
+      "categorie" : "Boulangerie",
       "horaires" : [ {
         "semaine" : {
           "Lundi" : [ {

@@ -86,7 +86,7 @@ name: "EventPage",
       Description: "",
       Logo:"fas fa-exclamation-circle",
         onClick : false,
-        regle:"",
+        regle: "",
     };
   },
     computed : {

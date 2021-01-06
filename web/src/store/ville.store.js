@@ -10,6 +10,34 @@ function clone(obj){
     }
     return copy;
 }
+/**
+ *
+ * Test if a point is on a square of center (a,b)
+ *
+ * @param x -> coordinate x of the citizen / policeman
+ * @param y ->  coordinate y of the citizen / policeman
+ * @param a -> coordinate x of the center of the zone
+ * @param b -> coordinate y of the center of the zone
+ * @returns boolean
+ */
+
+
+export function isInSquare(x, y, a, b){
+    let bottomLeftX = (a-0.010);
+    let bottomLeftY = (b-0.010);
+    let topRightX = (a+0.010);
+    let topRightY = (b+0.010);
+
+    let inX = false;
+    let inY = false;
+    if (x > bottomLeftX && x <  topRightX )
+        inX = true;
+
+    if (y > bottomLeftY  && y < topRightY)
+        inY = true;
+
+    return (inX && inY);
+}
 
 export const villeModule = {
     namespace: false,
@@ -158,6 +186,16 @@ export const villeModule = {
                 }
             });
             return adress;
+        },
+        getZoneCommerce : (state,getters) => (commerce) => {
+            let myZone = null;
+            getters.getZones.forEach(zone => {
+                if (isInSquare(commerce.position.x,commerce.position.y,zone.position.x,zone.position.y)) {
+                    myZone = zone;
+                }
+            })
+            return myZone;
+
         }
     },
     actions: {
