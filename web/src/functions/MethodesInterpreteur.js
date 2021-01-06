@@ -119,7 +119,7 @@ export default {
         /** Renvoie l'heure donnée dans un programme **/
         getHeure(pos){
             if(this.programme[pos] !== undefined && this.programme[pos].title === "heures"){
-               
+
                 if(pos < 1 || this.programme[pos-1].title!== 'Input' || this.programme[pos-1].input === "") this.error = "Il est nécessaire d'écrire une heure";
                 else{
                     this.heure = Number(this.programme[pos-1].input)
@@ -133,6 +133,7 @@ export default {
                             if(!existe){
                                 this.$store.dispatch('setClosingHour', {hour : this.heure, zone : this.zoneToApply});
                             } 
+
                             else {
                                 this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"};
                                 this.showModal=true
@@ -154,7 +155,7 @@ export default {
 
         /** Gestion d'un programme contenant une case Pour **/
         Pour(){
-            
+
             if(this.programme.length>0){
                 this.programme.forEach((item,index)=>{
                     if(item.title === "Pour tous"){
@@ -165,7 +166,7 @@ export default {
         },
         /** Vérifie qu'on a bien une Entité */
         checkEntity(pos){
-            
+
             if( !(this.programme[pos] !== undefined && this.programme[pos].type===3) ){
                 this.error = "Une condition 'Pour tout' doit être accompagnée d'une Entité";
             }
@@ -178,7 +179,7 @@ export default {
                     else{
                         this.zoneToApply = "";
                         this.checkDiverse(pos+1);
-                    }   
+                    }
                 }
                 else if (this.programme[pos-2] !== undefined && this.programme.length <=5){
                     // cas où la case diverse est avant le 'Pour tous'
@@ -207,6 +208,14 @@ export default {
                     else this.error = 'Ajoutez la case "Zone du magasin"'
                 }
             }
+            else if(this.programme.length === 4){
+                if(this.programme[2].title === "afficher" && this.programme[3].title === "événement"){
+                    let regle = {name:"affichage pour un type de magasins",magasin:this.programme[1].title}
+                    this.$emit("ajoutRegleEvenement", regle)
+                    this.error =''
+                    this.reussite = "Programme validé"
+                }
+            }
             else this.error = 'Programme inconnu'
         },
 
@@ -219,7 +228,7 @@ export default {
                     nbCitoyens = Number(this.programme[6].input)
                     if (this.programme[7].title === 'Alors') {
                         if (this.programme[8].title === 'afficher' && this.programme[9].title === 'événement') {
-                            let regle = ["condition affichage pour type de magasins",nbCitoyens]
+                            let regle = {name:"condition affichage pour type de magasins",citoyen:nbCitoyens,magasin:this.programme[1].title}
                             this.$emit("ajoutRegleEvenement", regle)
                             this.error =''
                             this.reussite = "Programme validé"
@@ -231,7 +240,7 @@ export default {
                 else this.error = "Veuillez donner le nombre de citoyens limite"
             }
             else this.error = "Ajouter une condition 'Plus grand que' ou 'Plus petit que'"
-        },          
+        },
 
         /** traite les cases de 'Données' et les cases 'Divers' */
         checkDiverse(pos){
@@ -242,8 +251,8 @@ export default {
                 this.getHeure(pos);
             }
             else if (this.programme[pos].title === 'fermeture'){
-                 if (this.checkReinitialiser(pos-1)){ // cas réinitialiser avant le 'magasins' 
-                 
+                 if (this.checkReinitialiser(pos-1)){ // cas réinitialiser avant le 'magasins'
+
                  }
                  else if (this.programme[pos+2] !== undefined){
                     this.getHeure(pos+2);
@@ -253,7 +262,7 @@ export default {
                  }
             }
             else if (this.programme[pos].title === 'réinitialiser') {
-                this.checkDiverse(pos+2);// cas réinitialiser après le 'magasins' 
+                this.checkDiverse(pos+2);// cas réinitialiser après le 'magasins'
             }
             else{
                 this.error = 'Programme inconnu';
