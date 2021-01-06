@@ -50,8 +50,7 @@ export default {
       this.programme = listeCommandes;
       if(this.programme.length===0) this.error="Programme vide";
       else {
-        this.Pour();
-        this.Si()
+        this.lancement()
       }
       if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     }

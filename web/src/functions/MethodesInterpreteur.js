@@ -1,12 +1,19 @@
 export default {
     methods:{
-        /** Méthode permettant d'analyser un programme comportant un Si **/
-        Si(){
-            this.checkError();
-            if(this.programme[0].title === 'Si'){
-                if(this.programme.length >1 && this.programme[1].title === 'citoyens') this.SiCitoyens();
-                else this.error = 'Programme inconnu'
+        /** Point de départ de l'interpréteur **/
+        lancement(){
+            if(this.programme.length>0){
+                this.programme.forEach((item,index)=>{
+                    if(item.title === "Pour tous") this.checkEntity(index+1)
+                    else if (item.title === "Si") this.Si(index+1)
+                })
             }
+        },
+
+        /** Méthode permettant d'analyser un programme comportant un Si **/
+        Si(pos){
+            this.checkError();
+            this.checkEntity(pos);
         },
 
         /** Méthode permettant d'analyser un programme comportant Si + citoyens **/
@@ -119,7 +126,7 @@ export default {
         /** Renvoie l'heure donnée dans un programme **/
         getHeure(pos){
             if(this.programme[pos] !== undefined && this.programme[pos].title === "heures"){
-               
+
                 if(pos < 1 || this.programme[pos-1].title!== 'Input' || this.programme[pos-1].input === "") this.error = "Il est nécessaire d'écrire une heure";
                 else{
                     this.heure = Number(this.programme[pos-1].input)
@@ -132,7 +139,7 @@ export default {
                             let existe = this.verifierExistence('Fermeture magasins',regles);
                             if(!existe){
                                 this.$store.dispatch('setClosingHour',this.heure);
-                            } 
+                            }
                             else {
                                 this.type = {programme: this.programme,titre: "Conflit concernant l'heure de fermeture des magasins"};
                                 this.showModal=true
@@ -152,20 +159,10 @@ export default {
             }
         },
 
-        /** Gestion d'un programme contenant une case Pour **/
-        Pour(){
-            
-            if(this.programme.length>0){
-                this.programme.forEach((item,index)=>{
-                    if(item.title === "Pour tous"){
-                        this.checkEntity(index+1);
-                    }
-                })
-            }
-        },
-        /** Véréfie qu'on a bien une Entité */
+
+        /** Vérifie qu'on a bien une Entité */
         checkEntity(pos){
-            
+            console.log(this.programme[pos],pos)
             if( !(this.programme[pos] !== undefined && this.programme[pos].type===3) ){
                 this.error = "Une condition 'Pour tout' doit être accompagnée d'une Entité";
             }
@@ -178,7 +175,7 @@ export default {
                     else{
                         this.zoneToApply = "";
                         this.checkDiverse(pos+1);
-                    }   
+                    }
                 }
                 else if (this.programme[pos-2] !== undefined && this.programme.length <=5){
                     // cas où la case diverse est avant le 'Pour tous'
@@ -192,19 +189,26 @@ export default {
                 this.error = 'Programme inconnu';
             }
             else if (this.programme[pos].title === 'citoyens'){
-                this.error = 'Programme inconnu';
+                this.SiCitoyens();
             }
-            else if(this.programme[1].title==='Boulangerie'||this.programme[1].title==='Bar') this.forMagasinEvent();
+            else if(this.programme[pos].title==='Boulangerie'||this.programme[pos].title==='Bar') this.forMagasinEvent(pos);
         },
 
         /** Gestion d'un programme qui parcoure un type de magasin pour la gestion d'événement **/
-        forMagasinEvent(){
+        forMagasinEvent(pos){
             if(this.programme.length === 10) {
-                if (this.programme[2].title === 'Si' && this.programme[3].title === 'citoyens') {
-                    if(this.programme[4].title === 'Zone du magasin'){
+                if (this.programme[pos].title === 'Si' && this.programme[pos + 1].title === 'citoyens') {
+                    if (this.programme[pos + 2].title === 'Zone du magasin') {
                         this.forMagasinEventZone()
-                    }
-                    else this.error = 'Ajoutez la case "Zone du magasin"'
+                    } else this.error = 'Ajoutez la case "Zone du magasin"'
+                }
+            }
+            else if(this.programme[pos+2] !== undefined){
+                if(this.programme[pos+1].title === "afficher" && this.programme[pos+2].title === "événement"){
+                    let regle = {"name":"affichage pour un type de magasin","magasin":this.programme[pos].title}
+                    this.$emit("ajoutRegleEvenement", regle)
+                    this.error =''
+                    this.reussite = "Programme validé"
                 }
             }
             else this.error = 'Programme inconnu'
@@ -221,7 +225,7 @@ export default {
                         if (this.programme[8].title === 'afficher' && this.programme[9].title === 'événement') {
                             let regle = ["condition affichage pour type de magasins",nbCitoyens]
                             this.$emit("ajoutRegleEvenement", regle)
-                            this.error =''
+                            this.error = ''
                             this.reussite = "Programme validé"
                         }
                         else this.error = "Programme inconnu"
@@ -231,7 +235,7 @@ export default {
                 else this.error = "Veuillez donner le nombre de citoyens limite"
             }
             else this.error = "Ajouter une condition 'Plus grand que' ou 'Plus petit que'"
-        },          
+        },
 
         /** traite les cases de 'Données' et les cases 'Divers' */
         checkDiverse(pos){
@@ -242,8 +246,8 @@ export default {
                 this.getHeure(pos);
             }
             else if (this.programme[pos].title === 'fermeture'){
-                 if (this.checkReinitialiser(pos-1)){ // cas réinitialiser avant le 'magasins' 
-                 
+                 if (this.checkReinitialiser(pos-1)){ // cas réinitialiser avant le 'magasins'
+
                  }
                  else if (this.programme[pos+2] !== undefined){
                     this.getHeure(pos+2);
@@ -253,7 +257,7 @@ export default {
                  }
             }
             else if (this.programme[pos].title === 'réinitialiser') {
-                this.checkDiverse(pos+2);// cas réinitialiser après le 'magasins' 
+                this.checkDiverse(pos+2);// cas réinitialiser après le 'magasins'
             }
             else{
                 this.error = 'Programme inconnu';

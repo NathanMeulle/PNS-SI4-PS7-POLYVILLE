@@ -37,8 +37,7 @@ export default {
       if(this.programme.length===0) this.error="Programme vide";
       else {
         console.log("mon programme : ", this.programme)
-        this.Si()
-        this.Pour()
+        this.lancement()
       }
       if(this.error === "" && this.reussite === "") this.error = "Programme inconnu"
     }
