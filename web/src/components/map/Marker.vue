@@ -51,7 +51,7 @@
             </l-marker>
         </div>
         <div v-else>
-            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id)">
+            <l-marker :lat-lng="position" @moveend="log('moveend')" @click="sendId(id), toDisplay('Bienvenue ' + name)">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>

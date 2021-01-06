@@ -121,7 +121,7 @@ name: "EventPage",
             store.commit({
                 type: "addEvent",
                 name: this.NomEvenement,
-                logo : this.logo,
+                logo : this.Logo,
                 location : this.NomPointInteret,
                 description: this.Description,
                 coordonate: pos,

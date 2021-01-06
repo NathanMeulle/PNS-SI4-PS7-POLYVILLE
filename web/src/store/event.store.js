@@ -32,8 +32,8 @@ export const eventModule = {
             if (payload.location != undefined) {
                 store.getters.loadCommerces.forEach(commerce => {
                     if (commerce.nom === payload.location) {
-                        x = commerce.position.x;
-                        y = commerce.position.y;
+                        x = commerce.position.x ;
+                        y = commerce.position.y + 0.0010;
                     }
                 })
             }
@@ -49,10 +49,6 @@ export const eventModule = {
                     "y" : y,
                 },
             })
-            /*
-            state.events.push([lenghtList,payload.name, payload.description, payload.coordonate, payload.regle,payload.logo])
-            */
-            console.log(state.events);
         },
         sendEventId: (state, payload) => {
             state.currentID = payload.id;
