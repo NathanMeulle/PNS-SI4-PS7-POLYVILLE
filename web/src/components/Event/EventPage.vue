@@ -1,6 +1,6 @@
 <template>
   <div class="putInLine">
-  <div>
+  <div >
     <div>
       Nom de l'événement :
       <input v-model="NomEvenement" placeholder="Titre de l'événement" maxlength="24"/>
@@ -34,7 +34,7 @@
     <div v-if="regle!==''">
       Regle : {{regle}}
     </div>
-    <button v-on:click="validation">Validation</button>
+    
     <div id="reussite" v-if="valid!==''">{{valid}}</div>
     <div id="error" v-else>{{error}}</div>
   </div>
@@ -47,8 +47,14 @@
             :Logo="Logo"
     ></PrintEvent>
 </div>
+
   </div>
-  <div>
+  <div class= "centerDiv">
+  
+    <button id ="bouton1" class="bouton" v-on:click="showDSL">Ajouter une règle</button>
+    <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
+    </div>
+  <div id="DSL" style = "display: none">
 
   <div>
     <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
@@ -133,6 +139,10 @@ name: "EventPage",
                 regle: this.regle,
             })
         },
+        showDSL(){
+          document.getElementById("DSL").style.display = "block";
+          document.getElementById("bouton1").style.display = "none";
+        },
         showMap(){
             this.displayPopUp=true;
         },
@@ -174,7 +184,28 @@ name: "EventPage",
     #reussite{
       color: green;
     }
+    .centerDiv{
+      margin-top: 50px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end
+      
+    }
 
+.bouton{
+  border-radius: 40px;
+  text-align: center;
+  font-family: "Sofia", sans-serif;
+  font-size: 18px;
+  border: 3px solid rgb(13, 88, 57);
+  cursor: pointer;
+  background-color: rgb(187, 238, 195);
+  font-weight: bold;
+  width:200px;
+  height: 50px;
+  box-shadow: 4px 4px 2px 1px #266027;
+}
 
 
 </style>
