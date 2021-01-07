@@ -21,7 +21,7 @@ Each commit must be associated with a github issue. The submitted code must be c
   ### Branch organization
   Our branches are organized as follows: 
   * a `master` branch for renderings
-  * a `develop` branch, stable and tested for the next rendering
+  * a `dev` branch, stable and tested for the next rendering
   * a `newfeaturename` branch to develop new features
   
   ### Add a branch
