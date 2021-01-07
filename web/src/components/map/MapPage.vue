@@ -30,6 +30,12 @@
                 Présence Policière
             </span>
         </label>
+        <label class="container" for="checkboxEvent">
+            <input type="checkbox" id="checkboxEvent" value="Event" v-model="loadCheckbox" v-on:input="doSelect('Event')">
+            <span class="checkmark">
+                Évènement
+            </span>
+        </label>
 
         </div>
             <div class="dropdown">

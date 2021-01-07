@@ -111,6 +111,7 @@
 
 
         </div>
+        <div v-if="filterOption.includes('Event')" class="event">
         <Marker
                 v-for="events in getEvents"
                 :key="events.id"
@@ -124,6 +125,7 @@
                 @displayevent="displayEvent=true,displayHours=false"
                 @click="displayEvent=true"
         />
+        </div>
 
 
       </l-map>

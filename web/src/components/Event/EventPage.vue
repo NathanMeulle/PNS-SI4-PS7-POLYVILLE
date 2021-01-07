@@ -1,4 +1,5 @@
 <template>
+  <div class="wrapperUp">
   <div class="split NW">
     <div>
       Nom de l'événement :
@@ -48,10 +49,13 @@
     ></PrintEvent>
 
   </div>
+  </div>
+  <div class="wrapperDown">
 
   <div class="S">
     <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
 
+  </div>
   </div>
   <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
 
@@ -117,7 +121,7 @@ name: "EventPage",
         validation() {
             console.log(this.getPosition[0])
             if(this.NomEvenement === "") this.error = "Veuillez rentrer un nom pour votre événement"
-            else if (this.getPosition[0] === undefined && this.NomPointInteret === "") this.error = "Veuillez rentrer une position ou un" +
+            else if (this.getPosition[0] === undefined && this.NomPointInteret === "" && this.regle==="") this.error = "Veuillez rentrer une position ou un" +
                 " point d'intérêt pour votre événement"
             else this.valid = "Evénement enregistré"
             let pos = [this.getPosition[0],this.getPosition[1]]
@@ -153,13 +157,22 @@ name: "EventPage",
         margin-left: 20px;
         overflow-x: hidden;
     }
+    .wrapperUp {
+      height: 50%;
+      width: 100%;
+    }
     .NW {
+        height: 50%;
+        width: 50%;
         top: auto;
         left: 0;
     }
 
     /* Control the right side */
     .NE {
+        height: 50%;
+        width: 50%;
+        justify-content: right;
         right: 0;
         top: auto;
 

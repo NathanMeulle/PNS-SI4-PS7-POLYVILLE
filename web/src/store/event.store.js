@@ -85,23 +85,20 @@ export const eventModule = {
                     for (let i = 0; i<getters.loadCommerces.length;i++) {
                         let commerce = getters.loadCommerces[i];
                         let zoneCommerce = getters.getZoneCommerce(commerce);
-                        if (    (commerce.categorie === event.regle.magasin)    ) {
-                            if  ( event.regle.citoyen <= getters.getCitizen(zoneCommerce.id) ) {
-
+                        if (    (commerce.categorie === event.regle.magasin)   &&  ( event.regle.citoyen <= getters.getCitizen(zoneCommerce.id) )  ) {
                             let m = eventsToDisplay.length;
-                            eventsToDisplay.push( {
-                                "id" : n+m,
-                                "name" : event.name,
-                                "location" : "",
-                                "description" : event.description,
-                                "regle" : "",
-                                "logo" : event.logo,
-                                "position" : {
-                                    "x" : commerce.position.x,
-                                    "y" : commerce.position.y,
+                            eventsToDisplay.push({
+                                "id": n + m,
+                                "name": event.name,
+                                "location": "",
+                                "description": event.description,
+                                "regle": "",
+                                "logo": event.logo,
+                                "position": {
+                                    "x": commerce.position.x,
+                                    "y": commerce.position.y,
                                 },
                             })
-                        }
                         }
                     }
 
@@ -127,6 +124,7 @@ export const eventModule = {
                     }
                 }
             });
+            console.log(eventsToDisplay);
             return eventsToDisplay;
         },
         getEventId : (state) => {

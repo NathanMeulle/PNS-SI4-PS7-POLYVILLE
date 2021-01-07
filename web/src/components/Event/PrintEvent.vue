@@ -32,18 +32,23 @@ export default {
 
 <style scoped>
 h2 {
-  margin-left: 30%;
-  margin-right: 30%;
-  border-width: 2px;
-  background-color: yellow;
+
+  margin: 10px;
+  background-color: #28ff3a;
+  border-radius: 50px;
+  border: 3px solid #0cb50b;
+  justify-content: center;
+
 }
 .majorText {
   margin-right: 30%;
-  color: red;
+  color: #1f1e1f;
+  justify-content: center;
 }
 .descriptionText {
   font-weight: 200;
   font-size: 80%;
   text-align: center;
+  justify-content: center;
 }
 </style>

@@ -46,7 +46,7 @@
             </l-marker>
         </div>
         <div v-else-if="iconType==='Events'" >
-            <l-marker :lat-lng="position" :icon="Events" @moveend="log('moveend')" @click="sendEventId(id), toDisplay('Bienvenue ' + name)">
+            <l-marker :lat-lng="position" :icon="Events" @moveend="log('moveend')" @click="sendEventId(id), toDisplay('EVENEMENT')">
                 <MarkerPopup v-bind:msg="msg"/>
             </l-marker>
         </div>
