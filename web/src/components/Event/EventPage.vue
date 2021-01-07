@@ -27,14 +27,13 @@
     </div>
     <br/>
     <div> Coordonnées :
-      <button v-on:click="showMap">Afficher la carte</button>
-      <p>Les coordonnées de l'évenements sont : {{getPosition}}</p>
+      <button v-on:click="showMap" id="popupMap"  class="bouton">Afficher la carte</button>
     </div>
 
     <div v-if="regle!==''">
       Regle : {{regle}}
     </div>
-    
+
     <div id="reussite" v-if="valid!==''">{{valid}}</div>
     <div id="error" v-else>{{error}}</div>
   </div>
@@ -50,7 +49,7 @@
 
   </div>
   <div class= "centerDiv">
-  
+
     <button id ="bouton1" class="bouton" v-on:click="showDSL">Ajouter une règle</button>
     <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
     </div>
@@ -124,9 +123,14 @@ name: "EventPage",
         },
         validation() {
             console.log(this.getPosition[0])
+            store.commit({
+              type : "addLocation",
+              location : this.NomPointInteret,
+            })
             if(this.NomEvenement === "") this.error = "Veuillez rentrer un nom pour votre événement"
             else if (this.getPosition[0] === undefined && this.NomPointInteret === "" && this.regle==="") this.error = "Veuillez rentrer une position ou un" +
                 " point d'intérêt pour votre événement"
+            else if (this.$store.getters.getStoreNotFound.interestPoint && !this.$store.getters.getStoreNotFound.storeFounded ) this.error = "Point d'interêt non existant"
             else this.valid = "Evénement enregistré"
             let pos = [this.getPosition[0],this.getPosition[1]]
             store.commit({
@@ -158,9 +162,9 @@ name: "EventPage",
     .putInLine {
       display: flex;
       flex-direction: row;
-      
+
     }
-    
+
     .shiftRight{
         width: 50%;
         margin-left: 10%;
@@ -184,13 +188,13 @@ name: "EventPage",
     #reussite{
       color: green;
     }
+
     .centerDiv{
       margin-top: 50px;
       margin-bottom: 20px;
       display: flex;
       justify-content: space-around;
-      align-items: flex-end
-      
+      align-items: flex-end;
     }
 
 .bouton{

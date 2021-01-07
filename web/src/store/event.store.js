@@ -7,6 +7,16 @@ export const eventModule = {
             position :[],
             events: [],
             currentID : 0,
+            location : {
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                },
+            },
+            storeNotFound : {
+                "interestPoint" : false,
+                "storeFounded" : false,
+            },
         }
     },
     mutations: {
@@ -14,6 +24,17 @@ export const eventModule = {
             state.position[0] = payload.lat,
                 state.position[1] = payload.lng,
                 console.log("added : ", state.position);
+        },
+        addLocation :(state, payload) => {
+                state.storeNotFound.interestPoint = true;
+                store.getters.loadCommerces.forEach(commerce => {
+                    if (commerce.nom === payload.location) {
+                        state.storeNotFound.storeFounded = true;
+                        state.location.position.x = commerce.position.x ;
+                        state.location.position.y = commerce.position.y + 0.0005;
+                    }
+                })
+            console.log('LOCATION POINT D INTERET', state.location,state.storeNotFound);
         },
         /**
          * On ajoute un événement à la liste comportant l'ensemble des événements
@@ -30,12 +51,9 @@ export const eventModule = {
                 y = payload.coordonate[1];
             }
             if (payload.location != undefined) {
-                store.getters.loadCommerces.forEach(commerce => {
-                    if (commerce.nom === payload.location) {
-                        x = commerce.position.x ;
-                        y = commerce.position.y + 0.0005;
-                    }
-                })
+                x = state.location.position.x;
+                y = state.location.position.y;
+
             }
             state.events.push( {
                 "id" : lenghtList,
@@ -58,6 +76,10 @@ export const eventModule = {
         getPosition: (state) => {
             console.log("getter store : ", state.position);
             return state.position;
+        },
+        getStoreNotFound : (state) => {
+            console.log('GETTER STORE NOT FOUND',state.storeNotFound)
+            return state.storeNotFound;
         },
         /**
          *
@@ -96,7 +118,7 @@ export const eventModule = {
                                 "logo": event.logo,
                                 "position": {
                                     "x": commerce.position.x,
-                                    "y": commerce.position.y,
+                                    "y": commerce.position.y + 0.0003,
                                 },
                             })
                         }
@@ -117,7 +139,7 @@ export const eventModule = {
                                 "logo" : event.logo,
                                 "position" : {
                                     "x" : getters.loadCommerces[i].position.x,
-                                    "y" : getters.loadCommerces[i].position.y,
+                                    "y" : getters.loadCommerces[i].position.y + 0.0005,
                                 },
                             })
                         }

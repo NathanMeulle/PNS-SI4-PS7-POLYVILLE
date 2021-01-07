@@ -35,7 +35,7 @@ export default createStore({
         return {
             infoCircle : "",
             idStore : 0,
-            checkedOptions: ["Commerces"],
+            checkedOptions: ["Commerces","Event"],
             displaypolice : true,
         }
     },

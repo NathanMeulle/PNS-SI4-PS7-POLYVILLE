@@ -79,7 +79,7 @@
         },
         data() {
             return {
-                checkedOptions: ["Commerces"],
+                checkedOptions: ["Commerces","Event"],
                 storeToDisplay : "Tout",
                 moveCounter : 0
             }
@@ -258,6 +258,7 @@
         right: 20px;
         bottom: 20px;
     }
+
 
 
 </style>

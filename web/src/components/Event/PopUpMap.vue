@@ -26,6 +26,7 @@
 
                                     </div>
                                 </l-map>
+                                <h5>Coordonnnées : {{getPosition}}</h5>
                             </div>
                     </div>
 
