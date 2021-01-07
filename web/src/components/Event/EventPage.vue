@@ -47,7 +47,7 @@
   </div>
   <div class= "centerDiv">
     
-    <div id ="bouton1" class="bouton" v-on:click="showDSL"><i class="fas fa-sort-down" style="font-size: 30px"></i> Ajouter une règle
+    <div id ="bouton1" class="bouton"> <div v-on:click="showDSL"><i class="fas fa-sort-down" style="font-size: 30px"></i> Ajouter une règle</div>
       
 <div id="DSL" style = "display: none">
 
