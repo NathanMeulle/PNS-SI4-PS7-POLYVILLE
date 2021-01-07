@@ -6,8 +6,10 @@
         <em>Nom de l'événement : </em>
         <em  class="descriptionText">{{ NomEvenement }}</em>
       </p>
-      <p>Événement à : </p>
-      <p class="majorText">{{ NomPointInteret }}</p>
+      <div v-if="nomPointInt !==''">
+        <p>Événement à : </p>
+        <p class="descriptionText">{{ NomPointInteret }}</p>
+      </div>
       <p style="white-space: pre-line">Description de l'événement :</p>
       <p class="descriptionText">{{ Description }}</p>
       <div v-if="Regle !== ''">
@@ -31,11 +33,13 @@ export default {
   data() {
     return {
       regle: {},
-      resultat: ""
+      resultat: "",
+      nomPointInt: "",
     };
   },
 
   updated() {
+    this.nomPointInt = this.NomPointInteret
     this.regle = this.Regle
     if(this.regle.name === "affichage pour type de magasins"){
       this.resultat = "L'affichage de cet événement se fera sur tous/toutes les " + this.regle.magasin + " de la ville."
