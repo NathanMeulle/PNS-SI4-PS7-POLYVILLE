@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapperUp">
-  <div class="split NW">
+  <div class="putInLine">
+  <div>
     <div>
       Nom de l'événement :
       <input v-model="NomEvenement" placeholder="Titre de l'événement" maxlength="24"/>
@@ -38,8 +38,7 @@
     <div id="reussite" v-if="valid!==''">{{valid}}</div>
     <div id="error" v-else>{{error}}</div>
   </div>
-  <div class="split NE">
-
+  <div class = "shiftRight">
     <h2>Aperçu de l'événement :</h2>
     <PrintEvent
             :NomPointInteret="NomPointInteret"
@@ -47,12 +46,11 @@
             :Description="Description"
             :Logo="Logo"
     ></PrintEvent>
-
+</div>
   </div>
-  </div>
-  <div class="wrapperDown">
+  <div>
 
-  <div class="S">
+  <div>
     <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
 
   </div>
@@ -147,42 +145,15 @@ name: "EventPage",
 </script>
 
 <style scoped>
-
-    .split {
-        height: 45%;
+    .putInLine {
+      display: flex;
+      flex-direction: row;
+      
+    }
+    
+    .shiftRight{
         width: 50%;
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        margin-left: 20px;
-        overflow-x: hidden;
-    }
-    .wrapperUp {
-      height: 50%;
-      width: 100%;
-    }
-    .NW {
-        height: 50%;
-        width: 50%;
-        top: auto;
-        left: 0;
-    }
-
-    /* Control the right side */
-    .NE {
-        height: 50%;
-        width: 50%;
-        justify-content: right;
-        right: 0;
-        top: auto;
-
-    }
-    .S {
-        border-top: 3px solid #0cb50b;
-        position: absolute;
-        height: 50%;
-        width: 99%;
-        top: 55%
+        margin-left: 10%;
     }
 
     textarea {
