@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="modal-default-button" @click="$emit('close')">
-                        Fermer
+                        Valider
                     </div>
 
                 </div>

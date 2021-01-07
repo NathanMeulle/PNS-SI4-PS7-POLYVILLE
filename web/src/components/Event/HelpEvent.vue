@@ -15,6 +15,10 @@
               </div>
               <br/>
               <div class="bouton" id="b2" v-on:click="init = false;typeMagasins = true">
+                Créer un événement pour tous les magasins d'un même type
+              </div>
+              <br/>
+              <div class="bouton" id="b3" v-on:click="init = false;typeMagasinsEtCondition = true">
                 Créer un événement pour tous les magasins d'un même type en fonction du nombre de citoyens proches
               </div>
             </div>
@@ -26,11 +30,18 @@
             Si => citoyens => zone X => plus grand que => "entrer une valeur" => alors => afficher => événement
           </div>
             <br/>
-            <div v-if="typeMagasins">
+            <div v-if="typeMagasinsEtCondition">
               Créer un événement pour tous les magasins d'un même type en fonction du nombre de citoyens proches :
               <br/>
               <br/>
               Pour tous => "type de magasin" => Si => citoyens => zone magasin => plus grand que => "entrer une valeur" => alors => afficher => événement
+            </div>
+            <br/>
+            <div v-if="typeMagasins">
+              Créer un événement pour tous les magasins d'un même type :
+              <br/>
+              <br/>
+              Pour tous => "type de magasin" => afficher => événement
             </div>
             <br/>
             <div class="bouton"  v-if="init === false" v-on:click="init = true;affichageNbCitoyens = false;typeMagasins = false">
@@ -54,7 +65,7 @@ export default {
     return{
       init: true,
       affichageNbCitoyens: false,
-      typeMagasins: false,
+      typeMagasinsEtCondition: false,
     }
   }
 }
@@ -122,6 +133,10 @@ export default {
 }
 
 #b2{
+  width: 70%;
+}
+
+#b3{
   width: 70%;
 }
 

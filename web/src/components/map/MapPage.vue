@@ -38,10 +38,10 @@
         </label>
 
         </div>
-            <div class="dropdown">
+            <div class="dropdown" id="menuDeroulant">
                 <button class="dropbtn">
                     {{storeToDisplay}}
-                    <em class="fa fa-caret-down"></em>
+                    <em class="fa fa-caret-down" id="fleche"></em>
                 </button>
                 <div class="dropdown-content">
                     <a href="#" @click="storeToDisplay = 'Bar',log('TEST : ' + storeToDisplay)">Bar</a>
@@ -247,6 +247,15 @@
     /* Show the checkmark when checked */
     .container input:checked ~ .checkmark:after {
         display: block;
+    }
+
+    #menuDeroulant{
+      width: 10%;
+    }
+
+    #fleche{
+      float: right;
+      margin-left: 3px;
     }
 
 
