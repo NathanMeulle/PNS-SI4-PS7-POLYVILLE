@@ -249,14 +249,6 @@
         display: block;
     }
 
-    #menuDeroulant{
-      width: 10%;
-    }
-
-    #fleche{
-      float: right;
-      margin-left: 3px;
-    }
 
 
 </style>
