@@ -49,18 +49,17 @@
 
   </div>
   <div class= "centerDiv">
-
     <button id ="bouton1" class="bouton" v-on:click="showDSL">Ajouter une règle</button>
-    <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
-    </div>
+  </div>
   <div id="DSL" style = "display: none">
 
   <div>
     <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
-
   </div>
   </div>
   <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
+  <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
+  <i class="fas fa-sort-down"></i>
 
 
 </template>
@@ -209,6 +208,10 @@ name: "EventPage",
   width:200px;
   height: 50px;
   box-shadow: 4px 4px 2px 1px #266027;
+}
+
+#bouton2{
+  margin-top: 5%;
 }
 
 
