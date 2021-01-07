@@ -1,6 +1,6 @@
 <template>
   <div>
-    Graphique des horaires du magasin
+    Horaires du magasin :
     {{ updateData() }}
     <div class="field is-grouped">
       <div class="control">
@@ -67,7 +67,7 @@ const options = {
         },
         scaleLabel: {
           display: true,
-          labelString: "Hour",
+          labelString: "Heure",
         },
         stacked: false,
         afterTickToLabelConversion: function (q) {
@@ -91,7 +91,7 @@ const options = {
       },
     },
     onClick: function (e, legendItem) {
-      
+
       // permet de lier les après-midis aux matinées dans la légende
       // afin d'avec 1 clic masquer/afficher les horaires de la semaines
       var index = legendItem.datasetIndex;

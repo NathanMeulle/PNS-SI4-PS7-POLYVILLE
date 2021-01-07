@@ -56,3 +56,19 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Tests & Coverage:
+
+### Run tests
+
+```
+npm run test:unit
+```
+
+### Run Coverage
+
+```
+npm run test:coverage
+```
+
+

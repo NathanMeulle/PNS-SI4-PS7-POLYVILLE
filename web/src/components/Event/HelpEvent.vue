@@ -10,39 +10,41 @@
             <div v-if="init">
               <h3>Choisissez le programme que vous voulez connaître : </h3>
               <br/>
-              <div class="bouton" id="b1" v-on:click="init = false;changerFermeture = true">
-                Modifier l'horaire de fermetures des magasins de la ville
+              <div class="bouton" id="b1" v-on:click="init = false;affichageNbCitoyens = true">
+                Afficher l'événement en fonction du nombre de citoyens dans une zone donnée
               </div>
               <br/>
-              <div class="bouton" id="b2" v-on:click="init = false;reinitFermeture = true">
-                Réinitialiser les horaires de fermeture des magasins
+              <div class="bouton" id="b2" v-on:click="init = false;typeMagasins = true">
+                Créer un événement pour tous les magasins d'un même type
               </div>
               <br/>
-              <div class="bouton" id="b3" v-on:click="init = false;deplacerPoliciers = true">
-                Déplacer des policiers en fonction d'un nombre de citoyens dans une zone
+              <div class="bouton" id="b3" v-on:click="init = false;typeMagasinsEtCondition = true">
+                Créer un événement pour tous les magasins d'un même type en fonction du nombre de citoyens proches
               </div>
-            </div>
-            <div v-if="changerFermeture">
-              <div>Changer l'horaire de fermeture des magasins de la ville :
-                <br/>
-                <br/>
-                Pour tous => magasins => fermeture => "entrer une heure" => heures
-              </div>
-            </div>
-            <div v-if="reinitFermeture">
-              Réinitialiser les horaires de fermeture des magasins :
-              <br/>
-              <br/>
-              Pour tous => magasins => réinitialiser => heures => fermeture
-            </div>
-            <div v-if="deplacerPoliciers">
-              Attribuer des policiers à une zone en fonction du nombre de citoyens s'y trouvant :
-              <br/>
-              <br/>
-              Si => citoyens => Zone X => Plus grand que ou Plus petit que => "entrer un nombre" => Alors => "entrer un nombre" => policiers => Zone X
             </div>
             <br/>
-            <div class="bouton"  v-if="init === false" v-on:click="init = true;changerFermeture = false;reinitFermeture = false;deplacerPoliciers = false">
+            <div v-if="affichageNbCitoyens">
+              Afficher l'événement en fonction du nombre de citoyens dans une zone donnée :
+              <br/>
+              <br/>
+            Si => citoyens => zone X => plus grand que => "entrer une valeur" => alors => afficher => événement
+          </div>
+            <br/>
+            <div v-if="typeMagasinsEtCondition">
+              Créer un événement pour tous les magasins d'un même type en fonction du nombre de citoyens proches :
+              <br/>
+              <br/>
+              Pour tous => "type de magasin" => Si => citoyens => zone magasin => plus grand que => "entrer une valeur" => alors => afficher => événement
+            </div>
+            <br/>
+            <div v-if="typeMagasins">
+              Créer un événement pour tous les magasins d'un même type :
+              <br/>
+              <br/>
+              Pour tous => "type de magasin" => afficher => événement
+            </div>
+            <br/>
+            <div class="bouton"  v-if="init === false" v-on:click="init = true;affichageNbCitoyens = false;typeMagasins = false">
               Retour à l'aide
             </div>
             <br/>
@@ -58,13 +60,12 @@
 
 <script>
 export default {
-name: "Help",
+  name: "HelpEvent",
   data(){
     return{
       init: true,
-      changerFermeture: false,
-      reinitFermeture: false,
-      deplacerPoliciers: false
+      affichageNbCitoyens: false,
+      typeMagasinsEtCondition: false,
     }
   }
 }
@@ -128,15 +129,16 @@ name: "Help",
 }
 
 #b1{
-  width: 50%;
+  width: 70%;
 }
 
 #b2{
-  width: 50%;
+  width: 70%;
 }
 
 #b3{
-  width: 50%;
+  width: 70%;
 }
+
 
 </style>

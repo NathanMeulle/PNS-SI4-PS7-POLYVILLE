@@ -22,20 +22,20 @@
             </slot>
             <slot name="header" v-if="type==='Conflit concernant l\'heure de fermeture des magasins'">
               <br/>
-                <button class="choix" v-on:click="changerHeureFermeture(choix.apres);$emit('close')" v-if="choix.apres!==-1">{{choix.apres}}h</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.apres);$emit('close')" v-else>Réinitialiser les horaires</button>
-              <button class="choix" v-on:click="changerHeureFermeture(choix.avant);$emit('close')">{{choix.avant}}h</button>
+                <button class="choix" v-on:click="[changerHeureFermeture(choix.apres), $emit('close')]" v-if="choix.apres!==-1">{{choix.apres}}h</button>
+              <button class="choix" v-on:click="[changerHeureFermeture(choix.apres), $emit('close')]" v-else>Réinitialiser les horaires</button>
+              <button class="choix" v-on:click="[changerHeureFermeture(choix.avant), $emit('close')]">{{choix.avant}}h</button>
             </slot>
             <slot name="header" v-if="type==='Conflit concernant le déplacement des policiers'">
               <br/>
-              <button class="choix" v-on:click="changerPoliciers(choix.avant);$emit('close')">{{choix.avant}}</button>
-              <button class="choix" v-on:click="changerPoliciers(choix.apres);$emit('close')">{{choix.apres}}</button>
+              <button class="choix" v-on:click="[changerPoliciers(choix.avant), $emit('close')]">{{choix.avant}}</button>
+              <button class="choix" v-on:click="[changerPoliciers(choix.apres), $emit('close')]">{{choix.apres}}</button>
             </slot>
           </div>
           <br/>
           <div class="modal-header">
             <div class="modal-default-button" @click="$emit('close')">
-              fermer
+              Fermer
             </div>
           </div>
         </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+
 export default {
   name: "PopUp",
   data(){
@@ -64,43 +65,57 @@ export default {
   methods : {
     /** Gère l'affichage des différents conflits possibles entre les règles **/
     afficherConflit(){
-      if(this.type === "Conflit concernant l'heure de fermeture des magasins") this.conflitHeureFermeture()
+      if(this.type === "Conflit concernant l'heure de fermeture des magasins") this.conflitHeureFermeture();
       else if (this.type === "Conflit concernant le déplacement des policiers") this.conflitPoliciers()
     },
 
     /** Gère l'affichage d'un conflit de règles concernant le déplacement de policiers **/
     conflitPoliciers(){
-      let tab = this.$store.getters.getReglePoliciers
-      console.log(tab)
+      let tab = this.$store.getters.getReglePoliciers;
+      console.log(tab);
       this.probleme1 = "Une règle (n°1) concernant le déplacement de policiers dans une zone est déjà en place : "+tab[2]+" policiers "+
-          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+"."
+          tab[3]+" pour "+tab[0]+" citoyens "+tab[1]+".";
 
       this.probleme2 = "Vous avez essayé d'appliquer la règle suivante (n°2) : "+this.programme[6].input+" policiers "+
-          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+"."
+          this.programme[8].title+" pour "+this.programme[4].input+" citoyens "+this.programme[2].title+".";
 
-      this.solution =  "Quelle règle voulez vous appliquer ?"
+      this.solution =  "Quelle règle voulez vous appliquer ?";
       this.choix = {avant: "Règle n°1", apres: "Règle n°2"}
     },
 
     /** Gère l'affichage d'un conflit de règles concernant le changement d'horaires des magasins **/
     conflitHeureFermeture(){
-      let heure = this.$store.getters.getRegleHeureFermeture
-      if(heure!== -1) {
-        this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heure + "h."
+      let heureRegleActuelle = this.getHourProg();
+      let heureReglePrec = this.$store.getters.getRegleHeureFermeture;
+      if(heureReglePrec!== -1) {
+        this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : " + heureReglePrec + "h.";
 
-        this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h."
+        this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + heureRegleActuelle + "h.";
 
         this.solution = "Quelle heure voulez vous choisir ?"
       }
         else{
-          this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires."
+          this.probleme1 = "Une règle modifiant l'heure de fermeture est déjà en place pour : réinitialiser les horaires.";
 
-          this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + this.programme[3].input + "h."
+          this.probleme2 = "Vous avez essayé d'appliquer une nouvelle règle pour : " + heureRegleActuelle + "h.";
 
           this.solution = "Quelle heure voulez vous choisir ?"
         }
-        this.choix = {avant: Number(this.programme[3].input), apres: heure}
+        this.choix = {avant: Number(heureRegleActuelle), apres: heureReglePrec};
         console.log(this.choix)
+    },
+
+    getHourProg(){
+      let res = -1;
+      this.programme.forEach((item,index)=>{
+        if(item.title === 'Input'){
+          index;
+          res = item.input;
+        }
+      })
+      
+      console.log(res);
+      return res;
     },
 
     /** Envoie le choix de l'utilisateur au store pour le changement d'horaires des magasins **/
@@ -123,8 +138,8 @@ export default {
 
   /** Initialise les données provoquant le conflit de règles **/
   created() {
-    this.type = this.value.titre
-    this.programme = this.value.programme
+    this.type = this.value.titre;
+    this.programme = this.value.programme;
     this.afficherConflit()
   }
 }

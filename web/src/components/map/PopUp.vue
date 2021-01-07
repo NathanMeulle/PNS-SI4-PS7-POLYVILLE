@@ -41,7 +41,7 @@
                                 </slot>
                             </div>
                             <div class="modal-default-button" @click="$emit('close')">
-                                fermer
+                                Fermer
                             </div>
 
                         </div>
@@ -89,7 +89,7 @@
 
             },
             getNom() {
-                console.log('NOM : ', this.$store.getters.getNomCommerce(this.id))
+                console.log('NOM : ', this.$store.getters.getNomCommerce(this.id));
                 return this.$store.getters.getNomCommerce(this.id);
             },
             getType() {
@@ -128,7 +128,7 @@
     .modal-container {
         width: 500px;
         height: 600px;
-        margin: 0px auto;
+        margin: 0 auto;
         padding: 20px 30px;
         background-color: #fff;
         border-radius: 10px;

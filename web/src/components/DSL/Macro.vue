@@ -8,7 +8,7 @@
       <div>Raccourci : {{macro[macro.length-1]}}</div>
       <div v-for="item in macro" :key="item.title">
         <div v-if="item.title === 'Input'">
-          <div>Entrer les données concernant ce programme :
+          <div>Entrez les données concernant ce programme :
             {{item.input}}
             <label>
               <input v-model="message[item.id]">
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <button v-on:click="use(macro,macro[macro.length-1])">Cliquer ici pour utiliser ce raccourci</button>
+      <button v-on:click="use(macro,macro[macro.length-1])">Cliquez ici pour utiliser ce raccourci</button>
       <br/>
     </div>
   </div>
@@ -49,16 +49,16 @@ name: "Macro",
 
   /** Initialise les macros existantes **/
   created() {
-    this.mesMacros = this.$store.getters.getMacros
+    this.mesMacros = this.$store.getters.getMacros;
     console.log("macros: ",this.mesMacros)
   },
   methods:{
     /** Vérifie que la valeur donnée en input est bien un nombre **/
     validation(id,macro){
-      const item = macro.find(item => item.id === id)
-      if(!isNaN(this.message[item.id])) item.input = this.message[item.id]
-      else this.error = 'Le champ est vide'
-      this.message[item.id] = ""
+      const item = macro.find(item => item.id === id);
+      if(!isNaN(this.message[item.id])) item.input = this.message[item.id];
+      else this.error = 'Le champ est vide';
+      this.message[item.id] = "";
       console.log("changement input", this.mesMacros)
     },
 
@@ -71,57 +71,57 @@ name: "Macro",
         this.macroDeplacementPoliciers(macro)
       }
       else if(type === "réinitialisation des horaires de fermeture des magasins") {
-        this.reussite = "Horaires réinitialisées"
+        this.reussite = "Horaires réinitialisées";
         this.$store.dispatch('setClosingHour',-1)
       }
     },
 
     /** Déplacement de policiers en fonction des citoyens via la macro, envoie la requête au store **/
     macroDeplacementPoliciers(macro) {
-      let nbCitoyens = Number(macro[4].input)
-      let nbPoliciers = Number(macro[6].input)
-      let zones = {}
-      zones[0] = macro[2].title
-      zones[1] = macro[8].title
-      let infOrSup = ""
+      let nbCitoyens = Number(macro[4].input);
+      let nbPoliciers = Number(macro[6].input);
+      let zones = {};
+      zones[0] = macro[2].title;
+      zones[1] = macro[8].title;
+      let infOrSup = "";
       if (macro[3].title === 'Plus grand que') {
         infOrSup = 'sup'
       }
-      let regles = this.$store.getters.getRegles
-      let existe = this.verifierExistence('Presence policier',regles)
-      console.log("existe :",existe)
-      this.reussite ="Déplacement de policiers effectué"
+      let regles = this.$store.getters.getRegles;
+      let existe = this.verifierExistence('Presence policier',regles);
+      console.log("existe :",existe);
+      this.reussite ="Déplacement de policiers effectué";
       if(!existe) this.$store.dispatch('deplacerPoliciers', {citoyens: nbCitoyens,
-        cond: infOrSup, zone1: zones[0], policiers: nbPoliciers, zone2: zones[1]})
+        cond: infOrSup, zone1: zones[0], policiers: nbPoliciers, zone2: zones[1]});
       else {
-        this.type = {programme: macro,titre: "Conflit concernant le déplacement des policiers"}
+        this.type = {programme: macro,titre: "Conflit concernant le déplacement des policiers"};
         this.showModal=true
       }
     },
 
     /** Changement d'horaires des magasins via une macro, envoie une requête au store **/
     macroChangementHeureFermeture(macro){
-      this.reussite = "Changement d'heure de fermeture effectué"
-      let regles = this.$store.getters.getRegles
-      console.log('regles : ',regles)
-      let existe = this.verifierExistence('Fermeture magasins',regles)
-      console.log("aled : ",existe)
-      if(!existe) this.$store.dispatch('setClosingHour',macro[3].input)
+      this.reussite = "Changement d'heure de fermeture effectué";
+      let regles = this.$store.getters.getRegles;
+      console.log('regles : ',regles);
+      let existe = this.verifierExistence('Fermeture magasins',regles);
+      console.log("aled : ",existe);
+      if(!existe) this.$store.dispatch('setClosingHour',macro[3].input);
       else {
-        this.type = {programme: macro,titre: "Conflit concernant l'heure de fermeture des magasins"}
+        this.type = {programme: macro,titre: "Conflit concernant l'heure de fermeture des magasins"};
         this.showModal=true
       }
     },
 
     /** Vérifie si une règle existe déjà pour éviter les conflits **/
     verifierExistence(titre,regles){
-      let existence = false
+      let existence = false;
       regles.forEach((item)=>{
-        console.log(item)
+        console.log(item);
         if(item.titre === titre){
           existence = true
         }
-      })
+      });
       return existence
     }
   }

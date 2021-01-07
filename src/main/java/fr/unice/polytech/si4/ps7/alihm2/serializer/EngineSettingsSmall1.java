@@ -1,5 +1,6 @@
 package fr.unice.polytech.si4.ps7.alihm2.serializer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.unice.polytech.si4.ps7.alihm2.*;
 import fr.unice.polytech.si4.ps7.alihm2.pi.Commerce;
@@ -10,6 +11,8 @@ import fr.unice.polytech.si4.ps7.alihm2.utils.PlageHoraire;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Position;
 import fr.unice.polytech.si4.ps7.alihm2.utils.Semaine;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 
 
@@ -23,9 +26,9 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     protected Ville ville;
     protected List<Commercant> commercants;
     protected List<Commerce> commerces;
-    protected final int longeur = 180;
-    protected final int largeur = 310;
-    protected final double d = 0.04;
+    protected static final int LONGEUR = 180;
+    protected static final int LARGEUR = 310;
+    protected static final double D = 0.04;
     protected List<Client> clients;
     protected List<Policier> policiers;
     protected List<Parking> parkings;
@@ -34,6 +37,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     private static final int NB_COMMERANTS = 30; // dans la limite de 400
     private static final int NB_PARKING = 4;
     private static final int NB_SEMAINE_HORAIRE = 4;
+    private Random rand;
 
     public EngineSettingsSmall1() {
         this.oM = new ObjectMapper();
@@ -42,23 +46,28 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
         initCommerces();
         this.parkings = initParkings();
         this.zones = initZones();
-        this.ville = new Ville(longeur, largeur, commercants, commerces, parkings, zones);
+        this.ville = new Ville(LONGEUR, LARGEUR, commercants, commerces, parkings, zones);
         this.clients = initClient();
         this.policiers = initPolicier();
     }
 
     private List<Double> createPosition() {
-        double x = (Math.random() * (this.longeur + 1)) / 10000.0 + 43.6055;
-        double y = (Math.random() * (this.largeur + 1)) / 10000.0 + 7.0500;
+        double x = (Math.random() * (LONGEUR + 1)) / 10000.0 + 43.6055;
+        double y = (Math.random() * (LARGEUR + 1)) / 10000.0 + 7.0500;
         return List.of(x, y);
     }
 
     private List<Client> initClient() {
+        try {
+            rand = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         List<Client> tmp = new ArrayList<>();
         for (int k = 0; k < NB_CLIENTS; k++) {
-            Random r = new Random();
-            double x = (r.nextGaussian() * this.d) / 7 + 43.6154;
-            double y = (r.nextGaussian() * this.d) / 7  + 7.0719;
+            double x = (this.rand.nextGaussian() * D) / 7 + 43.6154;
+            double y = (this.rand.nextGaussian() * D) / 7 + 7.0719;
             tmp.add(new Client(k, new Position(x, y), Math.random() < 0.5 ? ModeDeplacement.BUS : ModeDeplacement.VOITURE));
         }
         return tmp;
@@ -116,8 +125,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
             }
         }
         do {
-             x = (Math.random() * (this.longeur + 1)) / 10000.0 + 43.6055;
-             y = (Math.random() * (this.largeur + 1)) / 10000.0 + 7.0500;
+             x = (Math.random() * (LONGEUR + 1)) / 10000.0 + 43.6055;
+             y = (Math.random() * (LARGEUR + 1)) / 10000.0 + 7.0500;
         } while (positions.contains(new Position(x, y)));
         return new Position(x, y);
     }
@@ -130,8 +139,8 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
             for (String j : jour) {
                 int matinOuverture = (int) (Math.random() * ((10 - 6) + 1)) + 6;
                 int matinFermeture = (int) (Math.random() * ((14 - 11) + 1)) + 11;
-                int soirOuverture = (int) (Math.random() * ((15 - matinFermeture)) + 1) + matinFermeture;
-                int soirFermeture = (int) (Math.random() * ((23 - 18)) + 1) + 18;
+                int soirOuverture = (int) (Math.random() * (15 - matinFermeture)) + matinFermeture+1;
+                int soirFermeture = (int) (Math.random() * ((23 - 18) + 1)) + 18;
                 tmp.put(j, List.of(new PlageHoraire(matinOuverture, matinFermeture, (int) (Math.random() * (NB_CLIENTS /10.0 + 1))), new PlageHoraire(soirOuverture, soirFermeture, (int) (Math.random() * (NB_CLIENTS /10.0 + 1)))));
             }
             tmp.put("Dimanche", List.of(new PlageHoraire(0, 0, 0), new PlageHoraire(0, 0, 0)));
@@ -159,7 +168,7 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
             LinkedHashMap<String, List<PlageHoraire>> tmp = new LinkedHashMap<>();
             for (String j : jour) {
                 int matinOuverture = (int) (Math.random() * ((8 - 6) + 1)) + 6;
-                int soirFermeture = (int) (Math.random() * ((23 - 20)) + 1) + 20;
+                int soirFermeture = (int) (Math.random() * ((23 - 20) + 1)) + 20;
                 tmp.put(j, List.of(new PlageHoraire(matinOuverture, soirFermeture, (int) (Math.random() * (NB_CLIENTS / 10.0 + 1)))));
             }
             res.add(new Semaine(tmp));
@@ -193,6 +202,13 @@ public class EngineSettingsSmall1 implements EngineSettingsInterface {
     public List<Policier> getPoliciers() {
         return policiers;
     }
+    @JsonIgnore
+    public static int getNbCommerants() {
+        return NB_COMMERANTS;
+    }
 
-
+    @JsonIgnore
+    public static int getNbParking() {
+        return NB_PARKING;
+    }
 }

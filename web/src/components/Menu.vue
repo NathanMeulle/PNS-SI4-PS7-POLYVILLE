@@ -3,12 +3,17 @@
     <ul >
       <li>
         <router-link  active-class="active" to="/map">
-          <span>Map</span>
+          <span>Carte</span>
         </router-link>
       </li>
       <li>
         <router-link  active-class="active" to="/dsl">
-          DSL
+          Langage dédié
+        </router-link>
+      </li>
+      <li>
+        <router-link  active-class="active" to="/eventPage">
+          Evénements
         </router-link>
       </li>
     </ul>

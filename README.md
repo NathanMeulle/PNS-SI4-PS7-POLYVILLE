@@ -17,6 +17,13 @@
 - [Nathan Meulle](https://github.com/NathanMeulle)
 - [Alexis Mérienne](https://github.com/AlexisMerienne)
 
+
+## Project Structure
+- 1 java sub-project to generate a mock of the database in json format
+- 1 sub-project (web folder) containing the Vue App
+
+
+
 ## How to contribute
 To participate in this project, please have a look at our [contributing.md](https://github.com/PNS-PS7and8/ps7-20-21-al-ihm2/blob/master/CONTRIBUTING.md) 👀
 

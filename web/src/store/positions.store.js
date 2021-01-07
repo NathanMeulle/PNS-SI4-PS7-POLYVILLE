@@ -36,9 +36,6 @@ export const positionModule = {
             positions: PositionMock,
         }
     },
-    mutations:{
-
-    },
     getters:{
         numberOfCitizens: (state) => {
             var nbCitizens = 0;
@@ -67,7 +64,7 @@ export const positionModule = {
                       }
                   }
               }
-          })
+          });
         return nbCitizen;
         },
         /**
@@ -86,7 +83,7 @@ export const positionModule = {
                         }
                     }
                 }
-            })
+            });
             return nbPoliciers;
         },
 
@@ -94,4 +91,4 @@ export const positionModule = {
     },
     actions: {
     }
-}
+};

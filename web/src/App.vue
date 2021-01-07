@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome to Polyville !</h1>
+    <h1>Bienvenue à Polyville !</h1>
     <router-view></router-view>
     <Menu></Menu>
   </div>
