@@ -2,7 +2,7 @@
   <div>
     <h2>
       <p>
-        <em v-bind:class="Logo"></em> Evénement à
+        <em v-bind:class="Logo"></em> Événement à
         <em class="majorText">{{ NomPointInteret }}</em>
       </p>
       <p>Titre de l'événement:</p>
