@@ -2,12 +2,13 @@
   <div>
     <h2>
       <p>
-        <em v-bind:class="Logo"></em> Événement à
-        <em class="majorText">{{ NomPointInteret }}</em>
+        <em v-bind:class="Logo"></em>
+        <em>Nom de l'événement : </em>
+        <em  class="descriptionText">{{ NomEvenement }}</em>
       </p>
-      <p>Titre de l'événement:</p>
-      <p  class="descriptionText">{{ NomEvenement }}</p>
-      <p style="white-space: pre-line">Description de l'événement:</p>
+      <p>Événement à : </p>
+      <p class="majorText">{{ NomPointInteret }}</p>
+      <p style="white-space: pre-line">Description de l'événement :</p>
       <p class="descriptionText">{{ Description }}</p>
     </h2>
   </div>
@@ -32,13 +33,15 @@ export default {
 
 <style scoped>
 h2 {
-
   margin: 10px;
-  background-color: #28ff3a;
+  background-color: rgba(50, 255, 70, 0.45);
   border-radius: 50px;
   border: 3px solid #0cb50b;
   justify-content: center;
 
+}
+p {
+  margin-left: 5px;
 }
 .majorText {
   margin-right: 30%;
