@@ -30,10 +30,6 @@
       <button v-on:click="showMap" id="popupMap"  class="bouton">Afficher la carte</button>
     </div>
 
-    <div v-if="regle!==''">
-      Regle : {{regle}}
-    </div>
-
     <div id="reussite" v-if="valid!==''">{{valid}}</div>
     <div id="error" v-else>{{error}}</div>
   </div>
@@ -44,6 +40,7 @@
             :NomEvenement="NomEvenement"
             :Description="Description"
             :Logo="Logo"
+            :Regle="regle"
     ></PrintEvent>
 </div>
 
@@ -96,8 +93,8 @@ name: "EventPage",
       NomEvenement: "",
       Description: "",
       Logo:"fas fa-exclamation-circle",
-        onClick : false,
-        regle: "",
+      onClick : false,
+      regle: "",
     };
   },
     computed : {
