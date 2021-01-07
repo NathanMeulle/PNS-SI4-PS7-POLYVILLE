@@ -49,17 +49,22 @@
 
   </div>
   <div class= "centerDiv">
-    <button id ="bouton1" class="bouton" v-on:click="showDSL">Ajouter une règle</button>
-  </div>
-  <div id="DSL" style = "display: none">
+    
+    <div id ="bouton1" class="bouton" v-on:click="showDSL"><i class="fas fa-sort-down" style="font-size: 30px"></i> Ajouter une règle
+      
+<div id="DSL" style = "display: none">
 
   <div>
     <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
   </div>
   </div>
+      
+    </div>
+  </div>
+   <div class= "centerDiv">
   <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
   <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
-  <i class="fas fa-sort-down"></i>
+   </div>
 
 
 </template>
@@ -143,8 +148,13 @@ name: "EventPage",
             })
         },
         showDSL(){
-          document.getElementById("DSL").style.display = "block";
-          document.getElementById("bouton1").style.display = "none";
+          if(document.getElementById("DSL").style.display === "block"){
+            document.getElementById("DSL").style.display = "none";
+          }
+          else{
+            document.getElementById("DSL").style.display = "block";
+          }
+         
         },
         showMap(){
             this.displayPopUp=true;
@@ -201,18 +211,22 @@ name: "EventPage",
   text-align: center;
   font-family: "Sofia", sans-serif;
   font-size: 18px;
-  border: 3px solid rgb(13, 88, 57);
-  cursor: pointer;
   background-color: rgb(187, 238, 195);
+  cursor: pointer;
+  border: 3px solid rgb(13, 88, 57);
   font-weight: bold;
-  width:200px;
-  height: 50px;
   box-shadow: 4px 4px 2px 1px #266027;
 }
 
 #bouton2{
-  margin-top: 5%;
+  width:200px;
+  height: 50px;
+  
 }
 
+#bouton1{
+  background-color: rgb(238, 238, 238);
+  width:1500px;
+}
 
 </style>
