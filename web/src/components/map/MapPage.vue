@@ -1,43 +1,48 @@
 <template>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 
     <div class="MapPage">
         <div class="navbar">
-        <div class="checkbox">
-        <label  class="container" for="checkboxParking">
-            <input type="checkbox" id="checkboxParking" value="Parking" v-model="loadCheckbox" v-on:input="doSelect('Parking')">
-            <span class="checkmark">
+            <div class="checkbox">
+                <label class="container" for="checkboxParking">
+                    <input type="checkbox" id="checkboxParking" value="Parking" v-model="loadCheckbox"
+                           v-on:input="doSelect('Parking')">
+                    <span class="checkmark">
                 Parking
             </span>
-        </label>
-        <label class="container" for="checkboxCommerces">
-            <input type="checkbox" id="checkboxCommerces" value="Commerces" v-model="loadCheckbox" v-on:input="doSelect('Commerces')">
-            <span class="checkmark">
+                </label>
+                <label class="container" for="checkboxCommerces">
+                    <input type="checkbox" id="checkboxCommerces" value="Commerces" v-model="loadCheckbox"
+                           v-on:input="doSelect('Commerces')">
+                    <span class="checkmark">
                 Commerces
             </span>
-        </label>
-        <label class="container" for="checkboxAffluence">
-            <input type="checkbox" id="checkboxAffluence" value="Affluence" v-model="loadCheckbox" v-on:input="doSelect('Affluence')">
-            <span class="checkmark">
+                </label>
+                <label class="container" for="checkboxAffluence">
+                    <input type="checkbox" id="checkboxAffluence" value="Affluence" v-model="loadCheckbox"
+                           v-on:input="doSelect('Affluence')">
+                    <span class="checkmark">
                 Affluence
             </span>
-        </label>
-        <label class="container" for="checkboxPolice">
-            <input type="checkbox" id="checkboxPolice" value="Police" v-model="loadCheckbox" v-on:input="doSelect('Police')">
-            <span class="checkmark">
+                </label>
+                <label class="container" for="checkboxPolice">
+                    <input type="checkbox" id="checkboxPolice" value="Police" v-model="loadCheckbox"
+                           v-on:input="doSelect('Police')">
+                    <span class="checkmark">
                 Présence Policière
             </span>
-        </label>
-        <label class="container" for="checkboxEvent">
-            <input type="checkbox" id="checkboxEvent" value="Event" v-model="loadCheckbox" v-on:input="doSelect('Event')">
-            <span class="checkmark">
+                </label>
+                <label class="container" for="checkboxEvent">
+                    <input type="checkbox" id="checkboxEvent" value="Event" v-model="loadCheckbox"
+                           v-on:input="doSelect('Event')">
+                    <span class="checkmark">
                 Évènement
             </span>
-        </label>
+                </label>
 
-        </div>
+            </div>
             <div class="dropdown" id="menuDeroulant">
                 <button class="dropbtn">
                     {{storeToDisplay}}
@@ -54,9 +59,9 @@
                 </div>
             </div>
         </div>
-        <MapComponent class="map" v-bind:filterOption="loadCheckbox" v-bind:filterStore="storeToDisplay" ></MapComponent>
+        <MapComponent class="map" v-bind:filterOption="loadCheckbox" v-bind:filterStore="storeToDisplay"></MapComponent>
         <button id="MoveButton" v-on:click="moveCitizens">Simuler Déplacement Citoyens</button>
-      <AffichageRegles/>
+        <AffichageRegles/>
 
     </div>
 </template>
@@ -248,7 +253,11 @@
     .container input:checked ~ .checkmark:after {
         display: block;
     }
-
+    #MoveButton {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+    }
 
 
 </style>
