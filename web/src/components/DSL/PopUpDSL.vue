@@ -107,9 +107,9 @@ export default {
 
     getHourProg(){
       let res = -1;
+      // eslint-disable-next-line no-unused-vars
       this.programme.forEach((item,index)=>{
         if(item.title === 'Input'){
-          index;
           res = item.input;
         }
       })
