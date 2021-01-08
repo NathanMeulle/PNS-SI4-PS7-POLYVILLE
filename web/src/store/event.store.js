@@ -26,6 +26,7 @@ export const eventModule = {
                 console.log("added : ", state.position);
         },
         addLocation :(state, payload) => {
+            if (payload.location != "") {
                 state.storeNotFound.interestPoint = true;
                 store.getters.loadCommerces.forEach(commerce => {
                     if (commerce.nom === payload.location) {
@@ -34,6 +35,7 @@ export const eventModule = {
                         state.location.position.y = commerce.position.y + 0.0005;
                     }
                 })
+            }
             console.log('LOCATION POINT D INTERET', state.location,state.storeNotFound);
         },
         /**
@@ -50,7 +52,7 @@ export const eventModule = {
                 x = payload.coordonate[0];
                 y = payload.coordonate[1];
             }
-            if (payload.location != undefined) {
+            if (payload.location != "") {
                 x = state.location.position.x;
                 y = state.location.position.y;
 

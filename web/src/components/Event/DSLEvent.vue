@@ -59,10 +59,10 @@
           </div>
         </div>
       </div>
+      <div v-on:click="launch()" id="launch" class="bouton">Ajouter ce programme à mon événement</div>
     </div>
     <HelpEvent v-if="modalHelp" v-on:close="modalHelp = false"/>
     <div class="bouton" id="help" v-on:click="modalHelp = true">Aide</div>
-    <button v-on:click="launch()" id="launch" style="height: 3vh; width: 40%" class="bouton">Ajouter ce programme à mon événement</button>
     <br/>
     <div class="droite" style="height: 75%; width: 35%">
       <div style="height: 60vh; width: 100%" @drop='onDrop($event, 2)' @dragover.prevent @dragenter.prevent>
@@ -330,9 +330,8 @@ extends: DragDropMethods,
 }
 
 #launch{
-  margin-top: 1%;
-  float: right;
-  position: relative;
+  margin-top: 20%;
+  margin-left: 5%;
 }
 
 #help{

@@ -20,6 +20,7 @@
       <button v-on:click="use(macro,macro[macro.length-1])">Cliquez ici pour utiliser ce raccourci</button>
       <br/>
     </div>
+    <br/>
   </div>
   <br/>
   <router-link active-class="active" to="/dsl">

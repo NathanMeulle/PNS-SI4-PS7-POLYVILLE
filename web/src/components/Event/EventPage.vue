@@ -30,10 +30,6 @@
       <button v-on:click="showMap" id="popupMap"  class="bouton">Afficher la carte</button>
     </div>
 
-    <div v-if="regle!==''">
-      Regle : {{regle}}
-    </div>
-
     <div id="reussite" v-if="valid!==''">{{valid}}</div>
     <div id="error" v-else>{{error}}</div>
   </div>
@@ -44,23 +40,28 @@
             :NomEvenement="NomEvenement"
             :Description="Description"
             :Logo="Logo"
+            :Regle="regle"
     ></PrintEvent>
 </div>
 
   </div>
   <div class= "centerDiv">
-
-    <button id ="bouton1" class="bouton" v-on:click="showDSL">Ajouter une règle</button>
-    <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
-    </div>
-  <div id="DSL" style = "display: none">
+    
+    <div id ="bouton1" class="bouton"> <div v-on:click="showDSL"><em class="fas fa-sort-down" style="font-size: 30px"></em> Ajouter une règle</div>
+      
+<div id="DSL" style = "display: none">
 
   <div>
     <InterpreteurEvent v-on:ajoutRegleEvenement="ajoutRegle($event)"/>
-
   </div>
   </div>
+      
+    </div>
+  </div>
+   <div class= "centerDiv">
   <PopUpMap v-if="displayPopUp" @close="displayPopUp = false"/>
+  <button id ="bouton2" class="bouton" v-on:click="validation">Créer l'événement</button>
+   </div>
 
 
 </template>
@@ -92,8 +93,8 @@ name: "EventPage",
       NomEvenement: "",
       Description: "",
       Logo:"fas fa-exclamation-circle",
-        onClick : false,
-        regle: "",
+      onClick : false,
+      regle: "",
     };
   },
     computed : {
@@ -144,8 +145,13 @@ name: "EventPage",
             })
         },
         showDSL(){
-          document.getElementById("DSL").style.display = "block";
-          document.getElementById("bouton1").style.display = "none";
+          if(document.getElementById("DSL").style.display === "block"){
+            document.getElementById("DSL").style.display = "none";
+          }
+          else{
+            document.getElementById("DSL").style.display = "block";
+          }
+         
         },
         showMap(){
             this.displayPopUp=true;
@@ -202,14 +208,22 @@ name: "EventPage",
   text-align: center;
   font-family: "Sofia", sans-serif;
   font-size: 18px;
-  border: 3px solid rgb(13, 88, 57);
-  cursor: pointer;
   background-color: rgb(187, 238, 195);
+  cursor: pointer;
+  border: 3px solid rgb(13, 88, 57);
   font-weight: bold;
-  width:200px;
-  height: 50px;
   box-shadow: 4px 4px 2px 1px #266027;
 }
 
+#bouton2{
+  width:200px;
+  height: 50px;
+  
+}
+
+#bouton1{
+  background-color: rgb(238, 238, 238);
+  width:1500px;
+}
 
 </style>
