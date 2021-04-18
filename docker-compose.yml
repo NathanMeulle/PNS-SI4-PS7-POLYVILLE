@@ -1,0 +1,11 @@
+version: '3'
+services:
+  vue-app:
+    build:
+      context: ./
+    ports:
+      - "8080:8080"
+    container_name: vue-app
+    volumes:
+       - ./web:/usr/src/app/web
+       - /usr/src/app/web/node_modules
