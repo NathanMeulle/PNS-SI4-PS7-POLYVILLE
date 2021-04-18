@@ -8,4 +8,5 @@ services:
     container_name: vue-app
     volumes:
        - ./web:/usr/src/app/web
+       - ./mocks:/usr/src/app/mocks
        - /usr/src/app/web/node_modules

@@ -33,7 +33,7 @@ public class Engine {
             // Enregistre la sortie initiale.
             PrintStream sortieOriginale = System.out;
 
-            String path = System.getProperty("user.dir") + "/src/main/java/fr/unice/polytech/si4/ps7/alihm2/mocks"; // Chemin direct vers les mocks de vueJS
+            String path = "mocks"; // Chemin direct vers les mocks de vueJS
             fichierDeSortie = new PrintStream(path + "/Ville.mock.js");
             fichierDeSortie2 = new PrintStream(path + "/Position.mock.js");
             System.out.println("\n Json Créé !");
