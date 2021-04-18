@@ -1,4 +1,4 @@
-FROM maven:3.5-jdk-11 AS builder
+ FROM maven:3.5-jdk-11 AS builder
 WORKDIR /usr/src/app/
 COPY ./src ./src
 COPY ./mocks ./mocks
@@ -10,12 +10,12 @@ COPY ./pom.xml ./
 # -DskipTests 	  : skip tests
 RUN mvn -f ./pom.xml clean compile assembly:single -DskipTests
 
-COPY ./target/alihm2*-jar-with-dependencies.jar ./alihm2.jar
+ENV JAR_FILE=target/alihm2*-jar-with-dependencies.jar
+RUN mv ${JAR_FILE} ./alihm2.jar
 
 # Run the Engine Class to generate the json mocks
 RUN java -cp ./alihm2.jar fr/unice/polytech/si4/ps7/alihm2/serializer/Engine
 
-COPY ./mocks ./mocks
 
 FROM node:lts-alpine
 WORKDIR /usr/src/app/
